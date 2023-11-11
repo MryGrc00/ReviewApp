@@ -88,6 +88,15 @@ namespace ASI.Basecode.Resources.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot password?.
         /// </summary>
         public static string ForgotPass {
@@ -111,15 +120,6 @@ namespace ASI.Basecode.Resources.Views {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UserId.
-        /// </summary>
-        public static string UserId {
-            get {
-                return ResourceManager.GetString("UserId", resourceCulture);
             }
         }
     }

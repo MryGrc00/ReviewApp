@@ -16,19 +16,19 @@ namespace ASI.Basecode.Data.Repositories
 
         }
 
-        public IQueryable<User> GetUsers()
+        public IQueryable<Admin> GetUsers()
         {
-            return this.GetDbSet<User>();
+            return this.GetDbSet<Admin>();
         }
 
         public bool UserExists(string userId)
         {
-            return this.GetDbSet<User>().Any(x => x.UserId == userId);
+            return this.GetDbSet<Admin>().Any(x => x.Email == userId);
         }
 
-        public void AddUser(User user)
+        public void AddUser(Admin admin)
         {
-            this.GetDbSet<User>().Add(user);
+            this.GetDbSet<Admin>().Add(admin);
             UnitOfWork.SaveChanges();
         }
 

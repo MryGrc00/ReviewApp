@@ -22,29 +22,29 @@ namespace ASI.Basecode.Services.Services
             _repository = repository;
         }
 
-        public LoginResult AuthenticateUser(string userId, string password, ref User user)
+        public LoginResult AuthenticateUser(string userId, string password, ref Admin admin)
         {
-            user = new User();
+            admin = new Admin();
             var passwordKey = PasswordManager.EncryptPassword(password);
-            user = _repository.GetUsers().Where(x => x.UserId == userId &&
+            admin = _repository.GetUsers().Where(x => x.Email == userId &&
                                                      x.Password == passwordKey).FirstOrDefault();
 
-            return user != null ? LoginResult.Success : LoginResult.Failed;
+            return admin != null ? LoginResult.Success : LoginResult.Failed;
         }
 
         public void AddUser(UserViewModel model)
         {
-            var user = new User();
-            if (!_repository.UserExists(model.UserId))
+            var admin = new Admin();
+            if (!_repository.UserExists(model.Email))
             {
-                _mapper.Map(model, user);
-                user.Password = PasswordManager.EncryptPassword(model.Password);
-                user.CreatedTime = DateTime.Now;
-                user.UpdatedTime = DateTime.Now;
-                user.CreatedBy = System.Environment.UserName;
-                user.UpdatedBy = System.Environment.UserName;
+                _mapper.Map(model, admin);
+                admin.Password = PasswordManager.EncryptPassword(model.Password);
+                admin.CreatedTime = DateTime.Now;
+                admin.UpdatedTime = DateTime.Now;
+                admin.CreatedBy = System.Environment.UserName;
+                admin.UpdatedBy = System.Environment.UserName;
 
-                _repository.AddUser(user);
+                _repository.AddUser(admin);
             }
             else
             {

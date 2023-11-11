@@ -1,0 +1,121 @@
+body {
+    background-color: #060640;
+    color: white;
+}
+
+/*table*/
+
+.table-container {
+    position: relative;
+    overflow: auto;
+    height: 600px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 20px;
+    color: #004a52; /* Slightly darker text color for th elements */
+}
+
+
+.table-striped .name:nth-child(even),
+.table-striped .name:nth-child(odd) {
+    background-color: #00E5CC;
+}
+
+.button a i {
+    color: #00E5CC;
+}
+
+    .button a i:hover {
+        color: #060640;
+    }
+
+.button {
+    text-align: center;
+}
+
+.custom-thead {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+    .custom-thead th {
+        background-color: #00E5CC;
+        color: white;
+    }
+
+
+
+
+
+.add {
+    font-size: 15px;
+    margin-top: 10px;
+    background-color: #65a5a5;
+    color: white;
+    display: inline-block;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 40px;
+}
+
+.addbtn {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.logout {
+    font-size: 15px;
+    margin-top: 10px;
+    background-color: pink;
+    color: white;
+    display: inline-block;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 40px;
+}
+
+.home-content {
+    padding: 20px;
+}
+
+.navbar-nav li.nav-item {
+    margin-right: 50px; /* Adjust the value as needed */
+}
+
+.navbar-nav .nav-link {
+    color: #00E5CC;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: white;
+    }
+
+.flex-container {
+    display: flex;
+}
+
+.image-container {
+    margin-right: 10px; /* Adjust the spacing between image and text */
+}
+
+    .image-container img {
+        border-radius: 100px;
+    }
+
+.text-container {
+    flex: 1; /* This makes the text container take up the remaining space */
+    text-align: left;
+}
+
+
+.custom-thead th {
+    padding: 10px; /* Adjust the padding as needed */
+    text-align: center;
+}
+
+
+.name td {
+    padding: 10px; /* Adjust the padding as needed */
+    text-align: center;
+}
