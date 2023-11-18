@@ -43,6 +43,10 @@ namespace ASI.Basecode.Data
             {
                 return GetFolderPath(Path.Combine(LogDirectory, appName));
             }
+            public static string SharedImagesDirectory
+            {
+                get { return GetFolderPath(SetupRootDirectory, "sharedImages"); }
+            }
         }
 
         /// <summary>

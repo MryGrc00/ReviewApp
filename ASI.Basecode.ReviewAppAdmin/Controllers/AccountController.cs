@@ -90,7 +90,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 // 認証OK
                 await this._signInManager.SignInAsync(admin);
                 this._session.SetString("UserName", admin.Name);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {

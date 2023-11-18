@@ -35,10 +35,18 @@ namespace ASI.Basecode.ReviewAppAdmin
             // Services
             this._services.TryAddSingleton<TokenValidationParametersFactory>();
             this._services.AddScoped<IUserService, UserService>();
+            this._services.AddScoped<IBookService, BookService>();
+            this._services.AddScoped<IGenreService, GenreService>();
+            this._services.AddScoped<IAdminService, AdminService>();
+            this._services.AddScoped<IRatingService, RatingService>();
           
 
             // Repositories
             this._services.AddScoped<IUserRepository, UserRepository>();
+            this._services.AddScoped<IBookRepository, BookRepository>();
+            this._services.AddScoped<IGenreRepository, GenreRepository>();
+            this._services.AddScoped<IAdminRepository, AdminRepository>();
+            this._services.AddScoped<IRatingRepository, RatingRepository>();
 
             // Manager Class
             this._services.AddScoped<SignInManager>();

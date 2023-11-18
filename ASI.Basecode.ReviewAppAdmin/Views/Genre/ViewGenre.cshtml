@@ -1,0 +1,52 @@
+﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
+
+<a asp-action="List" asp-controller="Genre">Go Back</a>
+
+<h2>Add New Genre</h2>
+
+<h3>Genre ID:</h3>
+<h4>@Model.GenreId</h4>
+<h3>Genre Name: </h3>
+<h4>@Model.GenreName</h4>
+
+<table class="table" id="myTable">
+    <thead class="custom-thead">
+        <tr>
+            <th>Book ID</th>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Added By</th>
+            <th>Genre</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var book in (List<ASI.Basecode.Services.ServiceModels.BookViewModel>)ViewData["Genre"])
+        {
+            <tr>
+                <td>@book.BookId</td>
+                <td>@book.Isbn</td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.CreatedBy</td>
+                <td>@book.Genre</td>
+                <td>@book.Description</td>
+                <td>
+                    <img src="@book.BookImage" alt="Image" width="100" height="100" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Page @ViewData["Page"] of @ViewData["TotalPages"]
+
+    @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+    {
+        <a href="@Url.Action("ViewGenre", new { @Model.GenreId, page = i, pageSize = ViewData["PageSize"] })">[@i]</a>
+    }
+</div>
