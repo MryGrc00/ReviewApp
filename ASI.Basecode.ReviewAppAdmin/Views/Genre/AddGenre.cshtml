@@ -1,0 +1,16 @@
+﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
+
+<a asp-action="List" asp-controller="Genre">Go Back</a>
+
+<h2>Add New Genre</h2>
+
+<form method="post" enctype="multipart/form-data" asp-action="AddGenre">
+    <div class="form-group">
+        <label>Genre Name</label>
+        <input class="form-control" asp-for="GenreName" />
+        <span asp-validation-for="GenreName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+
+</form>

@@ -12,6 +12,7 @@ namespace ASI.Basecode.Data.Models
         public string Description { get; set; }
         public string Genre { get; set; }
         public string Author { get; set; }
+        public int TotalRating { get; set; }
         public string CreatedBy { get; set; }
         public DateTime DateAdded { get; set; }
         public string UpdatedBy { get; set; }

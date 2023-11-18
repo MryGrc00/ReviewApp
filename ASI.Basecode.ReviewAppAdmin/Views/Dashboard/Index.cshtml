@@ -1,0 +1,30 @@
+﻿@model List<ASI.Basecode.Services.ServiceModels.BookViewModel>
+
+
+<div class="container pt-5">
+    <h2>Newest Book</h2>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="card-img"><img class="img-thumbnail" src="@book.BookImage" alt="Image" style="width: 200px; height:200px"/></div>
+                        <h4 class="card-text font-weight-bold">@book.Title</h4>
+                        <p class="card-text">By <b>@book.Author</b></p>
+                        <p class="card-text"><b>@book.Genre</b></p>
+                        <p class="card-text"><b>@book.Description</b></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
+                                    <input type="hidden" name="BookId" value="@book.BookId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
