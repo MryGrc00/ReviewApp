@@ -41,6 +41,26 @@ public class BookService : IBookService
         return data;
     }
 
+    public List<BookViewModel> TopBooks()
+    {
+        var data = _bookRepository.GetBooks().Select(x => new BookViewModel
+        {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        }).OrderByDescending(x => x.TotalRating).ToList();
+        return data;
+    }
+
     public BookViewModel GetBook(int id)
     {
         var model = _bookRepository.GetBook(id);

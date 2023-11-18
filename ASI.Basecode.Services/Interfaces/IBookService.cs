@@ -10,6 +10,7 @@ namespace ASI.Basecode.Services.Interfaces
     public interface IBookService
     {
         List<BookViewModel> GetBooks();
+        List<BookViewModel> TopBooks();
         BookViewModel GetBook(int id);
         void AddBook(BookViewModel model, string name);
         bool CheckIsbn(String isbn);

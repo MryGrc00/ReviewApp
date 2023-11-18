@@ -24,8 +24,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<BookViewModel> data = _bookService.GetBooks().Take(5).ToList();
-            return View("Index", data);
+            List<BookViewModel> newest = _bookService.GetBooks().Take(5).ToList();
+            List<BookViewModel> topBooks = _bookService.TopBooks().Take(5).ToList();
+            ViewData["TopBooks"] = topBooks;
+            return View("Index", newest);
         }
 
         [HttpGet]

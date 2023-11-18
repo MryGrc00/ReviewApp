@@ -30,7 +30,8 @@ namespace ASI.Basecode.ReviewApp.Controllers
         public IActionResult Index()
         {
             List<BookViewModel> data = _bookService.GetBooks().Take(5).ToList();
-
+            List<BookViewModel> topBooks = _bookService.TopBooks().Take(5).ToList();
+            ViewData["TopBooks"] = topBooks;
             return View("Index", data);
         }
 
@@ -54,6 +55,28 @@ namespace ASI.Basecode.ReviewApp.Controllers
 
 
             return View("NewestBookExpanded", paginatedBook);
+        }
+
+        [HttpGet]
+        public IActionResult TopBookExpanded(int page = 1, int pageSize = 10)
+        {
+            List<BookViewModel> data = _bookService.TopBooks();
+
+            int totalCount = data.Count;
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            page = Math.Max(1, Math.Min(page, totalPages));
+
+            List<BookViewModel> paginatedBook = data
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewData["Page"] = page;
+            ViewData["PageSize"] = pageSize;
+            ViewData["TotalPages"] = totalPages;
+
+
+            return View("TopBookExpanded", paginatedBook);
         }
 
         [HttpGet]

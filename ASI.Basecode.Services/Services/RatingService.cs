@@ -15,9 +15,10 @@ namespace ASI.Basecode.Services.Services
         private readonly IRatingRepository _ratingRepository;
         private readonly IBookRepository _bookRepository;
 
-        public RatingService(IRatingRepository ratingRepository)
+        public RatingService(IRatingRepository ratingRepository, IBookRepository bookRepository)
         {
             _ratingRepository = ratingRepository;
+            _bookRepository = bookRepository;
         }
 
         public List<RatingViewModel> GetRatings()
@@ -66,7 +67,7 @@ namespace ASI.Basecode.Services.Services
             rating.DateAdded = DateTime.Now;
             
 
-            var book = _bookRepository.GetBook(rating.BookId);
+            Book book = _bookRepository.GetBook(rating.BookId);
             if (book != null)
             {
                 book.TotalRating = book.TotalRating + model.RateStars;
