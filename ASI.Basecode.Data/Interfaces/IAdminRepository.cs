@@ -11,6 +11,7 @@ namespace ASI.Basecode.Data.Interfaces
     {
         IQueryable<Admin> GetAdmins();
         Admin GetAdmin(int id);
+        Admin GetAdminByEmail(string email);
         void AddAdmin(Admin admin);
         void EditAdmin(Admin admin);
         void DeleteAdmin(Admin admin);

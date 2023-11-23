@@ -1,34 +1,43 @@
 ﻿@model List<ASI.Basecode.Services.ServiceModels.BookViewModel>
 
 
-<div class="container pt-5">
+<div class="pt-5">
     <h2>Newest Book</h2>
+    <a asp-action="NewestBookExpanded" asp-controller="Dashboard">View More</a>
     <div class="row">
         @foreach (var book in Model)
         {
-            <div class="col-md-4">
+            
+            <div class="col-md-3">
+                <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
+
                 <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <div class="card-img"><img class="img-thumbnail" src="@book.BookImage" alt="Image" style="width: 200px; height:200px"/></div>
-                        <h4 class="card-text font-weight-bold">@book.Title</h4>
-                        <p class="card-text">By <b>@book.Author</b></p>
-                        <p class="card-text"><b>@book.Genre</b></p>
-                        <p class="card-text">Total Rating: <b>@book.TotalRating</b></p>
-                        <p class="card-text"><b>@book.Description</b></p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
-                                    <input type="hidden" name="BookId" value="@book.BookId" />
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </form>
+                        <input type="hidden" name="BookId" value="@book.BookId" />
+                        <button type="submit">
+                            <div class="card-body">
+                                <div class="card-img"><img class="img-thumbnail" src="@book.BookImage" alt="Image" style="width: 200px; height:200px" /></div>
+                                <h4 class="card-text font-weight-bold">@book.Title</h4>
+                                @foreach(var genre in book.SelectedGenres){
+                                    <div class="row">
+                                        <div class="col-12">
+                                            
+                                            <p class="card-text"><b>@genre</b></p>
+                                        </div>
+                                    </div>
+                                }
+                                <p class="card-text">By <b>@book.Author</b></p>
                             </div>
-                        </div>
-                    </div>
+                        </button>
+                        
                 </div>
+                </form>
+
             </div>
+            
         }
     </div>
     <h2>Top Book</h2>
+    <a asp-action="TopBookExpanded" asp-controller="Dashboard">View More</a>
     <div class="row">
         @foreach (var top in (List<ASI.Basecode.Services.ServiceModels.BookViewModel>)ViewData["TopBooks"])
         {
@@ -45,7 +54,7 @@
                             <div class="btn-group">
                                 <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
                                     <input type="hidden" name="BookId" value="@top.BookId" />
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">View Book</button>
                                 </form>
                             </div>
                         </div>

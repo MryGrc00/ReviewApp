@@ -19,6 +19,7 @@ namespace ASI.Basecode.Data
 
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<ForgotPassword> ForgotPasswords { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
 
@@ -99,6 +100,17 @@ namespace ASI.Basecode.Data
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ForgotPassword>(entity =>
+            {
+                entity.Property(e => e.Code)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Genre>(entity =>

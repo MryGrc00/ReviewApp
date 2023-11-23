@@ -1,4 +1,7 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
+@{
+    var Books = (ASI.Basecode.Services.ServiceModels.BookViewModel)ViewData["Books"];
+}
 
 <a asp-action="List" asp-controller="Genre">Go Back</a>
 
@@ -24,7 +27,7 @@
     </thead>
     <tbody>
 
-        @foreach (var book in (List<ASI.Basecode.Services.ServiceModels.BookViewModel>)ViewData["Genre"])
+        @foreach (var book in Books.Books)
         {
             <tr>
                 <td>@book.BookId</td>
@@ -42,11 +45,36 @@
     </tbody>
 </table>
 
-<div>
-    Page @ViewData["Page"] of @ViewData["TotalPages"]
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(1 == Books.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("ViewGenre", new { GenreId = Model.GenreId, page = Books.Page - 1, pageSize = Books.PageSize })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
 
-    @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-    {
-        <a href="@Url.Action("ViewGenre", new { @Model.GenreId, page = i, pageSize = ViewData["PageSize"] })">[@i]</a>
-    }
-</div>
+        @if (Books.TotalPages > 1)
+        {
+            <li class="page-item @(1 == Books.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("ViewGenre", new { GenreId = Model.GenreId, page = 1, pageSize = Books.PageSize })">1</a>
+            </li>
+
+            @for (int i = Math.Max(2, Books.Page - 1); i <= Math.Min(Books.TotalPages - 1, Books.Page + 1); i++)
+            {
+                <li class="page-item @(i == Books.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("ViewGenre", new { GenreId = Model.GenreId, page = i, pageSize = Books.PageSize })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Books.TotalPages == Books.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("ViewGenre", new { GenreId = Model.GenreId, page = Books.TotalPages, pageSize = Books.PageSize })">@Books.TotalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(Books.TotalPages == Books.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("ViewGenre", new { GenreId = Model.GenreId, page = Books.Page + 1, pageSize = Books.PageSize })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

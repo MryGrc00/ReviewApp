@@ -7,24 +7,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ASI.Basecode.Services.Services;
 
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepository;
+    private readonly IRatingService _ratingService;
 
-    public BookService(IBookRepository bookRepository)
+    public BookService(IBookRepository bookRepository, IRatingService ratingService)
     {
         _bookRepository = bookRepository;
+        _ratingService = ratingService;
     }
 
     public List<BookViewModel> GetBooks()
     {
-        var data = _bookRepository.GetBooks().Select(x => new BookViewModel {
+        var data = _bookRepository.GetBooks().Select(x => new BookViewModel
+        {
             BookId = x.BookId,
             BookImage = x.BookImage,
             Isbn = x.Isbn,
@@ -40,6 +45,147 @@ public class BookService : IBookService
         }).OrderByDescending(x => x.DateAdded).ToList();
         return data;
     }
+
+    public List<BookViewModel> NewestBooksUser()
+    {
+        DateTime twoWeeksAgo = DateTime.Now.AddDays(-14);
+        var data = _bookRepository.GetBooks().Where(x => x.DateAdded >= twoWeeksAgo).Select(x => new BookViewModel
+        {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        }).OrderByDescending(x => x.DateAdded).Take(5).ToList();
+        return data;
+    }
+
+    public List<BookViewModel> NewestBooks()
+    {
+        var data = _bookRepository.GetBooks().Select(x => new BookViewModel {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        }).OrderByDescending(x => x.DateAdded).Take(5).ToList();
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
+
+        return data;
+    }
+
+    public BookViewModel ListBooks(int page, int pageSize)
+    {
+        var data = _bookRepository.GetBooks().Select(x => new BookViewModel
+        {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        }).OrderByDescending(x => x.DateAdded).ToList();
+
+        int totalItems = data.Count;
+        int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+        page = Math.Max(1, Math.Min(page, totalPages));
+
+        List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return new BookViewModel
+        {
+            Books = booksOnPage,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+        };
+    }
+
+    public BookViewModel NewestBooksExpanded(int page, int pageSize, string searchKeyword, string sortBy)
+    {
+        var query = _bookRepository.GetBooks();
+
+        if (!string.IsNullOrEmpty(searchKeyword))
+        {
+            query = query.Where(x =>
+                x.Title.Contains(searchKeyword) ||
+                x.Author.Contains(searchKeyword) ||
+                x.Genre.Contains(searchKeyword)
+            );
+        }
+
+        var data = query.Select(x => new BookViewModel
+        {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        });
+
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            switch (sortBy.ToLower())
+            {
+                case "title":
+                    data = data.OrderBy(x => x.Title);
+                    break;
+                case "rating":
+                    data = data.OrderByDescending(x => x.TotalRating);
+                    break;
+                    // Add additional sorting options as needed
+            }
+        }
+        else
+        {
+            data = data.OrderByDescending(x => x.DateAdded);
+        }
+
+        int totalItems = data.Count();
+        int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+        page = Math.Max(1, Math.Min(page, totalPages));
+
+        List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return new BookViewModel
+        {
+            Books = booksOnPage,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+        };
+    }
+
 
     public List<BookViewModel> TopBooks()
     {
@@ -57,8 +203,61 @@ public class BookService : IBookService
             DateAdded = x.DateAdded,
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
-        }).OrderByDescending(x => x.TotalRating).ToList();
+        }).OrderByDescending(x => x.TotalRating).Take(5).ToList();
         return data;
+    }
+
+    public BookViewModel TopBooksExpanded(int page, int pageSize)
+    {
+        var data = _bookRepository.GetBooks().Select(x => new BookViewModel
+        {
+            BookId = x.BookId,
+            BookImage = x.BookImage,
+            Isbn = x.Isbn,
+            Title = x.Title,
+            Description = x.Description,
+            Genre = x.Genre,
+            Author = x.Author,
+            TotalRating = x.TotalRating,
+            CreatedBy = x.CreatedBy,
+            DateAdded = x.DateAdded,
+            UpdatedBy = x.UpdatedBy,
+            UpdatedDate = x.UpdatedDate,
+        }).OrderByDescending(x => x.TotalRating).ToList();
+
+        int totalItems = data.Count;
+        int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+        page = Math.Max(1, Math.Min(page, totalPages));
+
+        List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return new BookViewModel
+        {
+            Books = booksOnPage,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+        };
+    }
+
+    public RatingViewModel ViewRatinginBooks (int BookId, int page,  int pageSize)
+    {
+        var data = _ratingService.GetRatings().Where(x => x.BookId == BookId).ToList();
+
+        int totalItems = data.Count;
+        int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+        page = Math.Max(1, Math.Min(page, totalPages));
+
+        List<RatingViewModel> genreOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return new RatingViewModel
+        {
+            Ratings = genreOnPage,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+        };
     }
 
     public BookViewModel GetBook(int id)
@@ -66,6 +265,9 @@ public class BookService : IBookService
         var model = _bookRepository.GetBook(id);
         if (model != null)
         {
+            var data = _ratingService.GetRatings().Where(x => x.BookId == model.BookId).ToList();
+            int totalReview = data.Count();
+
             BookViewModel book = new()
             {
                 BookId = model.BookId,
@@ -76,6 +278,7 @@ public class BookService : IBookService
                 Genre = model.Genre,
                 Author = model.Author,
                 TotalRating = model.TotalRating,
+                TotalReview = totalReview,
                 CreatedBy = model.CreatedBy,
                 DateAdded = model.DateAdded,
                 UpdatedBy = model.UpdatedBy,
@@ -87,7 +290,7 @@ public class BookService : IBookService
 
     public void AddBook(BookViewModel model, string name)
     {
-        var url = "https://127.0.0.1:8080";
+        var url = PathManager.DirectoryPath.BaseUrlHost;
         var book = new Book();
         var bookName = Guid.NewGuid().ToString();
         var sharedImagesPath = PathManager.DirectoryPath.SharedImagesDirectory;
@@ -126,7 +329,7 @@ public class BookService : IBookService
 
     public void UpdateBook(BookViewModel model, string name)
     {
-        var url = "https://127.0.0.1:8080";
+        var url = PathManager.DirectoryPath.BaseUrlHost;
         Book book = _bookRepository.GetBook(model.BookId);
         if(book != null)
         {

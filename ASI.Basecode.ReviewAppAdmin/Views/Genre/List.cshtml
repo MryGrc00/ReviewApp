@@ -1,4 +1,4 @@
-﻿@model List<ASI.Basecode.Services.ServiceModels.GenreViewModel>
+﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
 @section styles {
     <link rel="stylesheet" href="~/css/book.css" />
 }
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
 
-            @foreach (var genre in Model)
+            @foreach (var genre in Model.Genres)
             {
                 <tr>
                     <td>@genre.GenreId</td>
@@ -56,16 +56,41 @@
     </table>
 </div>
 
-<div>
-    Page @ViewData["Page"] of @ViewData["TotalPages"]
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(1 == Model.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("List", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
 
-    @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-    {
-        <a href="@Url.Action("List", new { page = i, pageSize = ViewData["PageSize"] })">[@i]</a>
-    }
-</div>
+        @if (Model.TotalPages > 1)
+        {
+            <li class="page-item @(1 == Model.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("List", new { page = 1, pageSize = Model.PageSize })">1</a>
+            </li>
 
-@foreach (var genre in Model)
+            @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("List", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("List", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+@foreach (var genre in Model.Genres)
 {
     <!-- Modal -->
     <div class="modal fade" id="GenreModal_@genre.GenreId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

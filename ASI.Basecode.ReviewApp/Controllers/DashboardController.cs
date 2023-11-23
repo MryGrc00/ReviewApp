@@ -26,57 +26,31 @@ namespace ASI.Basecode.ReviewApp.Controllers
             _ratingService = ratingService;
         }
 
+
         [HttpGet]
         public IActionResult Index()
         {
-            List<BookViewModel> data = _bookService.GetBooks().Take(5).ToList();
-            List<BookViewModel> topBooks = _bookService.TopBooks().Take(5).ToList();
+            List<BookViewModel> newest = _bookService.NewestBooksUser();
+            List<BookViewModel> topBooks = _bookService.TopBooks();
             ViewData["TopBooks"] = topBooks;
-            return View("Index", data);
+            return View("Index", newest);
         }
 
         [HttpGet]
-        public IActionResult NewestBookExpanded(int page = 1, int pageSize = 10)
+        public IActionResult NewestBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
-            List<BookViewModel> data = _bookService.GetBooks();
-
-            int totalCount = data.Count;
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            page = Math.Max(1, Math.Min(page, totalPages));
-
-            List<BookViewModel> paginatedBook = data
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = pageSize;
-            ViewData["TotalPages"] = totalPages;
-
-
-            return View("NewestBookExpanded", paginatedBook);
+            var newestBookExpanded = _bookService.NewestBooksExpanded(page, pageSize, searchKeyword, sortBy);
+            ViewBag.SearchKeyword = searchKeyword;
+            ViewBag.SortBy = sortBy;
+            return View("NewestBookExpanded", newestBookExpanded);
         }
 
         [HttpGet]
         public IActionResult TopBookExpanded(int page = 1, int pageSize = 10)
         {
-            List<BookViewModel> data = _bookService.TopBooks();
+            var topBookExpanded = _bookService.TopBooksExpanded(page,pageSize);
 
-            int totalCount = data.Count;
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            page = Math.Max(1, Math.Min(page, totalPages));
-
-            List<BookViewModel> paginatedBook = data
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = pageSize;
-            ViewData["TotalPages"] = totalPages;
-
-
-            return View("TopBookExpanded", paginatedBook);
+            return View("TopBookExpanded", topBookExpanded);
         }
 
         [HttpGet]
@@ -85,8 +59,7 @@ namespace ASI.Basecode.ReviewApp.Controllers
             var data = _bookService.GetBook(BookId);
             List<RatingViewModel> rating = _ratingService.GetRatings()
                 .Where(x => x.BookId == BookId)
-                .Take(2).
-                ToList();
+                .ToList();
             int starRating = _ratingService.GetRatings().Where(x => x.BookId == BookId).Sum(x => x.RateStars);
             ViewData["TotalStar"] = starRating;
             ViewData["Rate"] = rating;

@@ -15,11 +15,20 @@ namespace ASI.Basecode.Services.Services
     {
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IEmailSender _emailSender;
+        private readonly IForgotPasswordRepository _forgotPasswordRepository;
+        private readonly IAdminService _adminService;
+        private readonly IAdminRepository _adminRepository;
 
-        public UserService(IUserRepository repository, IMapper mapper)
+        public UserService(IUserRepository repository, IEmailSender emailSender, IForgotPasswordRepository forgotPasswordRepository, 
+            IAdminService adminService, IAdminRepository adminRepository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
+            _emailSender = emailSender;
+            _forgotPasswordRepository = forgotPasswordRepository;
+            _adminService = adminService;
+            _adminRepository = adminRepository;
         }
 
         public LoginResult AuthenticateUser(string userId, string password, ref Admin admin)
@@ -51,5 +60,58 @@ namespace ASI.Basecode.Services.Services
                 throw new InvalidDataException(Resources.Messages.Errors.UserExists);
             }
         }
+
+        public void GetCode(ForgotPasswordViewModel model)
+        {
+            var data = _adminService.GetAdminWithEmail(model.Email);
+            if (data != null)
+            {
+                ForgotPassword forgetPassword = new ForgotPassword();
+                forgetPassword.Email = data.Email;
+                forgetPassword.Code = Guid.NewGuid().ToString("N").Substring(0, 6);
+                forgetPassword.DateReset = DateTime.Now;
+                var message = new Message(new string[] { forgetPassword.Email }, "Forgot Password", $"This is your code {forgetPassword.Code}.");
+                _emailSender.SendEmail(message);
+
+                _forgotPasswordRepository.AddForgotPassword(forgetPassword);
+            }
+        }
+
+        public ForgotPasswordViewModel ForgotPassword (ForgotPasswordViewModel model)
+        {
+            var data = _forgotPasswordRepository.GetForgetPassword(model.Email);
+            if (data != null)
+            {
+                if (data.Code == model.Code)
+                {
+                    ForgotPasswordViewModel reset = new()
+                    {
+                        Email = data.Email,
+                    };
+                    var remove = _forgotPasswordRepository.GetForgetPassword(reset.Email);
+                    _forgotPasswordRepository.DeleteForgotPassword(remove);
+                    return reset;
+                }
+                ForgotPasswordViewModel email = new()
+                {
+                    Email = data.Email,
+                };
+
+                return email;
+            }
+            return null;
+        }
+
+        public void ResetPassword (AdminViewModel model)
+        {
+            var data = _adminRepository.GetAdminByEmail(model.Email);
+            if (data != null)
+            {
+                data.Password = PasswordManager.EncryptPassword(model.Password);
+                data.UpdatedTime = DateTime.Now;
+                _adminRepository.EditAdmin(data);
+            }
+        }
+
     }
 }

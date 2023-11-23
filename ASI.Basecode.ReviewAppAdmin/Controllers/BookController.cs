@@ -25,35 +25,36 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             _genreService = genreService;
         }
 
+        /// <summary>
+        /// List of Book Records
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult List(int page = 1, int pageSize = 5)
         {
-            List<BookViewModel> data = _bookService.GetBooks();
-
-            int totalCount = data.Count;
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            page = Math.Max(1, Math.Min(page, totalPages));
-
-            List<BookViewModel> paginatedBooks = data
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = pageSize;
-            ViewData["TotalPages"] = totalPages;
-
-            return View("List", paginatedBooks);
+            var books = _bookService.ListBooks(page, pageSize);
+            return View("List", books);
         }
 
+        /// <summary>
+        /// Add Method
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult AddBook()
         {
             List<GenreViewModel> data = _genreService.GetGenres();
             ViewData["Genre"] = data;
-            return View("AddBook", new ASI.Basecode.Services.ServiceModels.BookViewModel());
+            return View("AddBook");
         }
 
+        /// <summary>
+        /// Add book record to the database
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AddBook (BookViewModel book)
         {
@@ -73,6 +74,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Edit Method
+        /// </summary>
+        /// <param name="BookId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult EditBook(int BookId)
         {
@@ -82,6 +88,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Update book record to the database
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult EditBook(BookViewModel book)
         {
@@ -89,6 +100,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Delete book record to the database
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteBook(BookViewModel book)
         {
@@ -96,11 +112,18 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// View book record and revoew associated
+        /// </summary>
+        /// <param name="BookId"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult ViewBook(int BookId)
+        public IActionResult ViewBook(int BookId, int page = 1, int pageSize = 5)
         {
             var data = _bookService.GetBook(BookId);
-            return View(data);
+            var ratings = _bookService.ViewRatinginBooks(BookId, page, pageSize);
+            ViewData["Ratings"] = ratings;
+            return View("ViewBook", data);
         }
     }
 }

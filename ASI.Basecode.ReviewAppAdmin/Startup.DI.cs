@@ -39,7 +39,7 @@ namespace ASI.Basecode.ReviewAppAdmin
             this._services.AddScoped<IGenreService, GenreService>();
             this._services.AddScoped<IAdminService, AdminService>();
             this._services.AddScoped<IRatingService, RatingService>();
-          
+            this._services.AddSingleton<IEmailSender, EmailSender>();          
 
             // Repositories
             this._services.AddScoped<IUserRepository, UserRepository>();
@@ -47,6 +47,7 @@ namespace ASI.Basecode.ReviewAppAdmin
             this._services.AddScoped<IGenreRepository, GenreRepository>();
             this._services.AddScoped<IAdminRepository, AdminRepository>();
             this._services.AddScoped<IRatingRepository, RatingRepository>();
+            this._services.AddScoped<IForgotPasswordRepository, ForgotPasswordRepository>();
 
             // Manager Class
             this._services.AddScoped<SignInManager>();

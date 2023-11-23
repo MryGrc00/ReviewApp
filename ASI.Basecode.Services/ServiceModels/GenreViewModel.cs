@@ -17,5 +17,10 @@ namespace ASI.Basecode.Services.ServiceModels
         public DateTime DateAdded { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
+
+        public List<GenreViewModel> Genres { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
     }
 }

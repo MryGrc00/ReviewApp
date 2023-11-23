@@ -10,6 +10,8 @@ namespace ASI.Basecode.Services.Interfaces
     public interface IGenreService
     {
         List<GenreViewModel> GetGenres();
+        GenreViewModel PaginatedGenres(int page, int pageSize);
+        BookViewModel ViewGenreInBooks(string GenreName, int page, int pageSize);
         GenreViewModel GetGenre(int id);
         void AddGenre(GenreViewModel model, string name);
         bool CheckGenreName(string GenreName);

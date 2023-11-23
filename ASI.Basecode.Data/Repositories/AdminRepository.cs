@@ -27,6 +27,12 @@ namespace ASI.Basecode.Data.Repositories
             return admin;
         }
 
+        public Admin GetAdminByEmail(string email)
+        {
+            var admin = this.GetDbSet<Admin>().FirstOrDefault(x => x.Email == email);
+            return admin;
+        }
+
         public void AddAdmin(Admin admin)
         {
             this.GetDbSet<Admin>().Add(admin);

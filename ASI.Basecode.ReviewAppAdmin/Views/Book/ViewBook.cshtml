@@ -1,4 +1,7 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
+@{
+    var Ratings = (ASI.Basecode.Services.ServiceModels.RatingViewModel)ViewData["Ratings"];
+}
 
 <a asp-action="List" asp-controller="Book">Go Back</a>
 
@@ -16,3 +19,66 @@
 <h4>@Model.Author</h4>
 <h3>Genre: </h3>
 <h4>@Model.Genre</h4>
+<h3>Total Review: </h3>
+<h4>@Model.TotalReview</h4>
+
+<table class="table" id="myTable">
+    <thead class="custom-thead">
+        <tr>
+            <th>Rating ID</th>
+            <th>Book ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Rate Stars By</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var ratings in Ratings.Ratings)
+        {
+            <tr>
+                <td>@ratings.RatingId</td>
+                <td>@ratings.BookId</td>
+                <td>@ratings.Name</td>
+                <td>@ratings.Email</td>
+                <td>@ratings.RateStars</td>
+                <td>@ratings.RateComment</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(1 == Ratings.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.Page - 1, pageSize = Ratings.PageSize })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        @if (Ratings.TotalPages > 1)
+        {
+            <li class="page-item @(1 == Ratings.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = 1, pageSize = Ratings.PageSize })">1</a>
+            </li>
+
+            @for (int i = Math.Max(2, Ratings.Page - 1); i <= Math.Min(Ratings.TotalPages - 1, Ratings.Page + 1); i++)
+            {
+                <li class="page-item @(i == Ratings.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = i, pageSize = Ratings.PageSize })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Ratings.TotalPages == Ratings.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.TotalPages, pageSize = Ratings.PageSize })">@Ratings.TotalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(Ratings.TotalPages == Ratings.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.Page + 1, pageSize = Ratings.PageSize })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
