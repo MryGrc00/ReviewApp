@@ -29,6 +29,7 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Author is required.")]
         public string Author { get; set; }
         public int TotalRating { get; set; }
+        public int TotalReview {  get; set; }
         public string CreatedBy { get; set; }
         public DateTime DateAdded { get; set; }
         public string UpdatedBy { get; set; }
@@ -36,6 +37,11 @@ namespace ASI.Basecode.Services.ServiceModels
 
         public IFormFile ImageFile { get; set; }
         public List<string> SelectedGenres { get; set; }
+
+        public List<BookViewModel> Books { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
 
     }
 }

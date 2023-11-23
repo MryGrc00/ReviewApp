@@ -26,6 +26,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         private readonly TokenProviderOptionsFactory _tokenProviderOptionsFactory;
         private readonly IConfiguration _appConfiguration;
         private readonly IUserService _userService;
+        private readonly IAdminService _adminService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
@@ -40,6 +41,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         /// <param name="tokenValidationParametersFactory">The token validation parameters factory.</param>
         /// <param name="tokenProviderOptionsFactory">The token provider options factory.</param>
         public AccountController(
+                            IAdminService adminService,
                             SignInManager signInManager,
                             IHttpContextAccessor httpContextAccessor,
                             ILoggerFactory loggerFactory,
@@ -55,6 +57,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             this._tokenValidationParametersFactory = tokenValidationParametersFactory;
             this._appConfiguration = configuration;
             this._userService = userService;
+            this._adminService = adminService;
         }
 
         /// <summary>
@@ -99,6 +102,85 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 return View();
             }
             return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult GetCode(ForgotPasswordViewModel forgotPassword)
+        {
+            var data = _userService.ForgotPassword(forgotPassword);
+            _userService.GetCode(forgotPassword);
+            return View("ForgotPassword", data);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+            var checkEmail = _adminService.CheckEmail(forgotPassword.Email);
+            if (checkEmail != "Exist")
+            {
+                base.ModelState.AddModelError("Email", "Email doesn't exists.");
+                return View(forgotPassword);
+            }
+            if (checkEmail == "Invalid")
+            {
+                base.ModelState.AddModelError("Email", "Email does not contain @gmail.com");
+                return View(forgotPassword);
+            }
+            
+            _userService.ForgotPassword(forgotPassword);
+
+            return RedirectToAction("ResetPassword", new { email = forgotPassword.Email});
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string email)
+        {
+            var data = _adminService.GetAdminWithEmail(email);
+            return View(data);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(AdminViewModel admin)
+        {
+            var checkPassword = _adminService.CheckPasswords(admin.Password, admin.ConfirmPassword);
+            if (checkPassword == "PassInvalid")
+            {
+                base.ModelState.AddModelError("Password", "Password must have at least one special character, one lowercase letter, one uppercase letter, and one digit.");
+                return View(admin);
+            }
+            if (checkPassword == "PassShort")
+            {
+                base.ModelState.AddModelError("Password", "Password must at least 8 characters.");
+                return View(admin);
+            }
+            if (checkPassword == "ConInvalid")
+            {
+                base.ModelState.AddModelError("ConfirmPassword", "Confirm Password must have at least one special character, one lowercase letter, one uppercase letter, and one digit.");
+                return View(admin);
+            }
+            if (checkPassword == "ConShort")
+            {
+                base.ModelState.AddModelError("ConfirmPassword", "Confirm Password must at least 8 characters.");
+                return View(admin);
+            }
+            if (checkPassword == "NotMatch")
+            {
+                base.ModelState.AddModelError("Password", "Passwords do not match.");
+                base.ModelState.AddModelError("ConfirmPassword", "Passwords do not match.");
+                return View(admin);
+            }
+            _userService.ResetPassword(admin);
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpGet]

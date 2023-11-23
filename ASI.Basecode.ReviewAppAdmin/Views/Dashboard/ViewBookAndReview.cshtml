@@ -1,19 +1,36 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
 
+<a asp-action="Index" asp-controller="Dashboard">Go Back</a>
 
 <div class="container pt-5">
-    <h2>Newest Book</h2>
+    <h2>Book Details</h2>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <div class="card-img"><img class="img-thumbnail" src="@Model.BookImage" alt="Image" style="width: 200px; height:200px" /></div>
                     <h4 class="card-text font-weight-bold">@Model.Title</h4>
                     <p class="card-text">By <b>@Model.Author</b></p>
                     <p class="card-text"><b>@Model.Genre</b></p>
+                    <p class="card-text">Total Rating: <b>@ViewData["TotalStar"]</b></p>
                     <p class="card-text"><b>@Model.Description</b></p>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            @foreach (var rate in (List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"])
+            {
+                <div class="col-md-8">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-text font-weight-bold">@rate.Name</h4>
+                            <p class="card-text">By <b>@rate.Email</b></p>
+                            <p class="card-text"><b>@rate.RateStars</b></p>
+                            <p class="card-text"><b>@rate.RateComment</b></p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>

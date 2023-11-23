@@ -1,4 +1,4 @@
-﻿@model List<ASI.Basecode.Services.ServiceModels.AdminViewModel>
+﻿@model ASI.Basecode.Services.ServiceModels.AdminViewModel
 @section styles {
     <link rel="stylesheet" href="~/css/book.css" />
 }
@@ -16,25 +16,19 @@
                 <th>Admin ID</th>
                 <th>Email</th>
                 <th>Name</th>
-                <th>Created By</th>
-                <th>Created Time</th>
-                <th>Updated By</th>
-                <th>Updated Time</th>
+                <th>Password</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
 
-            @foreach (var admin in Model)
+            @foreach (var admin in Model.Admins)
             {
                 <tr>
                     <td>@admin.AdminId</td>
                     <td>@admin.Email</td>
                     <td>@admin.Name</td>
-                    <td>@admin.CreatedBy</td>
-                    <td>@admin.CreatedTime</td>
-                    <td>@admin.UpdatedBy</td>
-                    <td>@admin.UpdatedTime</td>
+                    <td>@admin.Password</td>
                     <td class="button" style="min-width: 260px;">
                         <form asp-controller="Admin" asp-action="EditAdmin" method="get">
                             <input type="hidden" name="AdminId" value="@admin.AdminId">
@@ -58,22 +52,49 @@
     </table>
 </div>
 
-<div>
-    Page @ViewData["Page"] of @ViewData["TotalPages"]
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(1 == Model.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("List", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
 
-    @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-    {
-        <a href="@Url.Action("List", new { page = i, pageSize = ViewData["PageSize"] })">[@i]</a>
-    }
-</div>
+        @if (Model.TotalPages > 1)
+        {
+            <li class="page-item @(1 == Model.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("List", new { page = 1, pageSize = Model.PageSize })">1</a>
+            </li>
 
-@foreach (var admin in Model)
+            @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("List", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("List", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+@foreach (var admin in Model.Admins)
 {
     <!-- Modal -->
     <div class="modal fade" id="AdminModal_@admin.AdminId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form asp-controller="Book" asp-action="DeleteBook" method="post">
+                <form asp-controller="Admin" asp-action="DeleteAdmin" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,7 +102,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="BookId" value="@admin.AdminId">
+                        <input type="hidden" name="AdminId" value="@admin.AdminId">
                         <h2>Are you sure you want to delete this genre?</h2>
                         <h3>@admin.Email</h3>
                     </div>

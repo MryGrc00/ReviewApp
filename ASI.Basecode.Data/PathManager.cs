@@ -11,6 +11,7 @@ namespace ASI.Basecode.Data
         /// Gets or sets the setup root directory.
         /// </summary>
         public static string SetupRootDirectory { get; set; }
+        public static string BaseUrl { get; set; }
 
         /// <summary>
         /// Setups the specified setup root directory.
@@ -19,6 +20,11 @@ namespace ASI.Basecode.Data
         public static void Setup(string setupRootDirectory)
         {
             SetupRootDirectory = setupRootDirectory;
+        }
+
+        public static void SetupUrl(string baseUrl)
+        {
+            BaseUrl = baseUrl;
         }
 
         /// <summary>
@@ -43,10 +49,21 @@ namespace ASI.Basecode.Data
             {
                 return GetFolderPath(Path.Combine(LogDirectory, appName));
             }
+
+            /// <summary>
+            /// Image file storage directory path
+            /// </summary>
             public static string SharedImagesDirectory
             {
                 get { return GetFolderPath(SetupRootDirectory, "sharedImages"); }
             }
+
+            public static string BaseUrlHost
+            {
+                get { return BaseUrl; }
+            }
+
+
         }
 
         /// <summary>

@@ -22,5 +22,10 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Comment is required.")]
         public string RateComment { get; set; }
         public DateTime DateAdded { get; set; }
+
+        public List<RatingViewModel> Ratings { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
     }
 }

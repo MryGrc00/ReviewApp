@@ -71,7 +71,6 @@ namespace ASI.Basecode.Services.Services
             if (book != null)
             {
                 book.TotalRating = book.TotalRating + model.RateStars;
-                _bookRepository.EditBook(book);
             }
             _ratingRepository.AddRating(rating);
         }

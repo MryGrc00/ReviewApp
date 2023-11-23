@@ -19,6 +19,16 @@ namespace ASI.Basecode.ReviewAppAdmin.Extensions.Configuration
             return configuration.GetSection("Common")
                                 .GetValue<string>("SetupRoot");
         }
+        /// <summary>
+        /// Get the Url
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns>Set up BaseUrl</returns>
+        public static string GetBaseUrlDirectoryPath(this IConfiguration configuration)
+        {
+            return configuration.GetSection("Common")
+                                .GetValue<string>("Url");
+        }
 
         /// <summary>
         /// Gets the CSV output folder path.

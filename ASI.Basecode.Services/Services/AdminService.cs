@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ASI.Basecode.Services.Services
@@ -36,6 +37,36 @@ namespace ASI.Basecode.Services.Services
             return data;
         }
 
+        public AdminViewModel PaginatedAdmins(int page, int pageSize)
+        {
+            var data = _adminRepository.GetAdmins().Select(x => new AdminViewModel
+            {
+                AdminId = x.AdminId,
+                Email = x.Email,
+                Password = x.Password,
+                Name = x.Name,
+                CreatedBy = x.CreatedBy,
+                CreatedTime = x.CreatedTime,
+                UpdatedBy = x.UpdatedBy,
+                UpdatedTime = x.UpdatedTime,
+            }).OrderByDescending(x => x.CreatedTime).ToList();
+
+            int totalItems = data.Count;
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            page = Math.Max(1, Math.Min(page, totalPages));
+
+            List<AdminViewModel> adminOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return new AdminViewModel
+            {
+                Admins = adminOnPage,
+                Page = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+            };
+        }
+
         public AdminViewModel GetAdmin(int id)
         {
             var model = _adminRepository.GetAdmin(id);
@@ -46,6 +77,7 @@ namespace ASI.Basecode.Services.Services
                     AdminId = model.AdminId,
                     Email = model.Email,
                     Name = model.Name,
+                    Password = model.Password,
                     CreatedBy = model.CreatedBy,
                     CreatedTime = model.CreatedTime,
                     UpdatedBy = model.UpdatedBy,
@@ -56,10 +88,47 @@ namespace ASI.Basecode.Services.Services
             return null;
         }
 
+        public AdminViewModel GetAdminWithPassword(int id)
+        {
+            var model = _adminRepository.GetAdmin(id);
+            if (model != null)
+            {
+                AdminViewModel admin = new()
+                {
+                    AdminId = model.AdminId,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Password = PasswordManager.DecryptPassword(model.Password),
+                    ConfirmPassword = PasswordManager.DecryptPassword(model.Password),
+                    CreatedBy = model.CreatedBy,
+                    CreatedTime = model.CreatedTime,
+                    UpdatedBy = model.UpdatedBy,
+                    UpdatedTime = model.UpdatedTime,
+                };
+                return admin;
+            }
+            return null;
+        }
+
+        public AdminViewModel GetAdminWithEmail(string email)
+        {
+            var model = _adminRepository.GetAdminByEmail(email);
+            if(model != null)
+            {
+                AdminViewModel admin = new()
+                {
+                    AdminId = model.AdminId,
+                    Email = model.Email,
+                };
+                return admin;
+            }
+            return null;
+        }
+
         public void AddAdmin(AdminViewModel model, string name)
         {
             var admin = new Admin();
-            admin.Email = model.Email;
+            admin.Email = model.Email.ToLower();
             admin.Password = PasswordManager.EncryptPassword(model.Password);
             admin.Name = model.Name;
             admin.CreatedBy = name;
@@ -69,10 +138,54 @@ namespace ASI.Basecode.Services.Services
             _adminRepository.AddAdmin(admin);
         }
 
-        public bool CheckEmail(string email)
+        public string CheckEmail(string email)
         {
-            var isExist = _adminRepository.GetAdmins().Where(x => x.Email == email).Any();
-            return isExist;
+            var isAdminExist = _adminRepository.GetAdmins().Any(x => x.Email == email);
+            var isGmail = email.Contains("@gmail.com");
+
+            if (isAdminExist)
+            {
+                return "Exist";
+            }
+
+            if (!isGmail)
+            {
+                return "Invalid";
+            }
+
+            return "Valid";
+        }
+
+        public string CheckPasswords(string password, string confirmPassword)
+        {
+            string pattern = @"^(?=.*[!@#$%^&*(),.?""\:{}|<>])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$";
+
+            if (!Regex.IsMatch(password, pattern))
+            {
+                return "PassInvalid";
+            }
+
+            if (password.Length < 8)
+            {
+                return "PassShort";
+            }
+
+            if (confirmPassword.Length < 8)
+            {
+                return "ConShort";
+            }
+
+            if (!Regex.IsMatch(confirmPassword, pattern))
+            {
+                return "ConInvalid";
+            }
+
+            if (password != confirmPassword)
+            {
+                return "NotMatch";
+            }
+
+            return "Passwords match and meet the criteria.";
         }
 
         public void UpdateAdmin(AdminViewModel model, string name)
@@ -80,7 +193,7 @@ namespace ASI.Basecode.Services.Services
             Admin admin = _adminRepository.GetAdmin(model.AdminId);
             if (admin != null)
             {
-                admin.Email = model.Email;
+                admin.Email = model.Email.ToLower();
                 admin.Password = PasswordManager.EncryptPassword(model.Password);
                 admin.Name = model.Name;
                 admin.UpdatedBy= name;

@@ -16,6 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
 using System.Text;
+using ASI.Basecode.Services.Interfaces;
+using ASI.Basecode.Services.ServiceModels;
+using ASI.Basecode.Services.Services;
 
 namespace ASI.Basecode.ReviewApp
 {
@@ -51,6 +54,8 @@ namespace ASI.Basecode.ReviewApp
             this.Configuration = configuration;
 
             PathManager.Setup(this.Configuration.GetSetupRootDirectoryPath());
+
+            PathManager.SetupUrl(this.Configuration.GetBaseUrlDirectoryPath());
 
             var token = this.Configuration.GetTokenAuthentication();
         
@@ -88,6 +93,14 @@ namespace ASI.Basecode.ReviewApp
             {
                 options.Cookie.Name = Const.Issuer;
             });
+
+            //Mailer
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+            services.AddScoped<IEmailSender, EmailSender>();
 
             // DI Services AutoMapper(Add Profile)
             this.ConfigureAutoMapper();

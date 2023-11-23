@@ -17,42 +17,41 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
     public class GenreController : ControllerBase<GenreController>
     {   
         private readonly IGenreService _genreService;
-        private readonly IBookService _bookService;
 
-        public GenreController(IGenreService genreService, IBookService bookService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null)
+        public GenreController(IGenreService genreService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null)
             : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _genreService = genreService;
-            _bookService = bookService;
         }   
 
+        /// <summary>
+        /// List of Genre Records
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult List(int page = 1, int pageSize = 5)
         {
-            List<GenreViewModel> data = _genreService.GetGenres();
-
-            int totalCount = data.Count;
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            page = Math.Max(1, Math.Min(page, totalPages));
-
-            List<GenreViewModel> paginatedGenres = data
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = pageSize;
-            ViewData["TotalPages"] = totalPages;
-
-            return View("List", paginatedGenres);
+            var genre = _genreService.PaginatedGenres(page, pageSize);
+            return View("List", genre);
         }
 
+        /// <summary>
+        /// Add Method
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult AddGenre()
         {
             return View();
         }
 
+        /// <summary>
+        /// Add genre record to the database
+        /// </summary>
+        /// <param name="genre"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AddGenre(GenreViewModel genre)
         {
@@ -66,6 +65,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Edit Method
+        /// </summary>
+        /// <param name="GenreId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult EditGenre(int GenreId)
         {
@@ -73,6 +77,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Update genre record to the database
+        /// </summary>
+        /// <param name="genre"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult EditGenre(GenreViewModel genre)
         {
@@ -80,6 +89,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Delete genre record to the database
+        /// </summary>
+        /// <param name="genre"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteGenre(GenreViewModel genre)
         {
@@ -87,32 +101,20 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// View genre record with books associated
+        /// </summary>
+        /// <param name="GenreId"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult ViewGenre(int GenreId, int page = 1, int pageSize = 5)
         {
             var data = _genreService.GetGenre(GenreId);
-            List<BookViewModel> BookData = _bookService.GetBooks()
-                .Where(x => x.Genre.Split(',').Select(s => s.Trim()).Contains(data.GenreName))
-                .ToList();
-
-            int totalCount = BookData.Count;
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-
-            page = Math.Max(1, Math.Min(page, totalPages));
-
-            List<BookViewModel> paginatedBooks = BookData
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewData["Genre"] = paginatedBooks;
-
-            ViewData["Page"] = page;
-            ViewData["PageSize"] = pageSize;
-            ViewData["TotalPages"] = totalPages;
-
-            //ViewData["Genre"] = BookData;
-            return View(data);
+            var books = _genreService.ViewGenreInBooks(data.GenreName, page, pageSize);
+            ViewData["Books"] = books;
+            return View("ViewGenre", data);
         }
     }
 }
