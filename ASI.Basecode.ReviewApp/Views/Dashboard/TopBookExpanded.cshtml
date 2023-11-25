@@ -1,66 +1,107 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
 
-
-<div class="container pt-5">
-    <h2>Top Book</h2>
-    <a asp-action="Index" asp-controller="Dashboard">Go Back</a>
-    <div class="row">
-        @foreach (var book in Model.Books)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <div class="card-img"><img class="img-thumbnail" src="@book.BookImage" alt="Image" style="width: 200px; height:200px" /></div>
-                        <h4 class="card-text font-weight-bold">@book.Title</h4>
-                        <p class="card-text">By <b>@book.Author</b></p>
-                        <p class="card-text"><b>@book.Genre</b></p>
-                        <p class="card-text">Total Rating: <b>@book.TotalRating</b></p>
-                        <p class="card-text"><b>@book.Description</b></p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
-                                    <input type="hidden" name="BookId" value="@book.BookId" />
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+@section styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+    }
+<div class="mt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="Index" asp-controller="Dashboard">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
+    </div>
+    <div class="container">
+        <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Top Books</h2>
+        <form asp-action="TopBookExpanded" asp-controller="Dashboard" method="get">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <input type="text" class="form-control" name="searchKeyword" placeholder="Search Keyword" value="@ViewBag.SearchKeyword" />
+                </div>
+                <div class="col-auto">
+                    <select class="form-control" name="sortBy">
+                        <option value="">Sort By</option>
+                        <option value="title" selected="@((string)ViewBag.SortBy == "title")">Title</option>
+                        <option value="rating" selected="@((string)ViewBag.SortBy == "rating")">Rating</option>
+                        <!-- Add more sorting options if needed -->
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Apply</button>
                 </div>
             </div>
-        }
+        </form>
+        <br />
+        <div class="row row-cols-md-5 mt-5 g-1">
+            @foreach (var book in Model.Books)
+            {
+                <div class="col">
+                    <div class="card p-0 m-1 no-bg book-card">
+                        <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = book.BookId })" class="card-link">
+                            <div class="card-body d-flex flex-column">
+                                <div class="image-container position-relative">
+                                    <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" />
+                                    <div class="ratings-badge">
+                                        @book.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                                <h4 class="book-title">@book.Title</h4>
+
+                                <div class="d-flex align-items-center book-genre-container">
+                                    @foreach (var genre in book.Genre.Split(','))
+                                    {
+                                        <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                    }
+                                </div>
+                                <p class="book-author">@book.Author</p>
+                                @* <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                            <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
+                            <input type="hidden" name="BookId" value="@book.BookId" />
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </form>
+                            </div>
+                            </div> *@
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-</div>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li class="page-item @(1 == Model.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-
-        @if (Model.TotalPages > 1)
-        {
-            <li class="page-item @(1 == Model.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = 1, pageSize = Model.PageSize })">1</a>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item @(1 == Model.Page ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
             </li>
 
-            @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
+            @if (Model.TotalPages > 1)
             {
-                <li class="page-item @(i == Model.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = i, pageSize = Model.PageSize })">@i</a>
+                <li class="page-item @(1 == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = 1, pageSize = Model.PageSize })">1</a>
+                </li>
+
+                @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = i, pageSize = Model.PageSize })">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
                 </li>
             }
 
-            <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
+            <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
             </li>
-        }
-
-        <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("TopBookExpanded", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+        </ul>
+    </nav>
+</div>

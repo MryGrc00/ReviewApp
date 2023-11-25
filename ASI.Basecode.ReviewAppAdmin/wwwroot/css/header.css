@@ -1,0 +1,89 @@
+﻿
+.h-reviewapp-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 4.5rem;
+}
+
+.h-page-name {
+    font-family: Bebas Neue;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.h-nav-container a {
+    display: row;
+    justify-content: space-between;
+    margin-right: 5rem;
+}
+.h-nav {
+    text-decoration: none;
+    color: #fff; 
+    font-family: Inter;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+    .h-nav::before {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+        transition: width 0.3s ease;
+    }
+
+    .h-nav:hover::before {
+        width: 100%;
+    }
+
+    .h-nav:hover {
+        background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      
+    }
+
+
+
+.h-header {
+    height: 80px;
+    width: 100vw;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.active {
+    position: relative;
+    font-weight: 600;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+    .active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-image: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    }
+

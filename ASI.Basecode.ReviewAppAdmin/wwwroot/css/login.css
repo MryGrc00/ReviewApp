@@ -1,10 +1,20 @@
 body {
-    background-color: #060640;
+    background-image: url(../img/login-bg.png);
+    background-size: cover; /* Or cover */
+    background-repeat: no-repeat;
+    width: 10vw;
+    height: 89px;
     color: white;
+    padding: 0;
+    margin: 0;
+    margin-right: 2px;
+    align-items: center;
+    justify-content: center;
 }
 
-/*table*/
 
+
+/*table*/
 .table-container {
     position: relative;
     overflow: auto;
@@ -118,4 +128,114 @@ body {
 .name td {
     padding: 10px; /* Adjust the padding as needed */
     text-align: center;
+}
+
+
+/* newly added css*/
+div.container {
+    height: 100vh;
+    width: 120vw;
+    display: flex;
+    margin: 0;
+    margin-right: 2px;
+    align-items: center;
+    justify-content: center;
+}
+
+.b-login {
+    background: linear-gradient(91deg, #2103FE 0%, #C40D60 100%) !important;
+    border-radius: 8.43px;
+    transition: background 0.3s;
+    height: 40px;
+}
+
+
+
+
+
+.custom-left-col {
+    border-top-width: 1px;
+    border-style: solid;
+}
+
+.custom-right-col {
+    padding: 0;
+}
+
+reviewapp-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.page-name {
+    font-family: Bebas Neue;
+    font-size: 4rem;
+    font-style: normal;
+    font-weight: 400;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-tagline {
+    color: #FFF;
+    font-family: Bebas Neue;
+    font-size: 5rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.re-page-tagline {
+    font-size: inherit; /* Inherits font size from tagline */
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.login-text {
+    color: #CECECE;
+    text-align: center;
+    font-family: Inter;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.custom-conts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: red;
+    height: 12rem;
+    padding: 20px;
+}
+
+.custom-input-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 646px;
+}
+
+.custom-input-label {
+    color: #CECECE;
+    font-family: Inter;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0.5rem;
+}
+
+.custom-input-cred {
+    background: none;
+    width: 413px;
+    height: 51px;
+    border-radius: 8.426px;
+    border: 1.204px solid #FAFAFA;
 }

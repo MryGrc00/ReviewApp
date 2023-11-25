@@ -1,36 +1,114 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
-
-<a asp-action="Index" asp-controller="Dashboard">Go Back</a>
+@section styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+}
 
 <div class="container pt-5">
-    <h2>Book Details</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <div class="card-img"><img class="img-thumbnail" src="@Model.BookImage" alt="Image" style="width: 200px; height:200px" /></div>
-                    <h4 class="card-text font-weight-bold">@Model.Title</h4>
-                    <p class="card-text">By <b>@Model.Author</b></p>
-                    <p class="card-text"><b>@Model.Genre</b></p>
-                    <p class="card-text">Total Rating: <b>@ViewData["TotalStar"]</b></p>
-                    <p class="card-text"><b>@Model.Description</b></p>
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="Index" asp-controller="Dashboard">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
+    </div>
+    @* <h2>Book Details</h2> *@
+    <div class="row justify-content-center gap-5">
+        <div class="col-md-4 d-flex justify-content-center ">
+            <div class="p-3 mb-3">
+                <div class="card-body d-flex flex-column">
+                    <div class="bd-image-container ">
+                        <img src="@Model.BookImage" alt="Image" class="img-fluid h-100 w-100" />
+                    </div>
+                    <div class="position-relative">
+                        <h4 class="book-title">@Model.Title</h4>
+                        <span class="ratings-badge">
+                            @ViewData["TotalStar"]/5&nbsp;<i class="bi bi-star-fill"></i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center bd-genre-container">
+                        @foreach (var genre in @Model.Genre.Split(','))
+                        {
+                            <span class="d-flex align-items-center bd-genre">@genre.Trim()</span>
+                        }
+                    </div>
+                    <p class="book-author"> @Model.Author</p>
+
+                    <p class="card-text bd-book-description">@Model.Description</p>
                 </div>
+                <p class="card-text bd-book-isbn">ISBN#:&nbsp;@Model.Isbn</p>
+               
             </div>
         </div>
-        <div class="row">
-            @foreach (var rate in (List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"])
-            {
-                <div class="col-md-8">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h4 class="card-text font-weight-bold">@rate.Name</h4>
-                            <p class="card-text">By <b>@rate.Email</b></p>
-                            <p class="card-text"><b>@rate.RateStars</b></p>
-                            <p class="card-text"><b>@rate.RateComment</b></p>
+        @* column-2 *@
+        <div class="col-md-7 d-flex flex-column col-2">
+            <div class="row bd-scroll mt-3">
+                @foreach (var rate in (List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"])
+                {
+                    <div class="bd-review-container with-linear-gradient rounded-2">
+                        <div class="px-4 py-5">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-column justify-content-lg-start">
+                                    <div class="card-text">
+                                        <span>@rate.Name</span>
+                                        <span>&nbsp;|&nbsp;</span>
+                                        <span>@rate.Email</span>
+                                    </div>
+                                    <div class="bd-review-date">
+                                        <p>September 12, 2023</p>
+                                    </div>
+                                </div>
+                                <!--svg 5 stars-->
+                                <div class="d-flex justify-content-end">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < @rate.RateStars) // Fill the stars up to the rating value
+                                        {
+                                            <i class="bi bi-star-fill" style="font-size: 23px; color: rgba(255, 203, 69, 1)"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-star-fill" style="font-size: 23px;color: rgba(140, 140, 140, 1)"></i>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="review-desc">
+                                <p>@rate.RateComment</p>
+                                <span class="toggle-text"><a href="#" class="read-more-link">See more</a></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.review-desc').each(function () {
+                var lineHeight = parseInt($(this).css('line-height'), 10);
+                var height = $(this).height();
+                var lines = height / lineHeight;
+                if (lines > 5) {
+                    $(this).addClass('expandable');
+                    $(this).find('.toggle-text a').text('See More');
+                }
+            });
+
+            $('.read-more-link').on('click', function (e) {
+                e.preventDefault();
+                var $desc = $(this).closest('.review-desc');
+                $desc.toggleClass('expanded');
+
+                if ($desc.hasClass('expanded')) {
+                    $(this).text('See Less');
+                } else {
+                    $(this).text('See More');
+                }
+            });
+        });
+
+    </script>
+}

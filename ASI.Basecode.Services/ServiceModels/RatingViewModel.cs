@@ -17,6 +17,8 @@ namespace ASI.Basecode.Services.ServiceModels
 
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Rating is required.")]
         public int RateStars { get; set; }
 
         [Required(ErrorMessage = "Comment is required.")]

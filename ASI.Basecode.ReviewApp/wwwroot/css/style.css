@@ -1,6 +1,8 @@
 ﻿/* Main CSS Here */
 
 @import url( "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 * {
     margin: 0;
@@ -22,7 +24,9 @@
 }
 
 body {
-    background-color: var(--background-color4);
+    background: rgb(57,7,22);
+    background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
+    /*background-color: var(--background-color4);*/
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -31,12 +35,29 @@ header {
     height: 70px;
     width: 100vw;
     padding: 0 30px;
-    background-color: var(--background-color1);
+    /*    background-color: var(--background-color1);*/
     z-index: 100;
-    box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+    /*  box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);*/
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.h-reviewapp-container {
+    display: flex;
+    margin-top: 4.5rem;
+    margin-right: 4.5rem;
+}
+
+.h-page-name {
+    font-family: Bebas Neue;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .logo {
@@ -116,9 +137,9 @@ header {
     align-items: center;
     justify-content: center;
     position: relative;
-    cursor: pointer; 
+    cursor: pointer;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .main-container {
@@ -361,4 +382,77 @@ header {
     background-color: rgb(0, 177, 0);
     color: white;
     border-radius: 4px;
+}
+
+/*back button*/
+.animated-button {
+    position: relative;
+    display: inline-block;
+    padding: 8px 24px;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #C40D60; /*temp*/
+    border-radius: 12px;
+    border-bottom-color: rgba(72,5,224,1);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    box-shadow: 0 0 0 2px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+}
+
+    .animated-button span:last-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(94deg, #2103FE, #C40D60);
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .animated-button span:first-child {
+        position: relative;
+        z-index: 1;
+    }
+
+    .animated-button:hover {
+        /*box-shadow: 0 0 0 5px #FFC2FF;*/
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .animated-button:active {
+        scale: 0.95;
+    }
+
+    .animated-button:hover span:last-child {
+        width: 150px;
+        height: 150px;
+        opacity: 1;
+    }
+/*reusables*/
+.themed-text {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/*removing bg of autofill inputs*/
+/*works on up to dates version of chromes */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input[data-autocompleted] {
+    background-color: transparent !important;
 }
