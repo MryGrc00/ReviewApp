@@ -1,29 +1,44 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.AdminViewModel
-
-<a asp-action="List" asp-controller="Admin">Go Back</a>
-
-<h2>Update Admin</h2>
+@section styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+@{
+    ViewData["Title"] = "Edit Admin";
+}
+<div class="mt-5">
+    <a asp-action="List" asp-controller="Admin" class="btn btn-primary back">< Back</a>
+</div>
 
 <form method="post" enctype="multipart/form-data" asp-action="EditAdmin">
-    <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" asp-for="Email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="row">
+        <div class="col-6">
+            <div class="updatelabel mt-5">
+                <h2>UPDATE ADMIN ACCOUNT.</h2>
+            </div>
+        </div>
+        <div class="col-6 updateform">
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="text" class="form-control" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="text" class="form-control" asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <a class="btn btn-primary cancel" asp-action="List" asp-controller="Admin">Cancel</a>
+        <button type="submit" class="btn btn-primary save">Save</button>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="text" class="form-control" asp-for="Password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="text" class="form-control" asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Name</label>
-        <input class="form-control" asp-for="Name" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
 </form>

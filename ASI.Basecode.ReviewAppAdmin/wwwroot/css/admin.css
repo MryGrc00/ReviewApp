@@ -1,0 +1,280 @@
+﻿/* Base styles for the body */
+body {
+    font-family: Inter;
+    color: white;
+}
+
+
+<
+.table-container {
+    height: 600px;
+    overflow-y: auto; /* Enables scrolling if table content exceeds the container height */
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: transparent;
+}
+
+.table th, .table td {
+    padding: 8px;
+    font-size: 15px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(80, 74, 121, 0.50);
+    border-top: 1px solid rgba(80, 74, 121, 0.50);
+}
+
+
+.table th:last-child, .table td:last-child {
+    border-right: none;
+}
+
+.custom-thead th {
+    background-color: transparent;
+    color: white;
+    border-top: 1px solid rgba(80, 74, 121, 0.50);
+    border-bottom: none;
+}
+
+/* Styles for the tbody to ensure cells have transparent background */
+.table tbody tr td {
+    background-color: transparent; /* Ensures that each cell of the table body is transparent */
+    color: white;
+}
+
+.add {
+    display: flex;
+    justify-content: flex-end; /* Aligns button to the right */
+    margin-bottom: 50px;
+}
+
+.add .btn {
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    margin-top: 50px;
+}
+
+.add .btn:hover {
+    background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
+}
+
+.button {
+    min-width: 260px;
+    background-color: transparent;
+}
+
+.button button {
+    background-color: transparent;
+    position: relative;
+    border: 2px solid transparent;
+    padding: 5px;
+    background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.button button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    z-index: -1;
+    background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.button form {
+    background-color: transparent;
+}
+
+.icon-gradient {
+    display: inline-block;
+    background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/*for the add*/
+.addlabel {
+    padding-top: 40%;
+}
+
+.addlabel h2 {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue !important;
+    font-size: 68px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.addform {
+    padding-top: 10%;
+}
+
+.form-control {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 80%;
+}
+
+.form-control::placeholder {
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #2A03F4;
+    outline: none;
+ }
+
+.cancel {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+    background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 16px;
+    border-image: linear-gradient(91deg, #2603F8, #7B08A6, #B40C6E);
+    border-image-slice: 1;
+    border-width: 1px;
+    border-radius: 8px;
+    width: 38%;
+}
+
+.cancel:hover {
+    background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+.save {
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    width: 38%;
+}
+
+.save:hover {
+    background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
+}
+
+.cancel, .save {
+    margin-right: 20px;
+}
+
+.back {
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    width: 10%;
+}
+
+/*For the update*/
+.updatelabel {
+    padding-top: 40%;
+}
+
+.updatelabel h2 {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue !important;
+    font-size: 68px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.updateform {
+    padding-top: 10%;
+}
+
+
+
+/*Account Details*/
+.detaillabel h2 {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue !important;
+    font-size: 68px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.edit {
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    padding-bottom: 5px;
+}
+
+.editform {
+    padding-top: 5%;
+}
+
+.editform1 {
+    padding-top: 100px;
+}
+
+.editform1 .btns .edit {
+    width: 30%;
+}
+
+.editform1 button {
+    background-color: transparent;
+    position: relative;
+    border: 2px solid transparent;
+    padding: 5px;
+    background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.editform1 button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    z-index: -1;
+    background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
+    border-radius: 4px;
+    pointer-events: none;
+}
