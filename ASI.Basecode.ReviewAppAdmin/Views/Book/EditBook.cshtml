@@ -1,5 +1,7 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
-
+@section styles {
+    <link rel="stylesheet" href="~/css/book.css" />
+}
 
 <div class="mt-5 pt-5 mb-3">
     <div class="d-flex justify-content-between">
@@ -10,75 +12,93 @@
             <span></span>
         </a>
     </div>
-<h2 class="themed-text">Update Book</h2>
+    <h2 class="themed-text">Update Book</h2>
 
-<form method="post" enctype="multipart/form-data" asp-action="EditBook">
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <div class="card mb-4 shadow-sm bg-transparent">
-                <div class="card-body text-white">
-                    <div class="bd-img-cont">
-                        <img class="img-fluid h-100 w-100" src="@Model.BookImage" alt="Image" />
+    <form method="post" enctype="multipart/form-data" asp-action="EditBook">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="card mb-4 shadow-sm bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="bd-img-cont">
+                            <img class="img-fluid h-100 w-100" src="@Model.BookImage" alt="Image" />
+                        </div>
+
                     </div>
-
                 </div>
             </div>
-        </div>  
-        <div class="form-group">
-            <label>Choose Image</label>
-            <input asp-for="ImageFile" type="file" accept="image/*" class="form-control-file" />
-            <span asp-validation-for="ImageFile" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Book Id</label>
-            <input class="form-control" asp-for="BookId" readonly />
-            <span asp-validation-for="BookId" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Isbn</label>
-            <input class="form-control" asp-for="Isbn" />
-            <span asp-validation-for="Isbn" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Title</label>
-            <input class="form-control" asp-for="Title" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+            <div class="col-md-8">
+                <div class="card w-100 bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="form-group">
+                            <label>Choose Image</label>
+                            <br />
+                            <input asp-for="ImageFile" type="file" accept="image/*" class="form-control-file" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Title</label>
+                                    <input class="form-control bg-transparent text-white mt-1" asp-for="Title" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
 
-        </div>
-        <div class="form-group">
-            <label>Author</label>
-            <input class="form-control" asp-for="Author" />
-            <span asp-validation-for="Author" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Description</label>
+                                    <textarea class="form-control bg-transparent text-white mt-1" rows="11" asp-for="Description"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
 
-        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Book Id</label>
+                                    <input class="form-control bg-transparent text-white mt-1" asp-for="BookId" readonly />
+                                    <span asp-validation-for="BookId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Isbn</label>
+                                    <input class="form-control bg-transparent text-white mt-1" asp-for="Isbn" />
+                                    <span asp-validation-for="Isbn" class="text-danger"></span>
+                                </div>
 
-        <div class="form-group">
-            <label>Genres</label>
-            @foreach (var genre in (List<ASI.Basecode.Services.ServiceModels.GenreViewModel>)ViewData["Genre"])
-            {
-                var isChecked = Model.Genre != null &&
-                Model.Genre.Split(',').Select(s => s.Trim()).Contains(genre.GenreName);
+                                <div class="form-group mt-1">
+                                    <label>Author</label>
+                                    <input class="form-control bg-transparent text-white mt-1" asp-for="Author" />
+                                    <span asp-validation-for="Author" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Genres</label>
+                                    @foreach (var genre in (List<ASI.Basecode.Services.ServiceModels.GenreViewModel>)ViewData["Genre"])
+                                    {
+                                        var isChecked = Model.Genre != null &&
+                                        Model.Genre.Split(',').Select(s => s.Trim()).Contains(genre.GenreName);
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="SelectedGenres" value="@genre.GenreName" @(isChecked ? "checked" : "") />
-                    <label class="form-check-label">@genre.GenreName</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="SelectedGenres" value="@genre.GenreName" @(isChecked ? "checked" : "") />
+                                            <label class="form-check-label">@genre.GenreName</label>
+                                        </div>
+                                    }
+                                    <span asp-validation-for="SelectedGenres" class="text-danger"></span>
+                                    <input type="hidden" asp-for="Genre" id="selectedGenresInput" />
+                                    <button type="submit" class="bd-viewBR">
+                                        <span class="bd-viewBRText ff-inter fw-bold">Save</span>
+                                        <span></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        
+
+                     
+                    </div>
                 </div>
-            }
-            <span asp-validation-for="SelectedGenres" class="text-danger"></span>
-            <input type="hidden" asp-for="Genre" id="selectedGenresInput" />
+            </div>
         </div>
-
-        <div class="form-group">
-            <label>Description</label>
-            <textarea class="form-control" rows="3" asp-for="Description"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-
-        </div>
-
-        <button type="submit" class="btn btn-primary">Add</button>
-    </div>
-</form>
-
+    </form>
+</div>
 @section Scripts {
     <script>
         $(document).ready(function () {
