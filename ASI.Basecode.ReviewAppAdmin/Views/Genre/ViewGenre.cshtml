@@ -2,48 +2,57 @@
 @{
     var Books = (ASI.Basecode.Services.ServiceModels.BookViewModel)ViewData["Books"];
 }
+@section styles {
+    <link rel="stylesheet" href="~/css/genre.css" />
+}
+@{
+    ViewData["Title"] = "Genre Details";
+}
+<div class="mt-5">
+    <a asp-action="List" asp-controller="genre" class="btn btn-primary back">< Back</a>
+</div>
+<div class="row">
+    <div class="col-6 editform">
+        <div class="detaillabel">
+            <h2>GENRE DETAILS.</h2>
+        </div>
+        <div class="form-group">
+            <label>Genre ID</label>
+            <input class="form-control" asp-for="GenreId" value="@Model.GenreId">
+        </div>
+        <div class="form-group">
+            <label>Genre Name</label>
+            <input class="form-control" asp-for="GenreName" value="@Model.GenreName" />
+        </div>
 
-<a asp-action="List" asp-controller="Genre">Go Back</a>
-
-<h2>Add New Genre</h2>
-
-<h3>Genre ID:</h3>
-<h4>@Model.GenreId</h4>
-<h3>Genre Name: </h3>
-<h4>@Model.GenreName</h4>
-
-<table class="table" id="myTable">
-    <thead class="custom-thead">
-        <tr>
-            <th>Book ID</th>
-            <th>ISBN</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Added By</th>
-            <th>Genre</th>
-            <th>Description</th>
-            <th>Image</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var book in Books.Books)
-        {
-            <tr>
-                <td>@book.BookId</td>
-                <td>@book.Isbn</td>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
-                <td>@book.CreatedBy</td>
-                <td>@book.Genre</td>
-                <td>@book.Description</td>
-                <td>
-                    <img src="@book.BookImage" alt="Image" width="100" height="100" />
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    </div>
+    <div class="col-6 editform1">
+        <div class="form-group" style="margin-left:45%;">
+            <a asp-controller="Genre" asp-action="EditGenre" class="edit btn btn-primary">
+                <i class="bi bi-pencil-square icon"></i> Edit Genre
+            </a>
+            <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-primary">
+                <i class="bi bi-trash icon-gradient"></i>
+            </button>
+        </div>
+        <div class="form-group">
+            <label>Created By</label>
+            <input class="form-control" value="@Model.GenreCreatedBy">
+        </div>
+        <div class="form-group">
+            <label>Time Created</label>
+            <input class="form-control" value="@Model.DateAdded" />
+        </div>
+        <div class="form-group">
+            <label>Updated By</label>
+            <input class="form-control" value="@Model.UpdatedBy" />
+        </div>
+        <div class="form-group">
+            <label>Time Updated</label>
+            <input class="form-control" value="@Model.UpdatedDate" />
+        </div>
+    </div>
+</div>
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
