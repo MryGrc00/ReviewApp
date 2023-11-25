@@ -1,9 +1,16 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
-
-<a asp-action="List" asp-controller="Genre">Go Back</a>
-
-<h2>Update Genre</h2>
-
+@section styles {
+    <link rel="stylesheet" href="~/css/genre.css" />
+}
+@{
+    ViewData["Title"] = "Edit Genre";
+}
+<div class="mt-5">
+    <a asp-action="List" asp-controller="Genre" class="btn btn-primary back"> < Back</a>
+</div>
+<div class="updatelbl">
+    <h2 class="updatelabel">UPDATE GENRE.</h2>
+</div>
 <form method="post" enctype="multipart/form-data" asp-action="EditGenre">
     <input type="hidden" class="form-control" asp-for="GenreId" />
     <div class="form-group">
@@ -11,7 +18,9 @@
         <input class="form-control" asp-for="GenreName" />
         <span asp-validation-for="GenreName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
+
+    <a class="btn btn-primary cancel" asp-action="List" asp-controller="Genre">Cancel</a>
+    <button type="submit" class="btn btn-primary save">Update</button>
 
 
 </form>
