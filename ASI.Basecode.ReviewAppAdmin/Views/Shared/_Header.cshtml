@@ -1,16 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Http
+@{
+    var action = ViewContext.RouteData.Values["Action"].ToString();
+    var controller = ViewContext.RouteData.Values["Controller"].ToString();
+}
 @inject IHttpContextAccessor HttpContextAccessor
 <header class="@((ViewBag.LoginView == true) ? "hide-navbar" : "")">
     <div class="logosec hover-pointer">
-        <img src="~/img/asi-logo-invert.svg"
-             style="width: 185px;" alt="logo"
-             onclick="window.location.href = '@Url.Action("Index", "Home")';">
+        <div class="h-reviewapp-container">
+            <span class="h-page-name" onclick="window.location.href = '@Url.Action("Index", "Dashboard")';">Review App</span>
+        </div>
     </div>
-    <a asp-action="Index" asp-controller="Dashboard">Dashboard</a>
-    <a asp-action="List" asp-controller="Book">Book</a>
-    <a asp-action="List" asp-controller="Genre">Genre</a>
-    <a asp-action="List" asp-controller="Admin">Account</a>
-
+    <div class="h-nav-container">
+        <a asp-action="Index" asp-controller="Dashboard" class="h-nav @(controller == "Dashboard" ? "active" : "")">Dashboard</a>
+        <a asp-action="List" asp-controller="Book" class="h-nav @(controller == "Book" ? "active" : "")">Books</a>
+        <a asp-action="List" asp-controller="Genre" class="h-nav @(controller == "Genre" ? "active" : "")">Genre</a>
+        <a asp-action="List" asp-controller="Admin" class="h-nav @(controller == "Admin" ? "active" : "")">Accounts</a>
+    </div>
     <div class="logosec">
         @HttpContextAccessor.HttpContext.Session.GetString("UserName")
         <div class="mr-20 hover-pointer" style="position: relative">

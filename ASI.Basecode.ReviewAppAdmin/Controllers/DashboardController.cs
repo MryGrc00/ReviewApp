@@ -61,8 +61,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             var data = _bookService.GetBook(BookId);
             List<RatingViewModel> rating = _ratingService.GetRatings()
                 .Where(x => x.BookId == BookId)
-            .Take(2).
-                ToList();
+                .ToList();
             int starRating = _ratingService.GetRatings().Where(x => x.BookId == BookId).Sum(x => x.RateStars);
             ViewData["TotalStar"] = starRating;
             ViewData["Rate"] = rating;

@@ -1,0 +1,281 @@
+﻿body {
+}
+
+
+.ff-bebas {
+    font-family: Bebas Neue;
+}
+
+.ff-inter {
+    font-family: Inter;
+}
+
+.text-silver {
+    color: #C0C0C0;
+}
+
+.text-charcoal {
+    color: #4A4A4A;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+/* ViewBookAndReview admin */
+.bd-cont {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /*margin-bottom: 23px;*/
+}
+
+.bd-img-cont {
+    height: 25rem;
+    /*   border-radius: 10px;*/
+    justify-content: center;
+    align-content: center;
+    background: #C5C5C5;
+}
+
+.bd-text {
+    font-family: Bebas Neue;
+    font-size: 58px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bd-ratings-badge {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 68px;
+    height: 28px;
+    border-radius: 8.42593px;
+    background-color: #F0BE4D;
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+}
+
+.bd-bookid {
+    color: #C0C0C0;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35.309px; /* 147.119% */
+}
+
+.bd-viewBR {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 24px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    /*box-shadow: 0 0 0 2px #ffffff20;*/
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.bd-viewBRText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+    .bd-viewBR span:last-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(94deg, #2103FE, #C40D60);
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        width: 105%;
+        height: 500%;
+        z-index: -1;
+        color: #ffff;
+    }
+
+    .bd-viewBR span:first-child {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bd-viewBR:hover .bd-viewBRText {
+        text-decoration: none;
+        background: #ffffff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .bd-viewBR-btn:active {
+        scale: 0.95;
+    }
+
+    .bd-viewBR:hover span:last-child {
+        /*	width: 100%;
+		    height: 100%;*/
+        opacity: 1;
+        align-self: center;
+    }
+.bd-delete {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 24px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    /*box-shadow: 0 0 0 2px #ffffff20;*/
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+.bd-deleteText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+    .bd-delete span:last-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(94deg, #2103FE, #C40D60);
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        width: 105%;
+        height: 500%;
+        z-index: -1;
+        color: #ffff;
+    }
+
+    .bd-delete span:first-child {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bd-delete:hover .bd-deleteText {
+        text-decoration: none;
+        background: #ffffff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .bd-delete:active {
+        scale: 0.95;
+    }
+
+    .bd-delete:hover span:last-child {
+        /*	width: 100%;
+		height: 100%;*/
+        opacity: 1;
+        align-self: center;
+    }
+
+.animated-back-btn {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 8px 24px;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    box-shadow: 0 0 0 2px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+    background: none;
+    width: 100%;
+}
+
+    .animated-back-btn span:last-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(94deg, #2103FE, #C40D60);
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        width: 105%;
+        height: 500%;
+        z-index: -1;
+    }
+
+    .animated-back-btn span:first-child {
+        position: relative;
+        z-index: 1;
+    }
+
+    .animated-back-btn:hover {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+        .animated-back-btn:active {
+		scale: 0.95;
+	}
+
+        .animated-back-btn:hover span:last-child {
+            /*	width: 100%;
+		height: 100%;*/
+            opacity: 1;
+            align-self: center;
+        }

@@ -1,9 +1,19 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 <header class="@((ViewBag.LoginView == true) ? "hide-navbar" : "")">
-    <div class="logosec hover-pointer">
-        <img src="~/img/asi-logo-invert.svg"
-             style="width: 185px;" alt="logo"
-             onclick="window.location.href = '@Url.Action("Index", "Home")';">
+    @*  <div class="logosec hover-pointer"> *@
+    @*   <img src="~/img/asi-logo-invert.svg"
+    style="width: 185px;" alt="logo"
+    onclick="window.location.href = '@Url.Action("Index", "Home")';"> *@
+    <div class="container-fluid hover-pointer">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <div class="h-reviewapp-container">
+                    <span class="h-page-name" onclick="window.location.href = '@Url.Action("Index", "Dashboard")';">Review App</span>
+                </div>
+            </div>
+        </div>
     </div>
+    @*
+    </div> *@
 </header>

@@ -282,6 +282,7 @@ public class BookService : IBookService
                 CreatedBy = model.CreatedBy,
                 DateAdded = model.DateAdded,
                 UpdatedBy = model.UpdatedBy,
+                UpdatedDate = model.UpdatedDate,
             };
             return book;
         }

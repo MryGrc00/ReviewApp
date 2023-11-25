@@ -1,84 +1,99 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
+@section styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
 @{
-    var Ratings = (ASI.Basecode.Services.ServiceModels.RatingViewModel)ViewData["Ratings"];
+    string formattedDateAdded = Model.DateAdded.ToString("MMMM dd, yyyy");
+    string formattedUpdatedDate = Model.UpdatedDate.ToString("MMMM dd, yyyy");
 }
 
-<a asp-action="List" asp-controller="Book">Go Back</a>
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="List" asp-controller="Book">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
+    </div>
+    <div class="container p-0">
+        <div class="d-flex justify-content-between align-content-center">
+            <span class="bd-text">BOOK DETAILS.</span>
+            <div class="d-flex align-content-center mt-3">
+                <form asp-controller="Book" asp-action="EditBook" method="get">
+                    <input type="hidden" name="BookId" value="@Model.BookId">
+                    <button type="submit" class="bd-viewBR mx-3">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="17px" width="19px"
+                                 viewBox="0 0 10 10" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M7.59856 4.06813L7.91668 3.75C8.37692 3.28977 8.37692 2.54357 7.91668 2.08334C7.45645 1.6231 6.71025 1.6231 6.25002 2.08334L5.92092 2.41244C6.29728 3.11883 6.88155 3.69827 7.59856 4.06813ZM4.46489 3.86846L2.52306 5.81029C2.098 6.23535 1.88547 6.44788 1.74574 6.70898C1.606 6.97008 1.54706 7.2648 1.42917 7.85425L1.3971 8.01457C1.33058 8.34718 1.29732 8.51348 1.39193 8.60809C1.48654 8.7027 1.65284 8.66944 1.98545 8.60292L2.14577 8.57085C2.73522 8.45296 3.02994 8.39402 3.29104 8.25428C3.55214 8.11455 3.76467 7.90202 4.18973 7.47696L6.13861 5.52807C5.47432 5.09094 4.90558 4.52582 4.46489 3.86846Z"
+                                      fill="#FFFFFF" />
+                            </svg>
+                        </span>
+                        <span class="bd-viewBRText">Edit Book</span>
+                        <span></span>
+                    </button>
+                </form>
+                <button type="submit" class="bd-delete">
+                    <span class="bd-deleteText ff-inter"><i class="bi bi-trash"></i></span>
+                    <span></span>
+                </button>
+            </div>
 
-<h2>Add New Genre</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="card mb-4 shadow-sm bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="bd-img-cont">
+                            <img class="img-fluid h-100 w-100" src="@Model.BookImage" alt="Image" />
+                        </div>
 
-<h3>Book ID:</h3>
-<h4>@Model.BookId</h4>
-<h3>Isbn: </h3>
-<h4>@Model.Isbn</h4>
-<h3>Book Cover: </h3>
-<h4>@Model.BookImage</h4>
-<h3>Title: </h3>
-<h4>@Model.Title</h4>
-<h3>Author: </h3>
-<h4>@Model.Author</h4>
-<h3>Genre: </h3>
-<h4>@Model.Genre</h4>
-<h3>Total Review: </h3>
-<h4>@Model.TotalReview</h4>
-
-<table class="table" id="myTable">
-    <thead class="custom-thead">
-        <tr>
-            <th>Rating ID</th>
-            <th>Book ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Rate Stars By</th>
-            <th>Comment</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var ratings in Ratings.Ratings)
-        {
-            <tr>
-                <td>@ratings.RatingId</td>
-                <td>@ratings.BookId</td>
-                <td>@ratings.Name</td>
-                <td>@ratings.Email</td>
-                <td>@ratings.RateStars</td>
-                <td>@ratings.RateComment</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li class="page-item @(1 == Ratings.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.Page - 1, pageSize = Ratings.PageSize })" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-
-        @if (Ratings.TotalPages > 1)
-        {
-            <li class="page-item @(1 == Ratings.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = 1, pageSize = Ratings.PageSize })">1</a>
-            </li>
-
-            @for (int i = Math.Max(2, Ratings.Page - 1); i <= Math.Min(Ratings.TotalPages - 1, Ratings.Page + 1); i++)
-            {
-                <li class="page-item @(i == Ratings.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = i, pageSize = Ratings.PageSize })">@i</a>
-                </li>
-            }
-
-            <li class="page-item @(Ratings.TotalPages == Ratings.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.TotalPages, pageSize = Ratings.PageSize })">@Ratings.TotalPages</a>
-            </li>
-        }
-
-        <li class="page-item @(Ratings.TotalPages == Ratings.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ViewGenre", new { BookId = Model.BookId, page = Ratings.Page + 1, pageSize = Ratings.PageSize })" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card w-100 bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="card-text bd-ratings-badge">
+                            @Model.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="card-text text-silver p-0 mb-0">Book ID:&nbsp;@Model.BookId</p>
+                        <p class="card-text fs-18 p-0 mb-0 fw-400">@Model.Title</p>
+                        <p class="card-text fs-16 fw-500 p-0 mb-0 text-charcoal">ISBN#:&nbsp;@Model.Isbn</p>
+                        <div class="d-flex align-items-center bd-genre-container  p-0 mb-1">
+                            @foreach (var genre in @Model.Genre.Split(','))
+                            {
+                                <span class="d-flex align-items-center bd-genre">@genre.Trim()</span>
+                            }
+                        </div>
+                        <p class="card-text  p-0 mb-1">By @Model.Author</p>
+                        <p class="card-text  p-0 mb-0 fs-16 ">@Model.Description</p>
+                        <p class="card-text  p-0 mb-0 text-charcoal">Added By:&nbsp;<span class="themed-text">@Model.CreatedBy</span></p>
+                        <p class="card-text  p-0 mb-0 text-charcoal">Time Added:&nbsp;@formattedDateAdded</p>
+                        <p class="card-text  p-0 mb-0 text-charcoal">Updated By:&nbsp;<span class="themed-text">@Model.UpdatedBy</span></p>
+                        <p class="card-text  p-0 mb-0 text-charcoal">Time Updated:&nbsp;@formattedUpdatedDate</p>
+                        <p class="card-text  p-0 mb-0 text-silver fs-16 mt-1 mb-2">Rating Count:&nbsp;@Model.TotalRating</p>
+                        <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = @Model.BookId })" class="bd-viewBR">
+                            <span class="bd-viewBRText ff-inter fw-bold">View Book Ratings</span>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            $('.nav-link').each(function () {
+                if ($(this).attr('href') === url) {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
+}

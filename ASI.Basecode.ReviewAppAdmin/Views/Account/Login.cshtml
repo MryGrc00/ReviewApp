@@ -12,44 +12,52 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col text-center reviewapp-container">
-            <span class="custom-text text-light-green">Re</span>
-            <span class="custom-text text-black">view App</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center mt-3">
-            <h2 class="signIn-text">Sign in</h2>
-        </div>
-    </div>
-    <form method="post" action="/Account/Login" id="loginForm">
-        <div class="col text-center mt-3">
-            <input type="text" id="adminId" class="username-input"
-                   asp-for="Email" placeholder="Enter userid" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="col text-center mt-2">
-            <input type="password" id="password" class="password-input"
-                   asp-for="Password" placeholder="Enter password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 text-right mt-2">
-                <a asp-controller="Account" class="text-muted forgetPassword-label" asp-action="ForgotPassword">@ForgotPass</a>
+        <div class="col-md-12">
+            <div class="row text-dark">
+                <div class="col-md-6 mt-4 me-5 pe-5">
+                    <img src="~/img/review-app.png" alt="" class="mb-3" width="200" style="margin-left:-40%;" />
+                    <img src="~/img/cvr.png" alt="" width="500" class="mb-5" style="margin-left:-40%;" />
+                    <div class="row text-white">
+                        <div class="col-md-12">
+                            <div class="col-md-9">
+                                <p class="text-center">Login to your account</p>
+                            </div>
+                            <form method="post" action="/Account/Login" id="loginForm">
+
+                                <label for="" class="text-white">Email</label>
+                                <input type="text" id="adminId" class="form-control w-75 bg-black text-white"
+                                       asp-for="Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span><br />
+
+
+                                <label for="" class="text-white">Password</label>
+                                <input type="password" id="password" class="form-control w-75 bg-black text-white"
+                                       asp-for="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+
+
+                                <div class="col-md-9 mt-2 float-end" style="margin-right:-10px;">
+                                    <a asp-controller="Account" class="text-white" asp-action="ForgotPassword">@ForgotPass </a>
+                                </div>
+
+                                <button class="w-75 mt-3 text-white outline-none b-login" type="submit">
+                                    @Login
+                                </button>
+
+                                <div class="d-flex align-items-center justify-content-center pt-4">
+                                    <p class="mb-0 me-2 mr-1">@DontHaveAcc</p>
+                                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-danger">@CreateNew</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="col text-center mt-2">
-            <button class="login-btn login-label" type="submit">
-                @Login
-            </button>
-        </div>
-        <div class="d-flex align-items-center justify-content-center pt-4">
-            <p class="mb-0 me-2 mr-1">@DontHaveAcc</p>
-            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-danger">@CreateNew</a>
-        </div>
-    </form>
+    </div>
 </div>
-
 @section scripts {
     <script>
         // Check for error message and display Toastr notification
