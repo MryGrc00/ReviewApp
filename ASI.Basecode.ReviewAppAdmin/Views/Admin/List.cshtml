@@ -5,58 +5,61 @@
 @{
     ViewData["Title"] = "Account Master";
 }
-
-<div class="add mt-3">
-    <a asp-controller="Admin" asp-action="AddAdmin" class="add btn btn-primary">+ Add Account</a>
-</div>
-
-<div class="table-container">
-    <table class="table" id="myTable">
-        <thead class="custom-thead">
-            <tr>
-                <th>Admin ID</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Created By</th>
-                <th>Created Time</th>
-                <th>Updated By</th>
-                <th>Updated Time</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var admin in Model.Admins)
-            {
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-end">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="add-button"
+           asp-action="AddAdmin" asp-controller="Admin">
+            <span>+&nbsp;Add Account </span>
+            <span></span>
+        </a>
+    </div>
+    <div class="table-container">
+        <table class="table" id="myTable">
+            <thead class="custom-thead">
                 <tr>
-                    <td>@admin.AdminId</td>
-                    <td>@admin.Email</td>
-                    <td>@admin.Name</td>
-                    <td>@admin.CreatedBy</td>
-                    <td>@admin.CreatedTime</td>
-                    <td>@admin.UpdatedBy</td>
-                    <td>@admin.UpdatedTime</td>
-                    <td class="button" style="min-width: 260px; display: flex; align-items: center; justify-content: center;">
-                        <form asp-controller="Admin" asp-action="EditAdmin" method="get" style="margin-right: 10px;">
-                            <input type="hidden" name="AdminId" value="@admin.AdminId">
-                            <button type="submit">
-                                <i class="bi bi-pencil-square icon-gradient" style="font-size: 15px;"></i>
-                            </button>
-                        </form>
-                        <button type="button" style="margin-left: 10px;" data-toggle="modal" data-target="#AdminModal_@admin.AdminId">
-                            <i class="bi bi-trash icon-gradient"></i>
-                        </button>
-                        <form asp-controller="Admin" asp-action="ViewAdmin" method="get">
-                            <input type="hidden" name="AdminId" value="@admin.AdminId">
-                            <button type="submit">
-                                <i class="bi bi-pencil-square" style="font-size: 15px;">View</i>
-                            </button>
-                        </form>
-                    </td>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Created By</th>
+                    <th>Created Time</th>
+                    <th>Updated By</th>
+                    <th>Updated Time</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+                @foreach (var admin in Model.Admins)
+                {
+                    <tr>
+                        <td>@admin.Email</td>
+                        <td>@admin.Name</td>
+                        <td>@admin.CreatedBy</td>
+                        <td>@admin.CreatedTime</td>
+                        <td>@admin.UpdatedBy</td>
+                        <td>@admin.UpdatedTime</td>
+                        <td class="button" style="min-width: 260px; display: flex; align-items: center; justify-content: center;">
+                            <form asp-controller="Admin" asp-action="EditAdmin" method="get">
+                                <input type="hidden" name="AdminId" value="@admin.AdminId">
+                                <button type="submit" style="margin-left: 10px;">
+                                    <i class="bi bi-pencil-square icon-gradient" style="font-size: 15px;"></i>
+                                </button>
+                            </form>
+                            <button type="button" style="margin-left: 10px;" data-toggle="modal" data-target="#AdminModal_@admin.AdminId">
+                                <i class="bi bi-trash icon-gradient"></i>
+                            </button>
+                            <form asp-controller="Admin" asp-action="ViewAdmin" method="get">
+                                <input type="hidden" name="AdminId" value="@admin.AdminId">
+                                <button type="submit" style="margin-left: 10px;">
+                                    <i class="bi bi-eye icon-gradient" style="font-size: 15px;"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <nav aria-label="Page navigation">
@@ -122,3 +125,9 @@
         </div>
     </div>
 }
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

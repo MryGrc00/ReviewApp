@@ -5,56 +5,78 @@
 @{
     ViewData["Title"] = "Admin Details";
 }
-<div class="mt-5">
-    <a asp-action="List" asp-controller="Admin" class="btn btn-primary back">< Back</a>
-</div>
-<div class="row">
-    <div class="col-6 editform">
-        <div class="detaillabel">
-            <h2>ACCOUNT DETAILS.</h2>
-        </div>
-        <div class="form-group">
-            <label>Admin ID</label>
-            <input class="form-control" asp-for="AdminId" value="@Model.AdminId">
-        </div>
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" asp-for="Name" value="@Model.Name" />
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" asp-for="Email" value="@Model.Email" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input class="form-control" asp-for="Password" value="@Model.Password" />
-        </div>
-
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="List" asp-controller="Admin">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
     </div>
-    <div class="col-6 editform1">
-        <div class="form-group" style="margin-left:45%;">
-            <a asp-controller="Admin" asp-action="EditAdmin" class="edit btn btn-primary">
-                <i class="bi bi-pencil-square icon"></i> Edit Account
-            </a>
-            <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-primary">
-                <i class="bi bi-trash icon-gradient"></i>
-            </button>
+    <div class="row">
+        <div class="col-6 editform">
+            <div class="detaillabel">
+                <h2>ACCOUNT DETAILS.</h2>
+            </div>
+            <div class="form-group">
+                <label>Admin ID</label>
+                <input class="form-control" asp-for="AdminId" value="@Model.AdminId">
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" asp-for="Name" value="@Model.Name" />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" asp-for="Email" value="@Model.Email" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" asp-for="Password" value="@Model.Password" />
+            </div>
+
         </div>
-        <div class="form-group">
-            <label>Created By</label>
-            <input class="form-control" asp-for="CreatedBy" value="@Model.CreatedBy">
-        </div>
-        <div class="form-group">
-            <label>Time Created</label>
-            <input class="form-control" asp-for="CreatedTime" value="@Model.CreatedTime" />
-        </div>
-        <div class="form-group">
-            <label>Updated By</label>
-            <input class="form-control" asp-for="UpdatedBy" value="@Model.UpdatedBy" />
-        </div>
-        <div class="form-group">
-            <label>Time Updated</label>
-            <input class="form-control" asp-for="UpdatedTime" value="@Model.UpdatedTime" />
+        <div class="col-6 editform1">
+            <div class="form-group" style="margin-left:45%;">
+                <div class="d-flex align-content-center mt-3">
+                    <form asp-controller="Admin" asp-action="EditAdmin" method="get">
+                        <input type="hidden" name="AdminId" value="@Model.AdminId">
+                        <button type="submit" class="editbtn-view mx-3">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="17px" width="19px"
+                                     viewBox="0 0 10 10" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M7.59856 4.06813L7.91668 3.75C8.37692 3.28977 8.37692 2.54357 7.91668 2.08334C7.45645 1.6231 6.71025 1.6231 6.25002 2.08334L5.92092 2.41244C6.29728 3.11883 6.88155 3.69827 7.59856 4.06813ZM4.46489 3.86846L2.52306 5.81029C2.098 6.23535 1.88547 6.44788 1.74574 6.70898C1.606 6.97008 1.54706 7.2648 1.42917 7.85425L1.3971 8.01457C1.33058 8.34718 1.29732 8.51348 1.39193 8.60809C1.48654 8.7027 1.65284 8.66944 1.98545 8.60292L2.14577 8.57085C2.73522 8.45296 3.02994 8.39402 3.29104 8.25428C3.55214 8.11455 3.76467 7.90202 4.18973 7.47696L6.13861 5.52807C5.47432 5.09094 4.90558 4.52582 4.46489 3.86846Z"
+                                          fill="#FFFFFF" />
+                                </svg>
+                            </span>
+                            <span class="editbtn-viewText">Edit Admin</span>
+                            <span></span>
+                        </button>
+                    </form>
+                    <button type="submit" class="bd-delete">
+                        <span class="bd-deleteText ff-inter"><i class="bi bi-trash"></i></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Created By</label>
+                <input class="form-control" asp-for="CreatedBy" value="@Model.CreatedBy">
+            </div>
+            <div class="form-group">
+                <label>Time Created</label>
+                <input class="form-control" asp-for="CreatedTime" value="@Model.CreatedTime" />
+            </div>
+            <div class="form-group">
+                <label>Updated By</label>
+                <input class="form-control" asp-for="UpdatedBy" value="@Model.UpdatedBy" />
+            </div>
+            <div class="form-group">
+                <label>Time Updated</label>
+                <input class="form-control" asp-for="UpdatedTime" value="@Model.UpdatedTime" />
+            </div>
         </div>
     </div>
 </div>

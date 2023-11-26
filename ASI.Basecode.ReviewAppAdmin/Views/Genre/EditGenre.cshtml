@@ -5,22 +5,29 @@
 @{
     ViewData["Title"] = "Edit Genre";
 }
-<div class="mt-5">
-    <a asp-action="List" asp-controller="Genre" class="btn btn-primary back"> < Back</a>
-</div>
-<div class="updatelbl">
-    <h2 class="updatelabel">UPDATE GENRE.</h2>
-</div>
-<form method="post" enctype="multipart/form-data" asp-action="EditGenre">
-    <input type="hidden" class="form-control" asp-for="GenreId" />
-    <div class="form-group">
-        <label>Genre Name</label>
-        <input class="form-control" asp-for="GenreName" />
-        <span asp-validation-for="GenreName" class="text-danger"></span>
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="List" asp-controller="Genre">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
     </div>
+    <div class="updatelbl">
+        <h2 class="updatelabel">UPDATE GENRE.</h2>
+    </div>
+    <form method="post" enctype="multipart/form-data" asp-action="EditGenre">
+        <input type="hidden" class="form-control" asp-for="GenreId" />
+        <div class="form-group">
+            <label>Genre Name</label>
+            <input class="form-control" asp-for="GenreName" />
+            <span asp-validation-for="GenreName" class="text-danger"></span>
+        </div>
+        <div class="mt-4">
+            <a class="btn btn-primary cancel" asp-action="List" asp-controller="Genre">Cancel</a>
+            <button type="submit" class="btn btn-primary save">Update</button>
+        </div>
 
-    <a class="btn btn-primary cancel" asp-action="List" asp-controller="Genre">Cancel</a>
-    <button type="submit" class="btn btn-primary save">Update</button>
-
-
-</form>
+    </form>
+</div>

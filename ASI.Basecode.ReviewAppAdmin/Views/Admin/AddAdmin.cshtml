@@ -5,41 +5,50 @@
 @{
     ViewData["Title"] = "Add Admin";
 }
-<div class="mt-5">
-    <a asp-action="List" asp-controller="Admin" class="btn btn-primary back"> < Back</a>
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="animated-button"
+           asp-action="List" asp-controller="Admin">
+            <span>&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" asp-action="AddAdmin">
+        <div class="row">
+            <div class="col-6">
+                <div class="addlabel mt-5">
+                    <h2>ADD AN ADMIN ACCOUNT.</h2>
+                </div>
+            </div>
+            <div class="col-6 addform">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mt-4">
+                    <a class="btn btn-primary cancel" asp-action="List" asp-controller="Admin">Cancel</a>
+                    <button type="submit" class="btn btn-primary save">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
 </div>
-
-<form method="post" enctype="multipart/form-data" asp-action="AddAdmin">
-<div class="row">
-    <div class="col-6">
-        <div class="addlabel mt-5">
-            <h2>ADD AN ADMIN ACCOUNT.</h2>
-        </div>
-    </div>
-    <div class="col-6 addform">
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" asp-for="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" asp-for="Password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" class="form-control" asp-for="ConfirmPassword" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" asp-for="Name" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-            <a class="btn btn-primary cancel" asp-action="List" asp-controller="Admin">Cancel</a>
-            <button type="submit" class="btn btn-primary save">Save</button>
-    </div>
- </div>
-
-</form>
