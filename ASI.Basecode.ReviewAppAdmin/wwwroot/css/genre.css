@@ -1,305 +1,476 @@
 ﻿/* Base styles for the body */
 body {
-font-family: Inter;
-color: white;
+    font-family: Inter;
+    color: white;
 }
 
+/*add button*/
+.add-button {
+    position: relative;
+    display: inline-block;
+    padding: 8px 24px;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    border: 2px solid #C40D60; /*temp*/
+    border-radius: 12px;
+    border-bottom-color: rgba(72,5,224,1);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    box-shadow: 0 0 0 2px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+}
 
-<
+.add-button span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.add-button span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.add-button:hover {
+    /*box-shadow: 0 0 0 5px #FFC2FF;*/
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.add-button:active {
+    scale: 0.95;
+}
+
+.add-button:hover span:last-child {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+}
+
 .table-container {
-height: 600px;
-overflow-y: auto; /* Enables scrolling if table content exceeds the container height */
+    height: 600px;
+    overflow-y: auto; /* Enables scrolling if table content exceeds the container height */
 }
 
 .table {
-width: 100%;
-border-collapse: separate;
-border-spacing: 0;
-background-color: transparent;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: transparent;
 }
 
 .table th, .table td {
-padding: 8px;
-font-size: 15px;
-text-align: center;
-background-color: transparent;
-border: none;
-border-bottom: 1px solid rgba(80, 74, 121, 0.50);
-border-top: 1px solid rgba(80, 74, 121, 0.50);
+    padding: 8px;
+    font-size: 15px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(80, 74, 121, 0.50);
+    border-top: 1px solid rgba(80, 74, 121, 0.50);
 }
 
 
-.table th:last-child, .table td:last-child {
-border-right: none;
-}
+    .table th:last-child, .table td:last-child {
+        border-right: none;
+    }
 
 .custom-thead th {
-background-color: transparent;
-color: white;
-border-top: 1px solid rgba(80, 74, 121, 0.50);
-border-bottom: none;
+    background-color: transparent;
+    color: white;
+    border-top: 1px solid rgba(80, 74, 121, 0.50);
+    border-bottom: none;
 }
 
-/* Styles for the tbody to ensure cells have transparent background */
 .table tbody tr td {
-background-color: transparent; /* Ensures that each cell of the table body is transparent */
-color: white;
+    background-color: transparent;
+    color: white;
 }
 
 .add {
-display: flex;
-justify-content: flex-end; /* Aligns button to the right */
-margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
 }
 
 .add .btn {
-border-radius: 8.426px;
-background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
-border: none;
-color: white;
-padding: 0.375rem 0.75rem;
-text-decoration: none;
-transition: background-color 0.15s ease-in-out;
-margin-top: 50px;
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    margin-top: 50px;
 }
 
 .add .btn:hover {
-background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
+    background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
 }
 
 .button {
-min-width: 260px;
-background-color: transparent;
+    min-width: 260px;
+    background-color: transparent;
 }
 
 .button button {
-background-color: transparent;
-position: relative;
-border: 2px solid transparent;
-padding: 5px;
-background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
--webkit-background-clip: padding-box;
-background-clip: padding-box;
+    background-color: transparent;
+    position: relative;
+    border: 2px solid transparent;
+    padding: 5px;
+    background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
 }
 
 .button button::before {
-content: '';
-position: absolute;
-top: -2px;
-right: -2px;
-bottom: -2px;
-left: -2px;
-z-index: -1;
-background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
-border-radius: 4px;
-pointer-events: none;
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    z-index: -1;
+    background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
+    border-radius: 4px;
+    pointer-events: none;
 }
 
 .button form {
-background-color: transparent;
+    background-color: transparent;
 }
 
 .icon-gradient {
-display: inline-block;
-background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
--webkit-text-fill-color: transparent;
+    display: inline-block;
+    background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
 }
 
 /*for the add*/
 .addlbl {
-padding-top: 15%;
+    padding-top: 5%;
 }
 
 .addlabel {
-background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-family: Bebas Neue, sans-serif; /* Fallback to sans-serif if Bebas Neue is not available */
-font-size: 64.59px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-display: inline; /* Ensure that the element behaves like text */
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue, sans-serif; /* Fallback to sans-serif if Bebas Neue is not available */
+    font-size: 64.59px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: inline; /* Ensure that the element behaves like text */
 }
 
 
 .form-control {
-background-color: transparent;
-border: 1px solid white;
-color: white;
-width: 30%;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 30%;
 }
 
 .form-control::placeholder {
-color: white;
+    color: white;
 }
 
 .form-control:focus {
-border-color: #2A03F4;
-outline: none;
+    border-color: #2A03F4;
+    outline: none;
 }
 
 
 .back {
-border-radius: 8.426px;
-background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
-border: none;
-color: white;
-padding: 0.375rem 0.75rem;
-text-decoration: none;
-transition: background-color 0.15s ease-in-out;
-width: 10%;
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    width: 10%;
 }
 
 .cancel {
-background-color: transparent;
-border: 1px solid transparent;
-color: transparent;
-background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
--webkit-background-clip: text;
-background-clip: text;
-font-size: 16px;
-border-image: linear-gradient(91deg, #2603F8, #7B08A6, #B40C6E);
-border-image-slice: 1;
-border-width: 1px;
-width: 14%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: transparent;
+    background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 16px;
+    border-image: linear-gradient(91deg, #2603F8, #7B08A6, #B40C6E);
+    border-image-slice: 1;
+    border-width: 1px;
+    width: 14%;
 }
 
 .cancel:hover {
-background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
--webkit-background-clip: text;
-background-clip: text;
+    background-image: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 
 .save {
-border-radius: 8.426px;
-background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
-border: none;
-color: white;
-padding: 0.375rem 0.75rem;
-text-decoration: none;
-transition: background-color 0.15s ease-in-out;
-width: 14%;
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    width: 14%;
 }
 
 .save:hover {
-background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
+    background: linear-gradient(91deg, #1e02fc 2.07%, #ba0b56 100%);
 }
 
 .cancel, .save {
-margin-right: 20px;
+    margin-right: 20px;
 }
 
 
 /*For the update*/
 .updatelbl {
-padding-top: 15%;
+    padding-top: 5%;
 }
 
 .updatelabel {
-background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-family: Bebas Neue, sans-serif; /* Fallback to sans-serif if Bebas Neue is not available */
-font-size: 64.59px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-display: inline; /* Ensure that the element behaves like text */
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue, sans-serif; /* Fallback to sans-serif if Bebas Neue is not available */
+    font-size: 64.59px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: inline; /* Ensure that the element behaves like text */
 }
 
 
 .updateform {
-padding-top: 10%;
+    padding-top: 10%;
 }
+
+/*edit button*/
+.editbtn-view {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 24px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    /*box-shadow: 0 0 0 2px #ffffff20;*/
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.editbtn-viewText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.editbtn-view span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+    width: 105%;
+    height: 500%;
+    z-index: -1;
+    color: #ffff;
+}
+
+.editbtn-view span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.editbtn-view:hover .editbtn-viewText {
+    text-decoration: none;
+    background: #ffffff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.editbtn-view-btn:active {
+    scale: 0.95;
+}
+
+.editbtn-view:hover span:last-child {
+    /*width: 100%;
+     height: 100%;*/
+    opacity: 1;
+    align-self: center;
+}
+
+/*delete button in view*/
+.bd-delete {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 24px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    /*box-shadow: 0 0 0 2px #ffffff20;*/
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.bd-deleteText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bd-delete span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+    width: 105%;
+    height: 500%;
+    z-index: -1;
+    color: #ffff;
+}
+
+.bd-delete span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.bd-delete:hover .bd-deleteText {
+    text-decoration: none;
+    background: #ffffff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bd-delete:active {
+    scale: 0.95;
+}
+
+.bd-delete:hover span:last-child {
+    /*	width: 100%;
+		height: 100%;*/
+    opacity: 1;
+    align-self: center;
+}
+
+
 
 /*Account Details*/
 .detaillabel h2 {
-background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-family: Bebas Neue !important;
-font-size: 68px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Bebas Neue !important;
+    font-size: 68px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .edit {
-border-radius: 8.426px;
-background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
-border: none;
-color: white;
-padding: 0.375rem 0.75rem;
-text-decoration: none;
-transition: background-color 0.15s ease-in-out;
-padding-bottom: 5px;
+    border-radius: 8.426px;
+    background: linear-gradient(91deg, #2103FE 2.07%, #C40D60 100%);
+    border: none;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    padding-bottom: 5px;
 }
 
 .editform {
-padding-top: 5%;
+    padding-top: 3%;
 }
 
 .editform .form-control {
-background-color: transparent;
-border: 1px solid white;
-color: white;
-width: 80%;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 85%;
 }
 
 editform .form-control::placeholder {
-color: white;
+    color: white;
 }
 
 editform .form-control:focus {
-border-color: #2A03F4;
-outline: none;
+    border-color: #2A03F4;
+    outline: none;
 }
 
 
 .editform1 {
-padding-top: 100px;
+    padding-top: 2.1%;
 }
 
 .editform1 .btns .edit {
-width: 30%;
+    width: 30%;
 }
 
-.editform1 button {
-background-color: transparent;
-position: relative;
-border: 2px solid transparent;
-padding: 5px;
-background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
--webkit-background-clip: padding-box;
-background-clip: padding-box;
-}
-
-.editform1 button::before {
-content: '';
-position: absolute;
-top: -2px;
-right: -2px;
-bottom: -2px;
-left: -2px;
-z-index: -1;
-background: linear-gradient(144deg, #2A03F4 -0.94%, #BC0C66 92.12%);
-border-radius: 4px;
-pointer-events: none;
-}
 
 .editform1 .form-control {
-background-color: transparent;
-border: 1px solid white;
-color: white;
-width: 80%;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 85%;
 }
 
 editform1 .form-control::placeholder {
