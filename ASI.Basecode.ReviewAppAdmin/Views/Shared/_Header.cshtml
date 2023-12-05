@@ -11,10 +11,10 @@
         </div>
     </div>
     <div class="h-nav-container">
-        <a asp-action="Index" asp-controller="Dashboard" class="h-nav @(controller == "Dashboard" ? "active" : "")">Dashboard</a>
-        <a asp-action="List" asp-controller="Book" class="h-nav @(controller == "Book" ? "active" : "")">Books</a>
-        <a asp-action="List" asp-controller="Genre" class="h-nav @(controller == "Genre" ? "active" : "")">Genre</a>
-        <a asp-action="List" asp-controller="Admin" class="h-nav @(controller == "Admin" ? "active" : "")">Accounts</a>
+        <a asp-action="Index" asp-controller="Dashboard" class="h-nav @(controller == "Dashboard" ? "h-active" : "")">Dashboard</a>
+        <a asp-action="List" asp-controller="Book" class="h-nav @(controller == "Book" ? "h-active" : "")">Books</a>
+        <a asp-action="List" asp-controller="Genre" class="h-nav @(controller == "Genre" ? "h-active" : "")">Genre</a>
+        <a asp-action="List" asp-controller="Admin" class="h-nav @(controller == "Admin" ? "h-active" : "")">Accounts</a>
     </div>
     <div class="logosec">
         @HttpContextAccessor.HttpContext.Session.GetString("UserName")

@@ -192,7 +192,7 @@
     height: 21rem;
     justify-content: center;
     align-content: center;
-    background: #C5C5C5;
+    background: linear-gradient(180deg, rgba(179, 11, 111, 0.20) 0%, rgba(3, 3, 3, 0.20) 100%);
 }
 
 .book-title {
@@ -468,6 +468,7 @@
     height: 32rem;
     width: 25rem;
     border-radius: 3px;
+    background: linear-gradient(180deg, rgba(179, 11, 111, 0.20) 0%, rgba(3, 3, 3, 0.20) 100%);
 }
 
 .bd-review-container {

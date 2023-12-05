@@ -5,10 +5,9 @@
 
 <div class="container pt-5">
     <div class="d-flex justify-content-between">
-        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
-        <a class="animated-button"
+        <a class="bd-viewBR px-3"
            asp-action="Index" asp-controller="Dashboard">
-            <span>&lt;&nbsp;Back </span>
+            <span class="bd-viewBRText">&lt;&nbsp;Back </span>
             <span></span>
         </a>
     </div>
@@ -18,13 +17,17 @@
             <div class="p-3 mb-3">
                 <div class="card-body d-flex flex-column">
                     <div class="bd-image-container ">
-                        <img src="@Model.BookImage" alt="Image" class="img-fluid h-100 w-100" />
+                        <img src="@Model.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
                     </div>
-                    <div class="position-relative">
-                        <h4 class="book-title">@Model.Title</h4>
-                        <span class="ratings-badge">
-                            @ViewData["TotalStar"]/5&nbsp;<i class="bi bi-star-fill"></i>
-                        </span>
+                    <div class="row align-items-center mt-2">
+                        <div class="col-9">
+                            <h4 class="book-title text-truncate">@Model.Title</h4>
+                        </div>
+                        <div class="col-3 d-flex align-items-center justify-content-end">
+                            <span class="averatings-badge d-flex align-items-center">
+                                @Model.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                            </span>
+                        </div>
                     </div>
                     <div class="d-flex align-items-center bd-genre-container">
                         @foreach (var genre in @Model.Genre.Split(','))
@@ -58,11 +61,10 @@
                                         <p>September 12, 2023</p>
                                     </div>
                                 </div>
-                                <!--svg 5 stars-->
                                 <div class="d-flex justify-content-end">
                                     @for (int i = 0; i < 5; i++)
                                     {
-                                        if (i < @rate.RateStars) // Fill the stars up to the rating value
+                                        if (i < @rate.RateStars)
                                         {
                                             <i class="bi bi-star-fill" style="font-size: 23px; color: rgba(255, 203, 69, 1)"></i>
                                         }

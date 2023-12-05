@@ -14,41 +14,42 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row text-dark">
-                <div class="col-md-6 mt-4 me-5 pe-5">
-                    <img src="~/img/review-app.png" alt="" class="mb-3" width="200" style="margin-left:-40%;" />
-                    <img src="~/img/cvr.png" alt="" width="500" class="mb-5" style="margin-left:-40%;" />
+                <div class="col-md-6 mt-5 pt-5 me-5 pe-5">
+                    <img src="~/img/review-app.png" alt="" class="mb-3" width="200" style="margin-left:-20%;" />
+                    <img src="~/img/cvr.png" alt="" width="500" class="mb-5" style="margin-left:-20%;" />
                     <div class="row text-white">
                         <div class="col-md-12">
-                            <div class="col-md-9">
+                            <div class="col">
                                 <p class="text-center">Login to your account</p>
                             </div>
                             <form method="post" action="/Account/Login" id="loginForm">
-
                                 <label for="" class="text-white">Email</label>
-                                <input type="text" id="adminId" class="form-control w-75 bg-black text-white"
+                                <input type="text" id="adminId" class="form-control w-100 shadow-none bg-transparent text-white border-white p-2 mt-1"
                                        asp-for="Email" />
                                 <span asp-validation-for="Email" class="text-danger"></span><br />
 
-
-                                <label for="" class="text-white">Password</label>
-                                <input type="password" id="password" class="form-control w-75 bg-black text-white"
+                                <label for="" class="text-white ">Password</label>
+                                <input type="password" id="password" class="form-control w-100 shadow-none bg-transparent text-white border-white p-2 mt-1"
                                        asp-for="Password" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
 
 
 
-                                <div class="col-md-9 mt-2 float-end" style="margin-right:-10px;">
-                                    <a asp-controller="Account" class="text-white" asp-action="ForgotPassword">@ForgotPass </a>
+                                <div class="col-md-9 mt-3 mb-3 float-end">
+                                    <a asp-controller="Account" class="text-white float-end" asp-action="ForgotPassword">@ForgotPass </a>
                                 </div>
 
-                                <button class="w-75 mt-3 text-white outline-none b-login" type="submit">
-                                    @Login
+                                <button class="w-100 mt-5 text-white outline-none bd-viewBR" type="submit">
+                                    <span class="bd-viewBRText">@Login</span>
+                                    <span></span>
                                 </button>
-
-                                <div class="d-flex align-items-center justify-content-center pt-4">
+                            @*     <div class="d-flex align-items-center justify-content-center pt-4">
                                     <p class="mb-0 me-2 mr-1">@DontHaveAcc</p>
-                                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-danger">@CreateNew</a>
-                                </div>
+                                    <a asp-controller="Account" asp-action="Register" class="bd-viewBR">
+                                        <span class="bd-viewBRText">@CreateNew</span>
+                                        <span></span>
+                                    </a>
+                                </div> *@
                             </form>
                         </div>
                     </div>

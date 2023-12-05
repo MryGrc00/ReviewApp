@@ -1,57 +1,120 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookViewModel
-
-
-<h2>Add New Book</h2>
-
-<form method="post" enctype="multipart/form-data" asp-action="AddBook">
-    <div class="form-group">
-        <label>Isbn</label>
-        <input class="form-control" asp-for="Isbn" />
-        <span asp-validation-for="Isbn" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Title</label>
-        <input class="form-control" asp-for="Title" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-
-    </div>
-    <div class="form-group">
-        <label>Author</label>
-        <input class="form-control" asp-for="Author" />
-        <span asp-validation-for="Author" class="text-danger"></span>
-
-    </div>
-
-    <div class="form-group">
-        <label>Genres</label>
-        @foreach (var genre in (List<ASI.Basecode.Services.ServiceModels.GenreViewModel>)ViewData["Genre"])
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedGenres" value="@genre.GenreName" />
-                <label class="form-check-label">@genre.GenreName</label>
+@section styles {
+    <link rel="stylesheet" href="~/css/books.css" />
+}
+<div class="mt-5 pt-4 mb-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="d-flex justify-content-between">
+                <a class="bd-viewBR px-3" asp-action="List" asp-controller="Book">
+                    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
+                    <span></span>
+                </a>
             </div>
-        }
-        <span asp-validation-for="SelectedGenres" class="text-danger"></span>
-        <input type="hidden" asp-for="Genre" id="selectedGenresInput" />
+        </div>
+        <div class="col-md-8">
+            <div class="updatelabel">Add Book.</div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Description</label>
-        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+    <form method="post" enctype="multipart/form-data" asp-action="AddBook">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="card mb-4 shadow-sm bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="bd-img-cont">
+                            <img class="img-fluid h-100 w-100" id="imagePreview" src="~/img/image.png" alt="Image" />
+                        </div>
+                        <div class="form-group text-white mt-4">
+                            <label for="imageFileInput" class="bd-viewBR"><span class="bd-viewBRText"><i class="bi bi-upload mx-2"></i>Add Book Cover</span><span></span></label>
+                            <input id="imageFileInput" asp-for="ImageFile" type="file" accept="image/*" class="form-control-file" required />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 p-0">
+                <div class="card w-100 bg-transparent">
+                    <div class="card-body text-white">
+                        <div class="row">
+                            <div class="col-md-6">
 
-    </div>
-    <div class="form-group">
-        <label>Choose Image</label>
-        <input asp-for="ImageFile" type="file" accept=".png" class="form-control-file" required/>
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-</form>
+                                <div class="form-group mt-1">
+                                    <label>Book Title</label>
+                                    <input class="form-control shadow-none bg-transparent text-white border-white mt-1" asp-for="Title" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Book Description</label>
+                                    <textarea class="form-control shadow-none bg-transparent text-white border-white mt-1" rows="15" asp-for="Description"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label>Book Isbn</label>
+                                    <input class="form-control shadow-none bg-transparent text-white border-white mt-1" asp-for="Isbn" />
+                                    <span asp-validation-for="Isbn" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Book Author</label>
+                                    <input class="form-control shadow-none bg-transparent text-white border-white mt-1" asp-for="Author" />
+                                    <span asp-validation-for="Author" class="text-danger"></span>
+
+                                </div>
+                                <div class="form-group mt-1">
+                                    <label>Book Genres</label>
+                                    <div class="genre-container">
+                                        <div class="genre-scroll">
+
+                                            @foreach (var genre in (List<ASI.Basecode.Services.ServiceModels.GenreViewModel>)ViewData["Genre"])
+                                            {
+                                                <div class="form-check ms-1">
+                                                    <input class="form-check-input shadow-none text-white border-white" type="checkbox" name="SelectedGenres" value="@genre.GenreName" />
+                                                    <label class="form-check-label">@genre.GenreName</label>
+                                                </div>
+                                            }
+                                            <span asp-validation-for="SelectedGenres" class="text-danger"></span>
+                                            <input type="hidden" asp-for="Genre" id="selectedGenresInput" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 g-2">
+                                    <div class="col">
+                                        <a class="bd-viewBR w-100" asp-action="List" asp-controller="Book">
+                                            <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                                            <span></span>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="bd-viewBR w-100"><span class="bd-viewBRText">Add</span><span></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 @section Scripts {
     <script>
         $(document).ready(function () {
+            // Preview image when selected in the file input
+            $('#imageFileInput').change(function () {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#imagePreview').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
             $('input[type=checkbox]').change(function () {
                 var selectedGenres = $('input[name="SelectedGenres"]:checked')
                     .map(function () {
@@ -65,4 +128,3 @@
     </script>
 }
 
- 
