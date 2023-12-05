@@ -7,65 +7,56 @@
     string formattedUpdatedDate = Model.UpdatedDate.ToString("MMMM dd, yyyy");
 }
 
-<div class="mt-5 pt-5 mb-3">
+<div class="mt-5 pt-4 mb-3">
     <div class="d-flex justify-content-between">
-        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
-        <a class="animated-button"
+        <a class="bd-viewBR px-3"
            asp-action="List" asp-controller="Book">
-            <span>&lt;&nbsp;Back </span>
+            <span class="bd-viewBRText">&lt;&nbsp;Back </span>
             <span></span>
         </a>
     </div>
     <div class="container p-0">
         <div class="d-flex justify-content-between align-content-center">
             <span class="bd-text">BOOK DETAILS.</span>
-            <div class="d-flex align-content-center mt-3">
+            <div class="d-flex align-content-center mt-1">
                 <form asp-controller="Book" asp-action="EditBook" method="get">
                     <input type="hidden" name="BookId" value="@Model.BookId">
-                    <button type="submit" class="bd-viewBR mx-3">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="17px" width="19px"
-                                 viewBox="0 0 10 10" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M7.59856 4.06813L7.91668 3.75C8.37692 3.28977 8.37692 2.54357 7.91668 2.08334C7.45645 1.6231 6.71025 1.6231 6.25002 2.08334L5.92092 2.41244C6.29728 3.11883 6.88155 3.69827 7.59856 4.06813ZM4.46489 3.86846L2.52306 5.81029C2.098 6.23535 1.88547 6.44788 1.74574 6.70898C1.606 6.97008 1.54706 7.2648 1.42917 7.85425L1.3971 8.01457C1.33058 8.34718 1.29732 8.51348 1.39193 8.60809C1.48654 8.7027 1.65284 8.66944 1.98545 8.60292L2.14577 8.57085C2.73522 8.45296 3.02994 8.39402 3.29104 8.25428C3.55214 8.11455 3.76467 7.90202 4.18973 7.47696L6.13861 5.52807C5.47432 5.09094 4.90558 4.52582 4.46489 3.86846Z"
-                                      fill="#FFFFFF" />
-                            </svg>
-                        </span>
-                        <span class="bd-viewBRText">Edit Book</span>
+                    <button type="submit" class="bd-viewBR mx-3 px-4">
+                        <span class="bd-viewBRText"><i class="bi bi-pencil-square me-2"></i>Edit Book</span>
                         <span></span>
                     </button>
                 </form>
-                <button type="submit" class="bd-delete">
-                    <span class="bd-deleteText ff-inter"><i class="bi bi-trash"></i></span>
+                <button type="submit" class="bd-viewBR px-4">
+                    <span class="bd-viewBRText ff-inter"><i class="bi bi-trash me-2"></i>Delete</span>
                     <span></span>
                 </button>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-4 p-0">
                 <div class="card mb-4 shadow-sm bg-transparent">
                     <div class="card-body text-white">
                         <div class="bd-img-cont">
-                            <img class="img-fluid h-100 w-100" src="@Model.BookImage" alt="Image" />
+                            <img class="img-fluid h-100 w-100" src="@Model.BookImage" alt="Image" onerror="this.onerror=null;this.src='/img/image.png';">
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 mt-2">
                 <div class="card w-100 bg-transparent">
                     <div class="card-body text-white">
-                        <div class="card-text bd-ratings-badge">
-                            @Model.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                        <div class="card-text bd-ratings-badge d-flex align-items-center">
+                            <span>@Model.AverageRating/5&nbsp;</span>
+                            <i class="bi bi-star-fill ml-1"></i>
                         </div>
                         <p class="card-text text-silver p-0 mb-0">Book ID:&nbsp;@Model.BookId</p>
                         <p class="card-text fs-18 p-0 mb-0 fw-400">@Model.Title</p>
                         <p class="card-text fs-16 fw-500 p-0 mb-0 text-charcoal">ISBN#:&nbsp;@Model.Isbn</p>
-                        <div class="d-flex align-items-center bd-genre-container  p-0 mb-1">
+                        <div class="d-flex align-items-center book-genre-container  p-0 mb-1">
                             @foreach (var genre in @Model.Genre.Split(','))
                             {
-                                <span class="d-flex align-items-center bd-genre">@genre.Trim()</span>
+                                <span class="d-flex align-items-center book-genre">@genre.Trim()</span>
                             }
                         </div>
                         <p class="card-text  p-0 mb-1">By @Model.Author</p>
@@ -74,11 +65,13 @@
                         <p class="card-text  p-0 mb-0 text-charcoal">Time Added:&nbsp;@formattedDateAdded</p>
                         <p class="card-text  p-0 mb-0 text-charcoal">Updated By:&nbsp;<span class="themed-text">@Model.UpdatedBy</span></p>
                         <p class="card-text  p-0 mb-0 text-charcoal">Time Updated:&nbsp;@formattedUpdatedDate</p>
-                        <p class="card-text  p-0 mb-0 text-silver fs-16 mt-1 mb-2">Rating Count:&nbsp;@Model.TotalRating</p>
-                        <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = @Model.BookId })" class="bd-viewBR">
-                            <span class="bd-viewBRText ff-inter fw-bold">View Book Ratings</span>
-                            <span></span>
-                        </a>
+                        <p class="card-text  p-0 mb-0 text-silver fs-16 mt-1 mb-2">Rating Count:&nbsp;@Model.TotalReview</p>
+                        <div class="viewbook-button">
+                            <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = @Model.BookId })" class="bd-viewBR">
+                                <span class="bd-viewBRText ff-inter fw-bold">View Book Ratings</span>
+                                <span></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,17 +8,17 @@
 }
 <div class="mt-5 pt-5 mb-3">
     <div class="d-flex justify-content-end">
-        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
-        <a class="add-button"
+        <a class="bd-viewBR"
            asp-action="AddBook" asp-controller="Book">
-            <span>+&nbsp;Add Book </span>
+            <span class="bd-viewBRText px-3">+&nbsp;Add Book </span>
             <span></span>
         </a>
     </div>
-    <div class="table-container" style="height:600px;">
+    <div >
         <table class="table" id="myTable">
             <thead class="custom-thead">
                 <tr>
+                    <th>Image</th>
                     <th>ISBN</th>
                     <th>Title</th>
                     <th>Author</th>
@@ -31,26 +31,34 @@
                 @foreach (var book in Model.Books)
                 {
                     <tr>
+                        <td>
+                            <img src="@book.BookImage" alt="Book Image" width="80" height="80" onerror="this.onerror=null;this.src='/img/image.png';">
+                        </td>
                         <td>@book.Isbn</td>
                         <td>@book.Title</td>
                         <td>@book.Author</td>
                         <td>@book.Genre</td>
-                        <td class="button" style="min-width: 150px; display: flex; align-items: center; justify-content: center;">
-                            <form asp-controller="Book" asp-action="EditBook" method="get">
-                                <input type="hidden" name="BookId" value="@book.BookId">
-                                <button type="submit">
-                                    <i class="bi bi-pencil-square icon-gradient" style="font-size: 15px;"></i>
+                        <td>
+                            <div style=" display: flex; justify-content: center; align-items: center;">
+                                <form asp-controller="Book" asp-action="EditBook" method="get" class="me-2">
+                                    <input type="hidden" name="BookId" value="@book.BookId">
+                                    <button type="submit" class="icon-btn">
+                                        <span><i class="bi bi-pencil-square icon-text"></i></span>
+                                        <span></span>
+                                    </button>
+                                </form>
+                                <button type="button" data-toggle="modal" data-target="#BookModal_@book.BookId" class="icon-btn me-2">
+                                    <span> <i class="bi bi-trash icon-text"></i></span>
+                                    <span></span>
                                 </button>
-                            </form>
-                            <button type="button" style="margin-left: 10px;" data-toggle="modal" data-target="#BookModal_@book.BookId">
-                                <i class="bi bi-trash icon-gradient"></i>
-                            </button>
-                            <form asp-controller="Book" asp-action="ViewBook" method="get">
-                                <input type="hidden" name="BookId" value="@book.BookId">
-                                <button type="submit" style="margin-left: 10px;">
-                                    <i class="bi bi-eye icon-gradient" style="font-size: 15px;"></i>
-                                </button>
-                            </form>
+                                <form asp-controller="Book" asp-action="ViewBook" method="get">
+                                    <input type="hidden" name="BookId" value="@book.BookId">
+                                    <button type="submit" class="icon-btn">
+                                        <span><i class="bi bi-eye icon-text"></i></span>
+                                        <span></span>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -58,35 +66,36 @@
         </table>
     </div>
 </div>
+
 <nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li class="page-item @(1 == Model.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("List", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+    <ul class="pagination justify-content-center  mt-5">
+        <li class="page-item @(Model.Page == 1 || Model.TotalPages <= 1 ? "disabled" : "")">
+            <a class="pagination-btn" href="@Url.Action("List", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                <span class="pagination-text" aria-hidden="true">&lt;</span>
+                <span></span>
             </a>
         </li>
 
-        @if (Model.TotalPages > 1)
+        <li class="page-item @(Model.Page == 1 ? "active" : "")">
+            <a class="pagination-btn" href="@Url.Action("List", new { page = 1, pageSize = Model.PageSize })">
+                <span class="pagination-text">1</span>
+                <span></span>
+            </a>
+        </li>
+
+        @for (int i = 2; i <= Model.TotalPages; i++)
         {
-            <li class="page-item @(1 == Model.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("List", new { page = 1, pageSize = Model.PageSize })">1</a>
-            </li>
-
-            @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
-            {
-                <li class="page-item @(i == Model.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">@i</a>
-                </li>
-            }
-
-            <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
-                <a class="page-link" href="@Url.Action("List", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
+            <li class="page-item @(i == Model.Page ? "active" : "")">
+                <a class="pagination-btn" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">
+                    <span class="pagination-text">@i</span>
+                    <span></span>
+                </a>
             </li>
         }
-
-        <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("List", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+        <li class="page-item @(Model.Page == Model.TotalPages || Model.TotalPages <= 1 ? "disabled" : "")">
+            <a class="pagination-btn" href="@Url.Action("List", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
+                <span class="pagination-text" aria-hidden="true">&gt;</span>
+                <span></span>
             </a>
         </li>
     </ul>
@@ -96,33 +105,35 @@
 {
     <!-- Modal -->
     <div class="modal fade" id="BookModal_@book.BookId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-cont px-4">
                 <form asp-controller="Book" asp-action="DeleteBook" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
                         <input type="hidden" name="BookId" value="@book.BookId">
-                        <h2>Are you sure you want to delete this genre?</h2>
-                        <h3>@book.Title</h3>
+                        <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
+                        <h5 class="text-white text-center">Are you sure you want to delete this book?</h5>
+                        <h6 class="text-neutralgray ff-inter text-center mt-3 text-truncate"><i>@book.Title</i></h6>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Delete</button>
+
+                    <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+                        <div class="row g-3" style="width:95%;">
+                            <div class="col d-flex">
+                                <button class="bd-viewBR w-100" data-dismiss="modal">
+                                    <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                                    <span></span>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="bd-viewBR w-100">
+                                    <span class="bd-viewBRText ff-inter fw-bold">Delete</span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 }
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 

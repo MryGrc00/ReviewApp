@@ -16,6 +16,7 @@
     --background-color2: #ffffff;
     --background-color3: #ededed;
     --background-color4: #cad7fda4;
+    --background-color5: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
     --primary-color: #4b49ac;
     --secondary-color: #0c007d;
     --Border-color: #3f0097;
@@ -24,40 +25,19 @@
 }
 
 body {
-    background: rgb(57,7,22);
-    background: linear-gradient(238deg, rgba(57,7,22,0.9893207282913166) 1%, rgba(43,7,18,1) 8%, rgba(33,5,14,0.9921218487394958) 13%, rgba(33,6,14,1) 19%, rgba(18,2,7,1) 51%, rgba(10,1,4,1) 65%);
-    /*background-color: var(--background-color4);*/
+    background-image: var(--background-color5);
     max-width: 100%;
     overflow-x: hidden;
 }
 
 header {
-    height: 70px;
+    height: 80px;
     width: 100vw;
     padding: 0 30px;
-    /*    background-color: var(--background-color1);*/
-    z-index: 100;
-    /*  box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);*/
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.h-reviewapp-container {
-    display: flex;
-    margin-top: 4.5rem;
-    margin-right: 4.5rem;
-}
-
-.h-page-name {
-    font-family: Bebas Neue;
-    font-size: 3rem;
-    font-style: normal;
-    font-weight: 400;
-    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
 }
 
 .logo {
@@ -84,6 +64,7 @@ header {
 
 .logosec {
     gap: 20px;
+    color: white;
 }
 
 .hover-pointer {
@@ -383,7 +364,23 @@ header {
     color: white;
     border-radius: 4px;
 }
+/*header css*/
+.h-reviewapp-container {
+    display: flex;
+    margin-top: 4.5rem;
+    margin-left: 4.5rem;
+}
 
+.h-page-name {
+    font-family: Bebas Neue;
+    font-size: 3.5rem;
+    font-style: normal;
+    font-weight: 400;
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 /*back button*/
 .animated-button {
     position: relative;
@@ -393,7 +390,7 @@ header {
     color: #ffffff;
     font-weight: 600;
     border: 2px solid #C40D60; /*temp*/
-    border-radius: 12px;
+    border-radius: 6px;
     border-bottom-color: rgba(72,5,224,1);
     border-top-color: rgba(196,13,96,1);
     border-left-color: rgb(72,5,224);
@@ -439,13 +436,8 @@ header {
         height: 150px;
         opacity: 1;
     }
-/*reusables*/
-.themed-text {
-    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+
+
 /*removing bg of autofill inputs*/
 /*works on up to dates version of chromes */
 input:-webkit-autofill,
@@ -455,4 +447,411 @@ input:-webkit-autofill:focus {
 
 input[data-autocompleted] {
     background-color: transparent !important;
+}
+/*buttons - save,cancel etc.*/
+.bd-viewBR {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px 2px;
+    border: 1.7px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-left-color: rgb(72,5,224);
+    border-top-color: rgba(136, 19, 66, 100);
+    border-right-color: rgba(136, 19, 66, 100);
+    box-shadow: -5px 5px 10px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+    background: none;
+}
+
+.bd-viewBRText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-right: 8px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bd-viewBR span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.bd-viewBR span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.bd-viewBR:hover .bd-viewBRText {
+    text-decoration: none;
+    background: #ffffff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bd-viewBR:active {
+    scale: 1;
+}
+
+.bd-viewBR:hover span:last-child {
+    width: 120%;
+    height: 150px;
+    opacity: 1;
+    align-self: center;
+}
+
+/*pagination btn css*/
+.pagination-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 2px;
+    border: 2px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    box-shadow: 0 1px 0 1px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+    background: none;
+    min-width: 30px;
+    vertical-align: middle;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3px;
+}
+
+.pagination-text {
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1rem;
+}
+
+.pagination-btn span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+    width: 115%;
+    height: 200%;
+    z-index: -1;
+    color: #ffff;
+    border-radius: 50%;
+}
+
+.pagination-btn span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.pagination-btn:hover .pagination-text {
+    text-decoration: none;
+    background: #ffffff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pagination-btn:active {
+    scale: 1;
+}
+
+.page-item.active .pagination-btn {
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+}
+
+    .page-item.active .pagination-btn .pagination-text {
+        color: white;
+        -webkit-text-fill-color: white;
+        background: none;
+        font-weight: normal;
+    }
+
+
+.pagination-btn:hover span:last-child {
+    /*	width: 100%;
+		        height: 100%;*/
+    opacity: 1;
+    align-self: center;
+}
+/*average ratings badge css*/
+.averatings-badge {
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 68px;
+    height: 28px;
+    border-radius: 8.42593px;
+    background-color: #F0BE4D !important;
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+}
+/*action buttons*/
+.icon-btn {
+    position: relative;
+    display: inline-block;
+    justify-content: center;
+    padding: 4px;
+    border-bottom-color: rgb(72,5,224);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    /*    box-shadow: 0 0 0 1.5px #ffffff20;*/
+    box-shadow: -2px 2px 2px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    text-decoration: none;
+    background: none;
+    min-width: 30px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.icon-text {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 5px;
+    font-size: 18px;
+}
+
+.icon-btn span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    height: 200%;
+    width: 200%;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+    z-index: -1;
+}
+
+.icon-btn span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.icon-btn :hover .icon-text {
+    text-decoration: none;
+    background: #ffffff;
+    background-image: none;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+.icon-btn:hover span:last-child {
+    /*	width: 100%;
+                    height: 100%;*/
+    opacity: 1;
+    align-self: center;
+}
+
+/*search filter btn */
+.filter-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px 2px;
+    border: 1.7px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-left-color: rgb(72,5,224);
+    border-top-color: rgba(136, 19, 66, 100);
+    border-right-color: rgba(136, 19, 66, 100);
+    box-shadow: -5px 5px 10px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 3rem;
+    text-decoration: none;
+    background: none;
+}
+
+.filter-btnText {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-right: 8px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.filter-btn span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.filter-btn span:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.filter-btn:hover .filter-btnText {
+    text-decoration: none;
+    background: #ffffff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.filter-btn:active {
+    scale: 1;
+}
+
+.filter-btn:hover span:last-child {
+    width: 120%;
+    height: 150px;
+    opacity: 1;
+    align-self: center;
+}
+
+.filter-btn option:checked {
+    background-color: red; /* Set your desired background color */
+    color: yellow; /* Set the text color for the selected option */
+}
+/*modal css*/
+.modal-cont {
+    border: 3px solid #C40D60;
+    border-radius: 6px;
+    border-bottom-color: rgba(72,5,224,1);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    background-image: var(--background-color5);
+}
+
+    .modal-cont .modal-header, .modal-footer {
+        position: relative;
+        border: 0;
+    }
+
+/*   .modal-cont .modal-header::after,
+        .modal-cont .modal-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom: 3px solid gray;  Change this to the desired border color 
+            width: 93%;
+        }*/
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+/*reusables*/
+.themed-text {
+    background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ff-bebas {
+    font-family: Bebas Neue;
+}
+
+.ff-inter {
+    font-family: Inter;
+}
+
+.text-neutralgray {
+    color: #C9C9C9 !important;
+}
+
+.text-silver {
+    color: #C0C0C0 !important;
+}
+
+.text-charcoal {
+    color: #4A4A4A !important;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-20 {
+    font-size: 19px;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
 }

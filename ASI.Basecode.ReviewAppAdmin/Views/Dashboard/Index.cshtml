@@ -4,15 +4,15 @@
 }
 
 <div class="custom-container">
-    <div class="mt-5 mb-2">
+    <div class="mt-5 pt-4 mb-2">
         <div class="d-flex justify-content-between align-items-center">
-            <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Newest Books</h2>
+            <h3 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Newest Books</h3>
             <div class="horizontal-line"></div>
             <a asp-action="NewestBookExpanded" asp-controller="Dashboard" class="d-flex align-items-center text-decoration-none">
                 <span class="m-0 see-more">See More</span>
             </a>
         </div>
-        <div class="row row-cols-md-5 mt-5 g-1">
+        <div class="row row-cols-md-5 mt-4 g-1">
             @foreach (var book in Model)
             {
                 <div class="col">
@@ -20,34 +20,19 @@
                         <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = book.BookId })" class="card-link">
                             <div class="card-body d-flex flex-column">
                                 <div class="image-container position-relative">
-                                    <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" />
-                                    <div class="ratings-badge">
+                                    <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
+                                    <div class="d-flex align-items-center ratings-badge">
                                         @book.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                     </div>
                                 </div>
-                                <h4 class="book-title">@book.Title</h4>
-
-                               @*  <div class="d-flex align-items-center book-genre-container">
-                                    @foreach (var genre in book.Genre.Split(','))
-                                    {
-                                        <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
-                                    }
-                                </div> *@
+                                <h4 class="book-title text-truncate">@book.Title</h4>
                                 <div class="d-flex align-items-center book-genre-container">
                                     @foreach (var genre in book.SelectedGenres)
                                     {
-                                        <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                        <span class="d-flex align-items-center book-genre ">@genre</span>
                                     }
                                     </div>
                                 <p class="book-author">@book.Author</p>
-                                @* <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                            <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
-                            <input type="hidden" name="BookId" value="@book.BookId" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </form>
-                            </div>
-                            </div> *@
                             </div>
                         </a>
                     </div>
@@ -55,7 +40,7 @@
             }
         </div>
 
-        <div class="mt-5 mb-4">
+        <div class="pt-4 mt-5 mb-4">
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Top Books</h2>
                 <div class="horizontal-line"></div>
@@ -63,7 +48,7 @@
                     <span class="m-0 see-more">See More</span>
                 </a>
             </div>
-            <div class="row row-cols-md-5 g-1 mt-5">
+            <div class="row row-cols-md-5 mt-4 g-1">
                 @foreach (var top in (List<ASI.Basecode.Services.ServiceModels.BookViewModel>)ViewData["TopBooks"])
                 {
                     <div class="col">
@@ -71,12 +56,12 @@
                             <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = top.BookId })" class="card-link">
                                 <div class="card-body d-flex flex-column">
                                     <div class="image-container position-relative">
-                                        <img src="@top.BookImage" alt="Image" class="img-fluid h-100 w-100" />
-                                        <div class="ratings-badge">
+                                        <img src="@top.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
+                                        <div class="d-flex align-items-center ratings-badge">
                                             @top.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                         </div>
                                     </div>
-                                    <h4 class="book-title">@top.Title</h4>
+                                    <h4 class="book-title text-truncate">@top.Title</h4>
 
                                     <div class="d-flex align-items-center book-genre-container">
                                         @foreach (var genre in top.Genre.Split(','))
@@ -86,12 +71,6 @@
                                     </div>
                                     <p class="book-author">@top.Author</p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        @* <div class="btn-group">
-                                    <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
-                                    <input type="hidden" name="BookId" value="@top.BookId" />
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </form>
-                                    </div> *@
                                     </div>
                                 </div>
                             </a>

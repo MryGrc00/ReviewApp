@@ -3,62 +3,65 @@
     <link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
-<div class="mt-5 mb-3">
+<div class="pt-4 mt-5 mb-3">
     <div class="d-flex justify-content-between">
-        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
-        <a class="animated-button"
+        <a class="bd-viewBR px-3"
            asp-action="Index" asp-controller="Dashboard">
-            <span>&lt;&nbsp;Back </span>
+            <span class="bd-viewBRText">&lt;&nbsp;Back </span>
             <span></span>
         </a>
     </div>
     <div class="container">
-        <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Newest Books</h2>
         <form asp-action="NewestBookExpanded" asp-controller="Dashboard" method="get">
-            <div class="row justify-content-end">
-                <div class="search-input">
-                    <input type="text" name="searchKeyword" placeholder="Search here..." aria-label="Search Keyword" aria-describedby="search-addon">
-                    <span class="icon-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="url(#searchGradient)" class="bi bi-search" viewBox="0 0 16 16">
-                            <defs>
-                                <linearGradient id="searchGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="33.29%" stop-color="#2203FF" />
-                                    <stop offset="67.01%" stop-color="#C40D60" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                        </svg>
-                    </span>
+            <!-- Search -->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Newest Books</h2>
                 </div>
-                <div class="col-auto">
-                    <select class="form-control" name="sortBy">
-                        <option value="">Sort By</option>
-                        <option value="title" selected="@((string)ViewBag.SortBy == "title")">Title</option>
-                        <option value="rating" selected="@((string)ViewBag.SortBy == "rating")">Rating</option>
-                        <!-- Add more sorting options if needed -->
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Apply</button>
+                <div class="col-md-8 d-flex align-items-center justify-content-end">
+                    <div class="search-input me-3">
+                        <input type="text" name="searchKeyword" placeholder="Search here..." aria-label="Search Keyword" aria-describedby="search-addon" value="@ViewBag.SearchKeyword">
+                        <span class="icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="url(#searchGradient)" class="bi bi-search" viewBox="0 0 16 16">
+                                <defs>
+                                    <linearGradient id="searchGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="33.29%" stop-color="#2203FF" />
+                                        <stop offset="67.01%" stop-color="#C40D60" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="col-auto me-3">
+                        <select class="form-control  shadow-none" name="sortBy" id="sortBy">
+                            <option value="">Sort By</option>
+                            <option value="title" selected="@((string)ViewBag.SortBy == "title")">Title</option>
+                            <option value="rating" selected="@((string)ViewBag.SortBy == "rating")">Rating</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
                 </div>
             </div>
         </form>
         <br />
-        <div class="row row-cols-md-5 mt-5 g-1">
+        <!-- Book Cards -->
+        <div class="row row-cols-md-5 g-1">
             @foreach (var book in Model.Books)
             {
-                <div class="col">
+                <div class="col pb-5">
                     <div class="card p-0 m-1 no-bg book-card">
                         <a href="@Url.Action("ViewBookAndReview", "Dashboard", new { BookId = book.BookId })" class="card-link">
                             <div class="card-body d-flex flex-column">
                                 <div class="image-container position-relative">
-                                    <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" />
-                                    <div class="ratings-badge">
-                                        @book.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                                    <img src="@book.BookImage" alt="Book Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
+                                    <div class="d-flex align-items-center ratings-badge">
+                                        @book.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                     </div>
                                 </div>
-                                <h4 class="book-title">@book.Title</h4>
-
+                                <h4 class="book-title text-truncate">@book.Title</h4>
                                 <div class="d-flex align-items-center book-genre-container">
                                     @foreach (var genre in book.Genre.Split(','))
                                     {
@@ -66,14 +69,6 @@
                                     }
                                 </div>
                                 <p class="book-author">@book.Author</p>
-                                @* <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                            <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
-                            <input type="hidden" name="BookId" value="@book.BookId" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </form>
-                            </div>
-                            </div> *@
                             </div>
                         </a>
                     </div>
@@ -83,36 +78,56 @@
     </div>
 
     <nav aria-label="Page navigation">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center  mt-5">
             <li class="page-item @(1 == Model.Page ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("NewestBookExpanded", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                <a class="pagination-btn" href="@Url.Action("NewestBookExpanded", new { page = Model.Page - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                    <span class="pagination-text" aria-hidden="true">&lt;</span>
+                    <span></span>
                 </a>
             </li>
 
             @if (Model.TotalPages > 1)
             {
                 <li class="page-item @(1 == Model.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("NewestBookExpanded", new { page = 1, pageSize = Model.PageSize })">1</a>
+                    <a class="pagination-btn" href="@Url.Action("NewestBookExpanded", new { page = 1, pageSize = Model.PageSize })">
+                        <span class="pagination-text">1</span>
+                        <span></span>
+                    </a>
                 </li>
 
                 @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
                 {
                     <li class="page-item @(i == Model.Page ? "active" : "")">
-                        <a class="page-link" href="@Url.Action("NewestBookExpanded", new { page = i, pageSize = Model.PageSize })">@i</a>
+                        <a class="pagination-btn" href="@Url.Action("NewestBookExpanded", new { page = i, pageSize = Model.PageSize })">
+                            <span class="pagination-text">@i</span>
+                            <span></span>
+                        </a>
                     </li>
                 }
 
                 <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("NewestBookExpanded", new { page = Model.TotalPages, pageSize = Model.PageSize })">@Model.TotalPages</a>
+                    <a class="pagination-btn" href="@Url.Action("NewestBookExpanded", new { page = Model.TotalPages, pageSize = Model.PageSize })">
+                        <span class="pagination-text">@Model.TotalPages</span>
+                        <span></span>
+                    </a>
                 </li>
             }
 
             <li class="page-item @(Model.TotalPages == Model.Page ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("NewestBookExpanded", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+                <a class="pagination-btn" href="@Url.Action("NewestBookExpanded", new { page = Model.Page + 1, pageSize = Model.PageSize })" aria-label="Next">
+                    <span class="pagination-text" aria-hidden="true">&gt;</span>
+                    <span></span>
                 </a>
             </li>
         </ul>
     </nav>
 </div>
+
+@section scripts{
+    <script>
+        $('#sortBy').on('change', function () {
+            $(this).find('option').css('background-color', ''); // Reset background color
+            $(this).find('option:selected').css('background-color', 'violet'); // Change background color of selected option
+        });
+    </script>
+}

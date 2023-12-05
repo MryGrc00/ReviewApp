@@ -62,7 +62,7 @@ body {
 
 .table-container {
     height: 600px;
-    overflow-y: auto; /* Enables scrolling if table content exceeds the container height */
+    overflow-y: auto;
 }
 
 .table {
@@ -72,20 +72,31 @@ body {
     background-color: transparent;
 }
 
-.table th, .table td {
-    padding: 8px;
-    font-size: 15px;
-    text-align: center;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(80, 74, 121, 0.50);
-    border-top: 1px solid rgba(80, 74, 121, 0.50);
-}
+    .table th, .table td {
+        padding: 8px;
+        font-size: 15px;
+        text-align: center;
+        background-color: transparent;
+        border: none;
+        /*     border-bottom: 1px solid rgba(80, 74, 121, 0.50);*/
+        border-top: 1px solid rgba(80, 74, 121, 0.50);
+        text-align: center;
+        vertical-align: middle;
+    }
 
+    .table td {
+        text-align: center;
+        vertical-align: middle;
+        color: #C9C9C9 !important;
+    }
 
-.table th:last-child, .table td:last-child {
-    border-right: none;
-}
+        .table th:last-child, .table td:last-child {
+            border-right: none;
+        }
+
+    .table tbody tr:last-child td {
+        border-bottom: 1px solid rgba(80, 74, 121, 0.50);
+    }
 
 .custom-thead th {
     background-color: transparent;

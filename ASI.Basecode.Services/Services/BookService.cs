@@ -268,6 +268,13 @@ public class BookService : IBookService
             var data = _ratingService.GetRatings().Where(x => x.BookId == model.BookId).ToList();
             int totalReview = data.Count();
 
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = model.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
             BookViewModel book = new()
             {
                 BookId = model.BookId,
@@ -279,6 +286,7 @@ public class BookService : IBookService
                 Author = model.Author,
                 TotalRating = model.TotalRating,
                 TotalReview = totalReview,
+                AverageRating = averageRating,
                 CreatedBy = model.CreatedBy,
                 DateAdded = model.DateAdded,
                 UpdatedBy = model.UpdatedBy,
@@ -307,7 +315,8 @@ public class BookService : IBookService
         book.UpdatedBy = name;
         book.UpdatedDate = DateTime.Now;
         var sharedImageFileName = Path.Combine(sharedImagesPath, bookName) + ".png";
-        using(var fileStream = new FileStream(sharedImageFileName, FileMode.Create))
+        using (var fileStream = new FileStream(sharedImageFileName, FileMode.Create))
+        if (model.ImageFile != null)
         {
             model.ImageFile.CopyTo(fileStream);
         }

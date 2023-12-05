@@ -8,9 +8,9 @@
 <div class="mt-5 pt-5 mb-3">
     <div class="d-flex justify-content-between">
         <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
-        <a class="animated-button"
+        <a class="bd-viewBR px-3"
            asp-action="List" asp-controller="Genre">
-            <span>&lt;&nbsp;Back </span>
+            <span class="bd-viewBRText">&lt;&nbsp;Back </span>
             <span></span>
         </a>
     </div>
@@ -21,12 +21,22 @@
         <input type="hidden" class="form-control" asp-for="GenreId" />
         <div class="form-group">
             <label>Genre Name</label>
-            <input class="form-control" asp-for="GenreName" />
+            <input class="form-control mt-1 shadow-none bg-transparent text-white border-white" asp-for="GenreName" maxlength="49" />
             <span asp-validation-for="GenreName" class="text-danger"></span>
         </div>
-        <div class="mt-4">
-            <a class="btn btn-primary cancel" asp-action="List" asp-controller="Genre">Cancel</a>
-            <button type="submit" class="btn btn-primary save">Update</button>
+        <div class="row mt-2 g-2" style="width:30.5%;">
+            <div class="col">
+                <a class="bd-viewBR w-100" asp-action="List" asp-controller="Genre">
+                    <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="col">
+                <button type="submit" class="bd-viewBR w-100">
+                    <span class="bd-viewBRText ff-inter fw-bold">Save</span>
+                    <span></span>
+                </button>
+            </div>
         </div>
 
     </form>

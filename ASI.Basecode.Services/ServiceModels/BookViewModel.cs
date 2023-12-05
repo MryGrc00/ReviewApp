@@ -29,6 +29,7 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Author is required.")]
         public string Author { get; set; }
         public int TotalRating { get; set; }
+        public double AverageRating { get; set; }
         public int TotalReview {  get; set; }
         public string CreatedBy { get; set; }
         public DateTime DateAdded { get; set; }
