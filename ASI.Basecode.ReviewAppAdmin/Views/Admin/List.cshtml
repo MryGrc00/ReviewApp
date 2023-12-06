@@ -112,9 +112,9 @@
             <div class="modal-content modal-cont px-4">
                 <form asp-controller="Admin" asp-action="DeleteAdmin" method="post">
                     <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
-                        <input type="hidden" name="BookId" value="@admin.AdminId">
+                        <input type="hidden" name="AdminId" value="@admin.AdminId">
                         <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
-                        <h5 class="text-white text-center">Are you sure you want to delete this book?</h5>
+                        <h5 class="text-white text-center">Are you sure you want to delete this Admin?</h5>
                         <h6 class="text-neutralgray ff-inter text-center mt-3 text-truncate"><i>@admin.Email</i></h6>
                     </div>
 

@@ -104,11 +104,11 @@
     <div class="modal fade" id="GenreModal_@genre.GenreId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-cont px-4">
-                <form asp-controller="Admin" asp-action="DeleteAdmin" method="post">
+                <form asp-controller="Genre" asp-action="DeleteGenre" method="post">
                     <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
-                        <input type="hidden" name="BookId" value="@genre.GenreId">
+                        <input type="hidden" name="GenreId" value="@genre.GenreId">
                         <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
-                        <h5 class="text-white text-center">Are you sure you want to delete this book?</h5>
+                        <h5 class="text-white text-center">Are you sure you want to delete this Genre?</h5>
                         <h6 class="text-neutralgray ff-inter text-center mt-3 text-truncate"><i>@genre.GenreName</i></h6>
                     </div>
 
