@@ -30,7 +30,7 @@
                         <span></span>
                     </button>
                 </form>
-                <button type="submit" class="bd-viewBR px-4">
+                <button type="submit" data-toggle="modal" data-target="#BookModal_@Model.BookId" class="bd-viewBR px-4">
                     <span class="bd-viewBRText ff-inter"><i class="bi bi-trash me-2"></i>Delete</span>
                     <span></span>
                 </button>
@@ -60,7 +60,7 @@
                         <div class="d-flex align-items-center book-genre-container  p-0 mb-1">
                             @foreach (var genre in @Model.Genre.Split(','))
                             {
-                                <span class="d-flex align-items-center book-genre">@genre.Trim()</span>
+                                <a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()" class="genre-btn me-1"><span class="genre-btnText">@genre</span><span></span></a>
                             }
                         </div>
                         <p class="card-text  p-0 mb-1">By @Model.Author</p>
@@ -79,6 +79,38 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="BookModal_@Model.BookId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-cont px-4">
+            <form asp-controller="Book" asp-action="DeleteBook" method="post">
+                <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
+                    <input type="hidden" name="BookId" value="@Model.BookId">
+                    <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
+                    <h5 class="text-white text-center">Are you sure you want to delete this book?</h5>
+                    <h6 class="text-neutralgray ff-inter text-center mt-3 text-truncate"><i>@Model.Title</i></h6>
+                </div>
+
+                <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+                    <div class="row g-3" style="width:95%;">
+                        <div class="col d-flex">
+                            <button class="bd-viewBR w-100" data-dismiss="modal">
+                                <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                                <span></span>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="bd-viewBR w-100">
+                                <span class="bd-viewBRText ff-inter fw-bold">Delete</span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -561,6 +561,23 @@ public class BookService : IBookService
         var isExist = _bookRepository.GetBooks().Where(x => x.Title == title).Any();
         return isExist;
     }
+
+    /// <summary>
+    /// Verifies if the genre has value.
+    /// </summary>
+    /// <param name="Genre"></param>
+    /// <returns></returns>
+    public bool CheckGenre(string Genre)
+    {
+        if (Genre == null )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     /// <summary>
     /// Updates the records of an existing book. Replaces the book image if a new one is provided.
     /// </summary>

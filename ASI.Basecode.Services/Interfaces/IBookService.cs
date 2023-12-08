@@ -21,6 +21,7 @@ namespace ASI.Basecode.Services.Interfaces
         void AddBook(BookViewModel model, string name);
         bool CheckIsbn(String isbn);
         bool CheckTitle(String title);
+        bool CheckGenre(string Genre);
         void UpdateBook(BookViewModel model, string name);
         void DeleteBook(BookViewModel model);
     }
