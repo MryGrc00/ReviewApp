@@ -26,6 +26,10 @@ public class BookService : IBookService
         _bookRepository = bookRepository;
         _ratingService = ratingService;
     }
+    /// <summary>
+    /// Retrieves all books from the database, along with their average ratings.
+    /// </summary>
+    /// <returns>A list of books with details and calculated average ratings.</returns>
 
     public List<BookViewModel> GetBooks()
     {
@@ -65,7 +69,10 @@ public class BookService : IBookService
 
         return data;
     }
-
+    /// <summary>
+    /// Gets the newest books added within the last two weeks, limited to five books.
+    /// </summary>
+    /// <returns>A list of the five most recently added books.</returns>
     public List<BookViewModel> NewestBooksUser()
     {
         DateTime twoWeeksAgo = DateTime.Now.AddDays(-14);
@@ -105,7 +112,10 @@ public class BookService : IBookService
 
         return data;
     }
-
+    /// <summary>
+    /// Fetches the five most recently added books from the database.
+    /// </summary>
+    /// <returns>List of the newest books.</returns>
     public List<BookViewModel> NewestBooks()
     {
         var data = _bookRepository.GetBooks().Select(x => new BookViewModel {
@@ -143,6 +153,13 @@ public class BookService : IBookService
 
         return data;
     }
+    /// <summary>
+    /// Provides a paginated list of books, optimizing data display and navigation.
+    /// Calculates average ratings for each book. Allows efficient browsing through large book datasets.
+    /// </summary>
+    /// <param name="page">The page number to display.</param>
+    /// <param name="pageSize">The number of books per page.</param>
+    /// <returns>A BookViewModel containing a paginated list of books and their average ratings.</returns>
 
     public BookViewModel ListBooks(int page, int pageSize)
     {
@@ -195,7 +212,15 @@ public class BookService : IBookService
             TotalPages = totalPages,
         };
     }
-
+    /// <summary>
+    /// Retrieves a filtered and sorted list of the newest books based on specified criteria.
+    /// Supports searching by title, author, genre, and sorting by different attributes.
+    /// </summary>
+    /// <param name="page">Page number for pagination.</param>
+    /// <param name="pageSize">Number of records per page.</param>
+    /// <param name="searchKeyword">Keyword for filtering books.</param>
+    /// <param name="sortBy">Sorting criterion for the book list.</param>
+    /// <returns>A filtered and sorted list of books.</returns>
     public BookViewModel NewestBooksExpanded(int page, int pageSize, string searchKeyword, string sortBy)
     {
         var query = _bookRepository.GetBooks();
@@ -280,7 +305,10 @@ public class BookService : IBookService
         };
     }
 
-
+    /// <summary>
+    /// Retrieves the top five highest-rated books from the database.
+    /// </summary>
+    /// <returns>List of top five books based on ratings.</returns>
     public List<BookViewModel> TopBooks()
     {
         var data = _bookRepository.GetBooks().Select(x => new BookViewModel
@@ -318,7 +346,15 @@ public class BookService : IBookService
 
         return data;
     }
-
+    /// <summary>
+    /// Provides a paginated and optionally filtered/sorted list of top-rated books.
+    /// Facilitates detailed exploration of popular books with customization options.
+    /// </summary>
+    /// <param name="page">Page number for the list.</param>
+    /// <param name="pageSize">Number of books per page.</param>
+    /// <param name="searchKeyword">Optional search keyword for filtering.</param>
+    /// <param name="sortBy">Optional sorting parameter.</param>
+    /// <returns>Paginated list of top books with sorting and filtering options.</returns>
     public BookViewModel TopBooksExpanded(int page, int pageSize, string searchKeyword, string sortBy)
     {
         var query = _bookRepository.GetBooks();
@@ -402,7 +438,14 @@ public class BookService : IBookService
             TotalPages = totalPages,
         };
     }
-
+    /// <summary>
+    /// Displays ratings for a specific book in a paginated format.
+    /// Useful for assessing reader feedback and opinions on a particular book.
+    /// </summary>
+    /// <param name="BookId">ID of the book to view ratings for.</param>
+    /// <param name="page">Page number for the ratings.</param>
+    /// <param name="pageSize">Number of ratings per page.</param>
+    /// <returns>Paginated view of book ratings.</returns>
     public RatingViewModel ViewRatinginBooks (int BookId, int page,  int pageSize)
     {
         var data = _ratingService.GetRatings().Where(x => x.BookId == BookId).ToList();
@@ -421,6 +464,11 @@ public class BookService : IBookService
             TotalPages = totalPages,
         };
     }
+    /// <summary>
+    /// Retrieves detailed record of a specific book by its ID, including its average rating calculated from user reviews.
+    /// </summary>
+    /// <param name="id">The unique identifier of the book.</param>
+    /// <returns>Detailed book record and average rating, or null if the book is not found.</returns>
 
     public BookViewModel GetBook(int id)
     {
@@ -458,6 +506,11 @@ public class BookService : IBookService
         }
         return null;
     }
+    /// <summary>
+    /// Adds a new book to the database. Generates a unique name for the book image and stores the book's details.
+    /// </summary>
+    /// <param name="model">The book record to add.</param>
+    /// <param name="name">The name of the person adding the book.</param>
 
     public void AddBook(BookViewModel model, string name)
     {
@@ -485,20 +538,34 @@ public class BookService : IBookService
         _bookRepository.AddBook(book);
     }
 
-    //Validate Isbn
+    /// <summary>
+    /// Checks if the provided ISBN already exists in the database.
+    /// </summary>
+    /// <param name="isbn">The ISBN to check.</param>
+    /// <returns>True if the ISBN exists, false otherwise.</returns>
+
     public bool CheckIsbn(string isbn)
     {
         var isExist = _bookRepository.GetBooks().Where(x => x.Isbn == isbn).Any();
         return isExist;
     }
 
-    //Validate Title
+    /// <summary>
+    /// Verifies if a book with the given title already exists in the database.
+    /// </summary>
+    /// <param name="title">The title to check.</param>
+    /// <returns>True if the title exists, false otherwise.</returns>
+
     public bool CheckTitle(string title)
     {
         var isExist = _bookRepository.GetBooks().Where(x => x.Title == title).Any();
         return isExist;
     }
-
+    /// <summary>
+    /// Updates the records of an existing book. Replaces the book image if a new one is provided.
+    /// </summary>
+    /// <param name="model">The updated book record.</param>
+    /// <param name="name">The name of the person updating the book.</param>
     public void UpdateBook(BookViewModel model, string name)
     {
         var url = PathManager.DirectoryPath.BaseUrlHost;
@@ -527,6 +594,10 @@ public class BookService : IBookService
             _bookRepository.EditBook(book);
         }
     }
+    /// <summary>
+    /// Removes a book from the database using its ID.
+    /// </summary>
+    /// <param name="model">The book record to delete.</param>
 
     public void DeleteBook(BookViewModel model)
     {
