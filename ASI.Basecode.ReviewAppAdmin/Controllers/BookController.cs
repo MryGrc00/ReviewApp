@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.ReviewAppAdmin.Mvc;
 using ASI.Basecode.Services.Interfaces;
@@ -97,6 +98,15 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpPost]
         public IActionResult EditBook(BookViewModel book)
         {
+            var genreChecker = _bookService.CheckGenre(book.Genre);
+            if(genreChecker == false)
+            {
+                var data = _bookService.GetBook(book.BookId);
+                base.ModelState.AddModelError("Genre", "Genre can't be null.");
+                List<GenreViewModel> GenreData = _genreService.GetGenres();
+                ViewData["Genre"] = GenreData;
+                return View(data);
+            }
             _bookService.UpdateBook(book, this.UserName);
             TempData["SuccessMessage"] = "Book successfully updated.";
             return RedirectToAction("List");

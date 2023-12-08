@@ -26,6 +26,7 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Genre</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,28 @@
                         <td>@book.Title</td>
                         <td>@book.Author</td>
                         <td>@book.Genre</td>
+                        <td>
+                            <div style=" display: flex; justify-content: center; align-items: center;">
+                                <form asp-controller="Book" asp-action="EditBook" method="get" class="me-2">
+                                    <input type="hidden" name="BookId" value="@book.BookId">
+                                    <button type="submit" class="icon-btn">
+                                        <span><i class="bi bi-pencil-square icon-text"></i></span>
+                                        <span></span>
+                                    </button>
+                                </form>
+                                <button type="button" data-toggle="modal" data-target="#BookModal_@book.BookId" class="icon-btn me-2">
+                                    <span> <i class="bi bi-trash icon-text"></i></span>
+                                    <span></span>
+                                </button>
+                                <form asp-controller="Book" asp-action="ViewBook" method="get">
+                                    <input type="hidden" name="BookId" value="@book.BookId">
+                                    <button type="submit" class="icon-btn">
+                                        <span><i class="bi bi-eye icon-text"></i></span>
+                                        <span></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
