@@ -55,12 +55,18 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpPost]
         public IActionResult AddGenre(GenreViewModel genre)
         {
+            if (genre.GenreName == null || genre.GenreName == " ")
+            {
+                base.ModelState.AddModelError("GenreName", "Genre name is required");
+                return View(genre);
+            }
             var isExist = _genreService.CheckGenreName(genre.GenreName);
             if(isExist)
             {
                 base.ModelState.AddModelError("GenreName", "Genre Name already exists");
                 return View(genre);
             }
+           
             _genreService.AddGenre(genre, this.UserName);
             TempData["SuccessMessage"] = "Genre successfully added.";
             return RedirectToAction("List");

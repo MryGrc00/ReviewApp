@@ -38,13 +38,30 @@
                         <td>@book.Title</td>
                         <td>@book.Author</td>
                         <td>
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                @foreach (var genre in book.SelectedGenres)
+                            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                                @for (var i = 0; i < book.SelectedGenres.Count && i < 4; i++)
                                 {
-                                    <a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()" class="genre-btn me-1"><span class="genre-btnText">@genre</span><span></span></a>
+                                    <a class="d-inline-block genre-btn me-1" asp-action="BookList" asp-controller="Genre" asp-route-genreName="@book.SelectedGenres[i].Trim()">
+                                        <span class="genre-btnText">@book.SelectedGenres[i]</span>
+                                        <span></span>
+                                    </a>
                                 }
                             </div>
+                            @if (book.SelectedGenres.Count > 4)
+                            {
+                                <div class="mt-2">
+                                    @for (var i = 4; i < book.SelectedGenres.Count; i++)
+                                    {
+                                        <a class="d-inline-block genre-btn me-1" asp-action="BookList" asp-controller="Genre" asp-route-genreName="@book.SelectedGenres[i].Trim()">
+                                            <span class="genre-btnText">@book.SelectedGenres[i]</span>
+                                            <span></span>
+                                        </a>
+                                    }
+                                </div>
+                            }
                         </td>
+
+
                         <td>
                             <div style=" display: flex; justify-content: center; align-items: center;">
                                 <form asp-controller="Book" asp-action="EditBook" method="get" class="me-2">

@@ -321,13 +321,7 @@
 
 /*}*/
 /* Container for the genres */
-.genre-container {
-    overflow: visible;
-    border: 1px solid #ccc;
-    padding: 7px;
-    margin-top: 5px;
-    scrollbar-color: #FF0000 #0000ff;
-}
+
 
 .genre-scroll {
     overflow-y: auto;
@@ -335,16 +329,22 @@
 }
 
 .genre-container {
-    max-height: 15.2rem;
-    overflow-y: auto; /* Use auto to display scrollbar when needed */
+    overflow: visible;
+    border: 1px solid #ccc;
+    padding: 7px;
+    margin-top: 5px;
+    scrollbar-color: #FF0000 #0000ff;
+    height: 19rem;
+    max-height: 15.3rem;
+    overflow-y: auto;
 }
 
     .genre-container::-webkit-scrollbar-thumb {
-        background-color: #ff0000; /* Change thumb color */
-        border-radius: 6px; /* Round the edges of the thumb */
+        background-color: #ff0000;
+        border-radius: 6px; 
     }
     .genre-container::-webkit-scrollbar-track {
-        background-color: #0000ff; /* Change track color */
+        background-color: #0000ff;
     }
 
 .td-btn {
