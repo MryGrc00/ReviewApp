@@ -5,6 +5,9 @@
 @{
     var book = (ASI.Basecode.Services.ServiceModels.BookViewModel)ViewData["Book"];
 }
+@{
+    ViewData["Title"] = "Rate Books";
+}
 <div class="container mt-5 pt-4">
     <div class="d-flex justify-content-between">
         <form asp-controller="Dashboard" asp-action="ViewBookAndReview" method="get">
@@ -34,7 +37,7 @@
                         <div class="d-flex align-items-center bd-genre-container">
                             @foreach (var genre in @book.Genre.Split(','))
                             {
-                                <span class="d-flex align-items-center bd-genre">@genre.Trim()</span>
+                                <span class="d-flex align-items-center bd-genre"><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
                             }
                         </div>
                         <p class="book-author"> @book.Author</p>

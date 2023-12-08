@@ -3,6 +3,10 @@
 @section styles {
     <link rel="stylesheet" href="~/css/dashboard.css" />
     }
+
+@{
+    ViewData["Title"] = "Top Books";
+}
 <div class="container mt-5 pt-4">
     <div class="d-flex justify-content-between">
         <a class="bd-viewBR px-3"
@@ -33,12 +37,10 @@
                         </span>
                     </div>
                     <div class="col-auto me-3">
-                        <select class="form-control" name="sortBy">
-                            <option value="">Sort By</option>
-                            <option value="title" selected="@((string)ViewBag.SortBy == "title")">Title</option>
-                            <option value="rating" selected="@((string)ViewBag.SortBy == "rating")">Rating</option>
-                            <!-- Add more sorting options if needed -->
-                        </select>
+                        <button class="btn @(ViewBag.SortBy == "title" ? "btn-primary" : "btn-secondary")" name="sortBy" value="title">Title</button>
+                        <button class="btn @(ViewBag.SortBy == "rating" ? "btn-primary" : "btn-secondary")" name="sortBy" value="rating">Rating</button>
+                        <button class="btn @(ViewBag.SortBy == "rating-asc" ? "btn-primary" : "btn-secondary")" name="sortBy" value="rating-asc">Rating-Asc</button>
+                        <!-- Add additional buttons as needed -->
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary">Apply</button>
@@ -65,7 +67,7 @@
                                 <div class="d-flex align-items-center book-genre-container">
                                     @foreach (var genre in book.Genre.Split(','))
                                     {
-                                        <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                        <span class="d-flex align-items-center book-genre "><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
                                     }
                                 </div>
                                 <p class="book-author">@book.Author</p>
@@ -87,14 +89,15 @@
                 </a>
             </li>
 
+            <li class="page-item @(1 == Model.Page ? "active" : "")">
+                <a class="pagination-btn" href="@Url.Action("TopBookExpanded", new { page = 1, pageSize = Model.PageSize })">
+                    <span class="pagination-text">1</span>
+                    <span></span>
+                </a>
+            </li>
+
             @if (Model.TotalPages > 1)
             {
-                <li class="page-item @(1 == Model.Page ? "active" : "")">
-                    <a class="pagination-btn" href="@Url.Action("TopBookExpanded", new { page = 1, pageSize = Model.PageSize })">
-                        <span class="pagination-text">1</span>
-                        <span></span>
-                    </a>
-                </li>
 
                 @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
                 {

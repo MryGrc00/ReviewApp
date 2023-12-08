@@ -125,6 +125,23 @@ namespace ASI.Basecode.Services.Services
             return null;
         }
 
+        public AdminViewModel GetAdminWithName(string name)
+        {
+            var model = _adminRepository.GetAdminByName(name);
+            if(model != null)
+            {
+                AdminViewModel admin = new()
+                {
+                    AdminId = model.AdminId,
+                    Name = model.Name,
+                    Email = model.Email,
+                    Password = model.Password,
+                };
+                return admin;
+            }
+            return null;
+        }
+
         public void AddAdmin(AdminViewModel model, string name)
         {
             var admin = new Admin();
@@ -154,6 +171,18 @@ namespace ASI.Basecode.Services.Services
             }
 
             return "Valid";
+        }
+
+        public string CheckOldPassword(int Adminid, string oldPassword)
+        {
+            var password = _adminRepository.GetAdmin(Adminid);
+
+            if (password.Password == PasswordManager.EncryptPassword(oldPassword))
+            {
+                return "Match";
+            }
+
+            return "Not Match";
         }
 
         public string CheckPasswords(string password, string confirmPassword)
@@ -193,6 +222,7 @@ namespace ASI.Basecode.Services.Services
             Admin admin = _adminRepository.GetAdmin(model.AdminId);
             if (admin != null)
             {
+                admin.AdminId = model.AdminId;
                 admin.Email = model.Email.ToLower();
                 admin.Password = PasswordManager.EncryptPassword(model.Password);
                 admin.Name = model.Name;
@@ -210,5 +240,42 @@ namespace ASI.Basecode.Services.Services
                 _adminRepository.DeleteAdmin(admin);
             }
         }
+
+        public void ChangeEmail(AdminViewModel model, string name)
+        {
+            Admin admin = _adminRepository.GetAdmin(model.AdminId);
+            if (admin != null)
+            {
+                admin.Email = model.Email.ToLower();
+                admin.UpdatedBy = name;
+                admin.UpdatedTime = DateTime.Now;
+                _adminRepository.EditAdmin(admin);
+            }
+        }
+
+        public void ChangeName(AdminViewModel model, string name)
+        {
+            Admin admin = _adminRepository.GetAdmin(model.AdminId);
+            if (admin != null)
+            {
+                admin.Name = model.Name;
+                admin.UpdatedBy = name;
+                admin.UpdatedTime = DateTime.Now;
+                _adminRepository.EditAdmin(admin);
+            }
+        }
+
+        public void ChangePassword(AdminViewModel model, string name)
+        {
+            Admin admin = _adminRepository.GetAdmin(model.AdminId);
+            if (admin != null)
+            {
+                admin.Password = PasswordManager.EncryptPassword(model.Password);
+                admin.UpdatedBy = name;
+                admin.UpdatedTime = DateTime.Now;
+                _adminRepository.EditAdmin(admin);
+            }
+        }
+
     }
 }

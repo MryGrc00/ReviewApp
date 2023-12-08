@@ -27,6 +27,12 @@ namespace ASI.Basecode.Data.Repositories
             return genre;
         }
 
+        public Genre GetGenreName(string genreName)
+        {
+            var genre = this.GetDbSet<Genre>().FirstOrDefault(x => x.GenreName == genreName);
+            return genre;
+        }
+
         public void AddGenre(Genre genre)
         {
             this.GetDbSet<Genre>().Add(genre);

@@ -33,6 +33,12 @@ namespace ASI.Basecode.Data.Repositories
             return admin;
         }
 
+        public Admin GetAdminByName(string name)
+        {
+            var admin = this.GetDbSet<Admin>().FirstOrDefault(x => x.Name == name);
+            return admin;
+        }
+
         public void AddAdmin(Admin admin)
         {
             this.GetDbSet<Admin>().Add(admin);

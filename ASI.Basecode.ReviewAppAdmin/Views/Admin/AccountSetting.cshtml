@@ -1,0 +1,17 @@
+﻿@model ASI.Basecode.Services.ServiceModels.AdminViewModel
+@section styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+@{
+    ViewData["Title"] = "Account Setting";
+}
+
+<a class="bd-viewBR px-3"
+   asp-action="Index" asp-controller="Dashboard">
+    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
+    <span></span>
+</a>
+
+<a asp-action="ChangeEmail" asp-controller="Admin">Change Email</a>
+<a asp-action="ChangeName" asp-controller="Admin">Change Name</a>
+<a asp-action="ChangePassword" asp-controller="Admin">Change Password</a>

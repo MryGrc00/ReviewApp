@@ -5,6 +5,7 @@ using ASI.Basecode.Services.ServiceModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -93,6 +94,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 return View(admin);
             }
             _adminService.AddAdmin(admin, this.UserName);
+            TempData["SuccessMessage"] = "Admin successfully added.";
             return RedirectToAction("List");
         }
 
@@ -105,6 +107,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult EditAdmin(int AdminId)
         {
             var data = _adminService.GetAdminWithPassword(AdminId);
+            TempData["SuccessMessage"] = "Admin successfully updated.";
             return View(data);
         }
 
@@ -129,6 +132,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult DeleteAdmin(AdminViewModel admin)
         {
             _adminService.DeleteAdmin(admin);
+            TempData["SuccessMessage"] = "Admin successfully deleted.";
             return RedirectToAction("List");
         }
 
@@ -140,8 +144,94 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpGet]
         public IActionResult ViewAdmin(int AdminId)
         {
-            var data = _adminService.GetAdmin(AdminId);
+            var data = _adminService.GetAdminWithPassword(AdminId);
             return View(data);
+        }
+
+        [HttpGet]
+        public IActionResult AccountSetting()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ChangeEmail ()
+        {
+            var data = _adminService.GetAdminWithName(this.UserName);
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeEmail(AdminViewModel admin)
+        {
+            _adminService.ChangeEmail(admin, this.UserName);
+            TempData["SuccessMessage"] = "Admin successfully changed email.";
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpGet]
+        public IActionResult ChangeName ()
+        {
+            var data = _adminService.GetAdminWithName(this.UserName);
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeName(AdminViewModel admin)
+        {
+            _adminService.ChangeName(admin, this.UserName);
+            this._session.SetString("UserName", admin.Name);
+            TempData["SuccessMessage"] = "Admin successfully changed name.";
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            var data = _adminService.GetAdminWithName(this.UserName);
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(AdminViewModel admin)
+        {
+            var oldPassword = _adminService.CheckOldPassword(admin.AdminId, admin.oldPassword);
+            if(oldPassword == "Not Match")
+            {
+                base.ModelState.AddModelError("oldPassword", "Password do not match");
+                return View(admin);
+            }
+
+            var checkPassword = _adminService.CheckPasswords(admin.Password, admin.ConfirmPassword);
+            if (checkPassword == "PassInvalid")
+            {
+                base.ModelState.AddModelError("Password", "Password must have at least one special character, one lowercase letter, one uppercase letter, and one digit.");
+                return View(admin);
+            }
+            if (checkPassword == "PassShort")
+            {
+                base.ModelState.AddModelError("Password", "Password must at least 8 characters.");
+                return View(admin);
+            }
+            if (checkPassword == "ConInvalid")
+            {
+                base.ModelState.AddModelError("ConfirmPassword", "Confirm Password must have at least one special character, one lowercase letter, one uppercase letter, and one digit.");
+                return View(admin);
+            }
+            if (checkPassword == "ConShort")
+            {
+                base.ModelState.AddModelError("ConfirmPassword", "Confirm Password must at least 8 characters.");
+                return View(admin);
+            }
+            if (checkPassword == "NotMatch")
+            {
+                base.ModelState.AddModelError("Password", "Passwords do not match.");
+                base.ModelState.AddModelError("ConfirmPassword", "Passwords do not match.");
+                return View(admin);
+            }
+            _adminService.ChangePassword(admin, this.UserName);
+            TempData["SuccessMessage"] = "Admin successfully changed password.";
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }

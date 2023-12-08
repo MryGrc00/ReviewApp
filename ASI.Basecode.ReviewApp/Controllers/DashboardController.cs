@@ -2,6 +2,7 @@
 using ASI.Basecode.ReviewApp.Mvc;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
+using ASI.Basecode.Services.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 
@@ -18,12 +20,14 @@ namespace ASI.Basecode.ReviewApp.Controllers
     {
         private readonly IBookService _bookService;
         private readonly IRatingService _ratingService;
+        private readonly IGenreService _genreService;
 
-        public DashboardController(IBookService bookService, IRatingService ratingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null)
+        public DashboardController(IBookService bookService, IRatingService ratingService, IGenreService genreService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null)
             : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _bookService = bookService;
             _ratingService = ratingService;
+            _genreService = genreService;
         }
 
 
@@ -46,9 +50,9 @@ namespace ASI.Basecode.ReviewApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult TopBookExpanded(int page = 1, int pageSize = 10)
+        public IActionResult TopBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
-            var topBookExpanded = _bookService.TopBooksExpanded(page,pageSize);
+            var topBookExpanded = _bookService.TopBooksExpanded(page, pageSize, searchKeyword, sortBy);
 
             return View("TopBookExpanded", topBookExpanded);
         }
@@ -83,7 +87,24 @@ namespace ASI.Basecode.ReviewApp.Controllers
             var data = _bookService.GetBook(rating.BookId);
             List<RatingViewModel> rate = _ratingService.GetRatings().Where(x => x.BookId == rating.BookId).Take(2).ToList();
             ViewData["Rate"] = rate;
+            TempData["SuccessMessage"] = "Rate successfully.";
             return RedirectToAction("ViewBookAndReview", data);
+        }
+
+        [HttpGet]
+        public IActionResult GenreList(string genreName, int page = 1, int pageSize = 5)
+        {
+            var data = _genreService.GetGenreName(genreName);
+            if (data != null)
+            {
+                var books = _genreService.ViewGenreInBooks(data.GenreName, page, pageSize);
+                ViewData["Books"] = books;
+                return View("GenreList", data);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }

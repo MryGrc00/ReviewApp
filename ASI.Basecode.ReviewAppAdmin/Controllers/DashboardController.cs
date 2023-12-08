@@ -48,9 +48,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         [HttpGet]
-        public IActionResult TopBookExpanded(int page = 1, int pageSize = 10)
+        public IActionResult TopBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
-            var topBookExpanded = _bookService.TopBooksExpanded(page, pageSize);
+            var topBookExpanded = _bookService.TopBooksExpanded(page, pageSize, searchKeyword, sortBy);
 
             return View("TopBookExpanded", topBookExpanded);
         }

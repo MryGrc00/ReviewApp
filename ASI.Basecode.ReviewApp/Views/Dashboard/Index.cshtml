@@ -3,6 +3,10 @@
     <link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
 <div class="custom-container">
     <div class="mt-5 pt-5 mb-2">
         <div class="d-flex justify-content-between align-items-center">
@@ -30,7 +34,7 @@
                                 <div class="d-flex align-items-center book-genre-container">
                                     @foreach (var genre in book.Genre.Split(','))
                                     {
-                                        <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                        <span class="d-flex align-items-center book-genre "><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
                                     }
                                 </div>
                                 <p class="book-author">@book.Author</p>
@@ -67,7 +71,7 @@
                                     <div class="d-flex align-items-center book-genre-container">
                                         @foreach (var genre in top.Genre.Split(','))
                                         {
-                                            <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                            <span class="d-flex align-items-center book-genre "><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
                                         }
                                     </div>
                                     <p class="book-author">@top.Author</p>
