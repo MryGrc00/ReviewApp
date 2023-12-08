@@ -22,14 +22,14 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _genreService = genreService;
-        }   
+        }
 
         /// <summary>
-        /// List of Genre Records
+        /// Retrieves and displays a paginated list of genre records.
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <param name="page">Page number to display. Default is 1.</param>
+        /// <param name="pageSize">Number of records per page. Default is 5.</param>
+        /// <returns>View with the list of genres.</returns>
         [HttpGet]
         public IActionResult List(int page = 1, int pageSize = 5)
         {
@@ -38,9 +38,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add Method
+        /// Displays the view for adding a new genre.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Add Genre view.</returns>
         [HttpGet]
         public IActionResult AddGenre()
         {
@@ -48,10 +48,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add genre record to the database
+        /// Processes the addition of a new genre record after validating for uniqueness of genre name.
         /// </summary>
-        /// <param name="genre"></param>
-        /// <returns></returns>
+        /// <param name="genre">Genre record to add.</param>
+        /// <returns>Redirects to the genre list on success, or displays validation errors.</returns>
         [HttpPost]
         public IActionResult AddGenre(GenreViewModel genre)
         {
@@ -73,10 +73,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Edit Method
+        /// Fetches and displays the details of a genre for editing.
         /// </summary>
-        /// <param name="GenreId"></param>
-        /// <returns></returns>
+        /// <param name="GenreId">ID of the genre to edit.</param>
+        /// <returns>Edit Genre view populated with genre's details.</returns>
         [HttpGet]
         public IActionResult EditGenre(int GenreId)
         {
@@ -98,10 +98,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Delete genre record to the database
+        /// Deletes a genre record from the system.
         /// </summary>
-        /// <param name="genre"></param>
-        /// <returns></returns>
+        /// <param name="genre">Genre record to delete.</param>
+        /// <returns>Redirects to the genre list after deletion.</returns>
         [HttpPost]
         public IActionResult DeleteGenre(GenreViewModel genre)
         {
@@ -111,12 +111,12 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// View genre record with books associated
+        /// Displays detailed information of a specific genre, including books associated with it.
         /// </summary>
-        /// <param name="GenreId"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <param name="GenreId">ID of the genre to view.</param>
+        /// <param name="page">Page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 5.</param>
+        /// <returns>View with detailed genre information and associated books.</returns>
         [HttpGet]
         public IActionResult ViewGenre(int GenreId, int page = 1, int pageSize = 5)
         {
@@ -126,6 +126,13 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View("ViewGenre", data);
         }
 
+        /// <summary>
+        /// Displays a list of books associated with a specific genre.
+        /// </summary>
+        /// <param name="genreName">Name of the genre.</param>
+        /// <param name="page">Page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 5.</param>
+        /// <returns>Book List view with books of the specified genre.</returns>
         [HttpGet]
         public IActionResult BookList(string genreName, int page = 1, int pageSize = 5)
         {

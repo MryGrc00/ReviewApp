@@ -25,10 +25,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// List of Newest and Top Books
+        /// Retrieves and displays lists of newest and top rated books.
         /// </summary>
-        /// <returns></returns>
-
+        /// <returns>Index view with lists of newest and top rated books.</returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -38,6 +37,14 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View("Index", newest);
         }
 
+        /// <summary>
+        /// Displays an expanded view of the newest books with pagination, search, and sorting capabilities.
+        /// </summary>
+        /// <param name="page">Page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 10.</param>
+        /// <param name="searchKeyword">Keyword for book search. Default is empty.</param>
+        /// <param name="sortBy">Sorting criteria. Default is empty.</param>
+        /// <returns>Newest Book Expanded view with search and sorting results.</returns>
         [HttpGet]
         public IActionResult NewestBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
@@ -47,6 +54,15 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View("NewestBookExpanded", newestBookExpanded);
         }
 
+        /// <summary>
+        /// Displays an expanded view of the top rated books with pagination, search, and sorting capabilities.
+        /// </summary>
+        /// <param name="page">Page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 10.</param>
+        /// <param name="searchKeyword">Keyword for book search. Default is empty.</param>
+        /// <param name="sortBy">Sorting criteria. Default is empty.</param>
+        /// <returns>Top Book Expanded view with search and sorting results.</returns>
+
         [HttpGet]
         public IActionResult TopBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
@@ -55,6 +71,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View("TopBookExpanded", topBookExpanded);
         }
 
+        /// <summary>
+        /// Displays detailed information about a specific book, including its associated reviews and ratings.
+        /// </summary>
+        /// <param name="BookId">ID of the book to view.</param>
+        /// <returns>View with detailed book information and associated ratings.</returns>
         [HttpGet]
         public IActionResult ViewBookAndReview(int BookId)
         {
@@ -68,6 +89,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Displays the view for rating a specific book.
+        /// </summary>
+        /// <param name="BookId">ID of the book to rate.</param>
+        /// <returns>Rate Book view with book details for rating submission.</returns>
         [HttpGet]
         public IActionResult RateBook(int BookId)
         {

@@ -24,12 +24,12 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             _adminService = adminService;
         }
 
-        /// <summary>
-        /// List of Admin Records
+        ///<summary>
+        /// Retrieves and displays a paginated list of admin records.
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <param name="page">Page number to display. Default is 1.</param>
+        /// <param name="pageSize">Number of records per page. Default is 5.</param>
+        /// <returns>View with the list of admin records.</returns>
         [HttpGet]
         public IActionResult List(int page = 1, int pageSize = 5)
         {
@@ -38,9 +38,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add Method
+        /// Displays the view for adding a new admin record.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Add Admin view.</returns>
         [HttpGet]
         public IActionResult AddAdmin()
         {
@@ -48,10 +48,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add admin record to the database
+        /// Processes the addition of a new admin record after validating required fields.
         /// </summary>
-        /// <param name="admin"></param>
-        /// <returns></returns>
+        /// <param name="admin">Admin record to add.</param>
+        /// <returns>Redirects to the admin list on success, or displays validation errors.</returns>
         [HttpPost]
         public IActionResult AddAdmin(AdminViewModel admin)
         {
@@ -110,10 +110,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Edit Method
+        /// Fetches and displays the records of an admin for editing.
         /// </summary>
-        /// <param name="AdminId"></param>
-        /// <returns></returns>
+        /// <param name="AdminId">ID of the admin to edit.</param>
+        /// <returns>Edit Admin view populated with admin's records.</returns>
         [HttpGet]
         public IActionResult EditAdmin(int AdminId)
         {
@@ -122,10 +122,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Update the admin record to the database
+        /// Updates an admin record with new record.
         /// </summary>
-        /// <param name="admin"></param>
-        /// <returns></returns>
+        /// <param name="admin">Updated admin record.</param>
+        /// <returns>Redirects to the admin list after successful update.</returns>
         [HttpPost]
         public IActionResult EditAdmin(AdminViewModel admin)
         {
@@ -135,10 +135,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Delete admin record to the database
+        /// Deletes an admin record from the system.
         /// </summary>
-        /// <param name="admin"></param>
-        /// <returns></returns>
+        /// <param name="admin">Admin record to delete.</param>
+        /// <returns>Redirects to the admin list after deletion.</returns>
         [HttpPost]
         public IActionResult DeleteAdmin(AdminViewModel admin)
         {
@@ -148,10 +148,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// View admin record
+        /// Displays detailed information of a specific admin.
         /// </summary>
-        /// <param name="AdminId"></param>
-        /// <returns></returns>
+        /// <param name="AdminId">ID of the admin to view.</param>
+        /// <returns>View Admin view with the admin's details.</returns>
         [HttpGet]
         public IActionResult ViewAdmin(int AdminId)
         {
@@ -159,12 +159,20 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Displays the account settings view for the current admin.
+        /// </summary>
+        /// <returns>Account Settings view.</returns>
         [HttpGet]
         public IActionResult AccountSetting()
         {
             return View();
         }
 
+        /// <summary>
+        /// Displays the view for changing the current admin's email.
+        /// </summary>
+        /// <returns>Change Email view with current admin's details.</returns>
         [HttpGet]
         public IActionResult ChangeEmail ()
         {
@@ -172,6 +180,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Processes the request to change the current admin's email.
+        /// </summary>
+        /// <param name="admin">Admin record with the new email.</param>
+        /// <returns>Redirects to the dashboard after successful change.</returns>
         [HttpPost]
         public IActionResult ChangeEmail(AdminViewModel admin)
         {
@@ -180,6 +193,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        /// <summary>
+        /// Displays the view for changing the current admin's name.
+        /// </summary>
+        /// <returns>Change Name view with current admin's details.</returns>
         [HttpGet]
         public IActionResult ChangeName ()
         {
@@ -187,6 +204,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Updates the name of the currently logged-in admin in the database.
+        /// </summary>
+        /// <param name="admin">The admin view model containing the new name information.</param>
+        /// <returns>Redirects to the Dashboard Index view on successful name update.</returns>
         [HttpPost]
         public IActionResult ChangeName(AdminViewModel admin)
         {
@@ -196,6 +218,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        /// <summary>
+        /// Displays the view for changing the current admin's password.
+        /// </summary>
+        /// <returns>Change Password view with current admin's details.</returns>
         [HttpGet]
         public IActionResult ChangePassword()
         {
@@ -203,6 +229,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// Processes the request to change the current admin's password after validating criteria.
+        /// </summary>
+        /// <param name="admin">The admin view model containing the old and new password record.</param>
+        /// <returns>Returns to the Change Password view with validation messages on failure or redirects to the Dashboard Index view on successful password update.</returns>
         [HttpPost]
         public IActionResult ChangePassword(AdminViewModel admin)
         {

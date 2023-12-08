@@ -30,7 +30,9 @@ namespace ASI.Basecode.ReviewApp.Controllers
             _genreService = genreService;
         }
 
-
+        /// Retrieves and displays lists of the newest books and top rated books.
+        /// </summary>
+        /// <returns>Dashboard Index view with lists of newest and top rated books.</returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -40,6 +42,14 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return View("Index", newest);
         }
 
+        /// <summary>
+        /// Displays an expanded view of the newest books with options for pagination, search, and sorting.
+        /// </summary>
+        /// <param name="page">Current page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 10.</param>
+        /// <param name="searchKeyword">Search keyword for filtering books. Default is empty.</param>
+        /// <param name="sortBy">Sorting criteria. Default is empty.</param>
+        /// <returns>Newest Book Expanded view with filtered and sorted book listings.</returns>
         [HttpGet]
         public IActionResult NewestBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
@@ -49,6 +59,14 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return View("NewestBookExpanded", newestBookExpanded);
         }
 
+        /// <summary>
+        /// Displays an expanded view of the top rated books with options for pagination, search, and sorting.
+        /// </summary>
+        /// <param name="page">Current page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 10.</param>
+        /// <param name="searchKeyword">Search keyword for filtering books. Default is empty.</param>
+        /// <param name="sortBy">Sorting criteria. Default is empty.</param>
+        /// <returns>Top Book Expanded view with filtered and sorted book listings.</returns>
         [HttpGet]
         public IActionResult TopBookExpanded(int page = 1, int pageSize = 10, string searchKeyword = "", string sortBy = "")
         {
@@ -57,6 +75,11 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return View("TopBookExpanded", topBookExpanded);
         }
 
+        ///<summary>
+        /// Displays detailed information of a specific book along with its associated ratings and reviews.
+        /// </summary>
+        /// <param name="BookId">ID of the book to view.</param>
+        /// <returns>View with the book details and its associated ratings and reviews.</returns>
         [HttpGet]
         public IActionResult ViewBookAndReview(int BookId)
         {
@@ -70,6 +93,11 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return View(data);
         }
 
+        ///<summary>
+        /// Displays the view for submitting a rating for a specific book.
+        /// </summary>
+        /// <param name="BookId">ID of the book to be rated.</param>
+        /// <returns>Rate Book view with book records for submitting a rating.</returns>
         [HttpGet]
         public IActionResult RateBook(int BookId)
         {
@@ -80,6 +108,11 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return View();
         }
 
+        ///<summary>
+        /// Processes the submission of a new rating for a book, validating the email provided.
+        /// </summary>
+        /// <param name="rating">Rating record submitted by the user.</param>
+        /// <returns>Redirects to ViewBookAndReview on success or displays errors if validation fails.</returns>
         [HttpPost]
         public IActionResult RateBook(RatingViewModel rating)
         {
@@ -98,6 +131,13 @@ namespace ASI.Basecode.ReviewApp.Controllers
             return RedirectToAction("ViewBookAndReview", data);
         }
 
+        /// <summary>
+        /// Displays a list of books associated with a specific genre, with pagination.
+        /// </summary>
+        /// <param name="genreName">Name of the genre to display books for.</param>
+        /// <param name="page">Current page number for pagination. Default is 1.</param>
+        /// <param name="pageSize">Number of books per page. Default is 5.</param>
+        /// <returns>Genre List view with books associated with the specified genre, or redirects to Index if the genre is not found.</returns>
         [HttpGet]
         public IActionResult GenreList(string genreName, int page = 1, int pageSize = 5)
         {
