@@ -84,11 +84,22 @@
             </a>
         </li>
 
-        @for (int i = 2; i <= Model.TotalPages; i++)
+        @if (Model.TotalPages > 1)
         {
-            <li class="page-item @(i == Model.Page ? "active" : "")">
-                <a class="pagination-btn" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">
-                    <span class="pagination-text">@i</span>
+
+            @for (int i = Math.Max(2, Model.Page - 1); i <= Math.Min(Model.TotalPages - 1, Model.Page + 1); i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="pagination-btn" href="@Url.Action("List", new { page = i, pageSize = Model.PageSize })">
+                        <span class="pagination-text">@i</span>
+                        <span></span>
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(Model.TotalPages == Model.Page ? "active" : "")">
+                <a class="pagination-btn" href="@Url.Action("List", new { page = Model.TotalPages, pageSize = Model.PageSize })">
+                    <span class="pagination-text">@Model.TotalPages</span>
                     <span></span>
                 </a>
             </li>
@@ -138,4 +149,14 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts {
+    <script>
+        // Check for success message and display Toastr notification
+        var successMessage = '@TempData["SuccessMessage"]';
+        if (successMessage) {
+            toastr.success(successMessage);
+        }
+    </script>
 }

@@ -13,6 +13,7 @@ namespace ASI.Basecode.Services.Interfaces
         GenreViewModel PaginatedGenres(int page, int pageSize);
         BookViewModel ViewGenreInBooks(string GenreName, int page, int pageSize);
         GenreViewModel GetGenre(int id);
+        GenreViewModel GetGenreName(string genreName);
         void AddGenre(GenreViewModel model, string name);
         bool CheckGenreName(string GenreName);
         void UpdateGenre(GenreViewModel model, string name);

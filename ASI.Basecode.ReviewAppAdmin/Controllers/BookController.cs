@@ -71,6 +71,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 return View(book);
             }
             _bookService.AddBook(book, this.UserName);
+            TempData["SuccessMessage"] = "Book successfully added.";
             return RedirectToAction("List");
         }
 
@@ -97,6 +98,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult EditBook(BookViewModel book)
         {
             _bookService.UpdateBook(book, this.UserName);
+            TempData["SuccessMessage"] = "Book successfully updated.";
             return RedirectToAction("List");
         }
 
@@ -109,6 +111,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult DeleteBook(BookViewModel book)
         {
             _bookService.DeleteBook(book);
+            TempData["SuccessMessage"] = "Book successfully deleted.";
             return RedirectToAction("List");
         }
 

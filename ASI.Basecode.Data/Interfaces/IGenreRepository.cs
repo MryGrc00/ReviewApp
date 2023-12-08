@@ -11,6 +11,7 @@ namespace ASI.Basecode.Data.Interfaces
     {
         IQueryable<Genre> GetGenres();
         Genre GetGenre(int id);
+        Genre GetGenreName(string genreName);
         void AddGenre(Genre genre);
         void EditGenre(Genre genre);
         void DeleteGenre(Genre genre);

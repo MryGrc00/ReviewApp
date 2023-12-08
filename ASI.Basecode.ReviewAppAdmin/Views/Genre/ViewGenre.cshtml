@@ -31,7 +31,7 @@
                             <span></span>
                         </button>
                     </form>
-                    <button type="submit" class="bd-viewBR px-4">
+                    <button type="button" data-toggle="modal" data-target="#GenreModal_@Model.GenreId" class="bd-viewBR px-4">
                         <span class="bd-viewBRText ff-inter"><i class="bi bi-trash me-2"></i>Delete</span>
                         <span></span>
                     </button>
@@ -67,6 +67,39 @@
                     <input class="form-control shadow-none bg-transparent text-white border-white mt-1" value="@Model.UpdatedDate" disabled />
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="GenreModal_@Model.GenreId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-cont px-4">
+            <form asp-controller="Genre" asp-action="DeleteGenre" method="post">
+                <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
+                    <input type="hidden" name="GenreId" value="@Model.GenreId">
+                    <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
+                    <h5 class="text-white text-center">Are you sure you want to delete this Genre?</h5>
+                    <h6 class="text-neutralgray ff-inter text-center mt-3 text-truncate"><i>@Model.GenreName</i></h6>
+                </div>
+
+                <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+                    <div class="row g-3" style="width:95%;">
+                        <div class="col d-flex">
+                            <button class="bd-viewBR w-100" data-dismiss="modal">
+                                <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                                <span></span>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="bd-viewBR w-100">
+                                <span class="bd-viewBRText ff-inter fw-bold">Delete</span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

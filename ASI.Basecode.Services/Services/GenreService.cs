@@ -1,5 +1,6 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
+using ASI.Basecode.Data.Repositories;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
 using System;
@@ -109,6 +110,25 @@ namespace ASI.Basecode.Services.Services
             return null;
         }
 
+        public GenreViewModel GetGenreName(string genreName)
+        {
+            var model = _genreRepository.GetGenreName(genreName);
+            if (model != null)
+            {
+                GenreViewModel genre = new()
+                {
+                    GenreId = model.GenreId,
+                    GenreName = model.GenreName,
+                    GenreCreatedBy = model.GenreCreatedBy,
+                    DateAdded = model.DateAdded,
+                    UpdatedBy = model.UpdatedBy,
+                    UpdatedDate = model.UpdatedDate,
+                };
+                return genre;
+            }
+            return null;
+        }
+
         public void AddGenre(GenreViewModel model, string name)
         {
             var genre = new Genre();
@@ -142,6 +162,7 @@ namespace ASI.Basecode.Services.Services
         public void DeleteGenre(GenreViewModel model)
         {
             Genre genre = _genreRepository.GetGenre(model.GenreId);
+
             if (genre != null)
             {
                 _genreRepository.DeleteGenre(genre);

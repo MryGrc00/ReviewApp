@@ -28,14 +28,45 @@
                 <ul>
                     <li>
                         <i class="fa-solid fa-gear"></i>
-                        <a href="#">Settings</a>
+                        <a asp-action="AccountSetting" asp-controller="Admin">Account Settings</a>
                     </li>
                     <li>
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <a asp-action="SignOutUser" asp-controller="Account">Logout</a>
+                        <a class="text-black" data-toggle="modal" data-target="#logoutModal">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-cont px-4">
+            <form asp-controller="Account" asp-action="SignOutUser" method="post">
+                <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
+                    <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
+                    <h5 class="text-white text-center">Are you sure you want to Logout?</h5>
+                </div>
+
+                <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+                    <div class="row g-3" style="width:95%;">
+                        <div class="col d-flex">
+                            <button class="bd-viewBR w-100" data-dismiss="modal">
+                                <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                                <span></span>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="bd-viewBR w-100">
+                                <span class="bd-viewBRText ff-inter fw-bold">Logout</span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -27,6 +27,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public DateTime CreatedTime { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedTime { get; set; }
+        public string oldPassword { get; set; }
 
         public List<AdminViewModel> Admins { get; set; }
         public int Page { get; set; }

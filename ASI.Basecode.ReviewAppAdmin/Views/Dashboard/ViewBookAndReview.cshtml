@@ -3,6 +3,10 @@
     <link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
+@{
+    ViewData["Title"] = "View Book";
+}
+
 <div class="container pt-5">
     <div class="d-flex justify-content-between">
         <a class="bd-viewBR px-3"
@@ -32,7 +36,7 @@
                     <div class="d-flex align-items-center bd-genre-container">
                         @foreach (var genre in @Model.Genre.Split(','))
                         {
-                            <span class="d-flex align-items-center bd-genre">@genre.Trim()</span>
+                            <span class="d-flex align-items-center bd-genre"><a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()">@genre</a></span>
                         }
                     </div>
                     <p class="book-author"> @Model.Author</p>

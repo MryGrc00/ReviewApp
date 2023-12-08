@@ -3,6 +3,7 @@ using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +44,25 @@ public class BookService : IBookService
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
         }).OrderByDescending(x => x.DateAdded).ToList();
+
+        foreach (var book in data)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
+
         return data;
     }
 
@@ -64,6 +84,25 @@ public class BookService : IBookService
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
         }).OrderByDescending(x => x.DateAdded).Take(5).ToList();
+
+        foreach (var book in data)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
+
         return data;
     }
 
@@ -83,6 +122,22 @@ public class BookService : IBookService
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
         }).OrderByDescending(x => x.DateAdded).Take(5).ToList();
+
+        foreach (var book in data)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
 
         data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
@@ -113,6 +168,24 @@ public class BookService : IBookService
         page = Math.Max(1, Math.Min(page, totalPages));
 
         List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        foreach (var book in booksOnPage)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
         return new BookViewModel
         {
@@ -162,6 +235,9 @@ public class BookService : IBookService
                 case "rating":
                     data = data.OrderByDescending(x => x.TotalRating);
                     break;
+                case "rating-asc":
+                    data = data.OrderBy(x => x.TotalRating);
+                    break;
                     // Add additional sorting options as needed
             }
         }
@@ -176,6 +252,24 @@ public class BookService : IBookService
         page = Math.Max(1, Math.Min(page, totalPages));
 
         List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        foreach (var book in booksOnPage)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
         return new BookViewModel
         {
@@ -204,12 +298,41 @@ public class BookService : IBookService
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
         }).OrderByDescending(x => x.TotalRating).Take(5).ToList();
+        foreach (var book in data)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
+
         return data;
     }
 
-    public BookViewModel TopBooksExpanded(int page, int pageSize)
+    public BookViewModel TopBooksExpanded(int page, int pageSize, string searchKeyword, string sortBy)
     {
-        var data = _bookRepository.GetBooks().Select(x => new BookViewModel
+        var query = _bookRepository.GetBooks();
+
+        if (!string.IsNullOrEmpty(searchKeyword))
+        {
+            query = query.Where(x =>
+                x.Title.Contains(searchKeyword) ||
+                x.Author.Contains(searchKeyword) ||
+                x.Genre.Contains(searchKeyword)
+            );
+        }
+
+        var data = query.Select(x => new BookViewModel
         {
             BookId = x.BookId,
             BookImage = x.BookImage,
@@ -223,14 +346,53 @@ public class BookService : IBookService
             DateAdded = x.DateAdded,
             UpdatedBy = x.UpdatedBy,
             UpdatedDate = x.UpdatedDate,
-        }).OrderByDescending(x => x.TotalRating).ToList();
+        });
 
-        int totalItems = data.Count;
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            switch (sortBy.ToLower())
+            {
+                case "title":
+                    data = data.OrderBy(x => x.Title);
+                    break;
+                case "rating":
+                    data = data.OrderByDescending(x => x.TotalRating);
+                    break;
+                case "rating-asc":
+                    data = data.OrderBy(x => x.TotalRating);
+                    break;
+                    // Add additional sorting options as needed
+            }
+        }
+        else
+        {
+            data = data.OrderByDescending(x => x.TotalRating);
+        }
+
+        int totalItems = data.Count();
         int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
         page = Math.Max(1, Math.Min(page, totalPages));
 
         List<BookViewModel> booksOnPage = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        foreach (var book in booksOnPage)
+        {
+            var ratings = _ratingService.GetRatings().Where(r => r.BookId == book.BookId).ToList();
+            int totalReview = ratings.Count();
+
+            double averageRating = 0;
+            if (totalReview > 0)
+            {
+                int totalRating = book.TotalRating;
+                averageRating = (double)totalRating / totalReview;
+                averageRating = Math.Round(averageRating, 1);
+            }
+
+            book.AverageRating = averageRating;
+        }
+
+        data.ForEach(book => book.SelectedGenres = book.Genre.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
         return new BookViewModel
         {

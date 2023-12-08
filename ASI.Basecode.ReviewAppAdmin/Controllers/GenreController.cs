@@ -62,6 +62,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 return View(genre);
             }
             _genreService.AddGenre(genre, this.UserName);
+            TempData["SuccessMessage"] = "Genre successfully added.";
             return RedirectToAction("List");
         }
 
@@ -86,6 +87,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult EditGenre(GenreViewModel genre)
         {
             _genreService.UpdateGenre(genre, this.UserName);
+            TempData["SuccessMessage"] = "Genre successfully updated.";
             return RedirectToAction("List");
         }
 
@@ -98,6 +100,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult DeleteGenre(GenreViewModel genre)
         {
             _genreService.DeleteGenre(genre);
+            TempData["SuccessMessage"] = "Genre successfully deleted.";
             return RedirectToAction("List");
         }
 
@@ -115,6 +118,21 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             var books = _genreService.ViewGenreInBooks(data.GenreName, page, pageSize);
             ViewData["Books"] = books;
             return View("ViewGenre", data);
+        }
+
+        [HttpGet]
+        public IActionResult BookList(string genreName, int page = 1, int pageSize = 5)
+        {
+            var data = _genreService.GetGenreName(genreName);
+            if (data != null)
+            {
+                var books = _genreService.ViewGenreInBooks(data.GenreName, page, pageSize);
+                ViewData["Books"] = books;
+                return View("BookList", data);
+            } else
+            {
+                return RedirectToAction("List");
+            }
         }
     }
 }

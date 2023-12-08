@@ -1,0 +1,92 @@
+﻿@model ASI.Basecode.Services.ServiceModels.GenreViewModel
+@section styles {
+    <link rel="stylesheet" href="~/css/genre.css" />
+}
+@{
+    var Books = (ASI.Basecode.Services.ServiceModels.BookViewModel)ViewData["Books"];
+}
+@{
+    ViewData["Title"] = "Genre";
+}
+<div class="mt-5 pt-5 mb-3">
+    <div class="d-flex justify-content-between">
+        <!--<h2 class="fw-bolder dark-blue">Newest</h2>-->
+        <a class="bd-viewBR px-3"
+           asp-action="Index" asp-controller="Dashboard">
+            <span class="bd-viewBRText">&lt;&nbsp;Back </span>
+            <span></span>
+        </a>
+        <div>
+            <h2>@Model.GenreName</h2>
+            <table class="table" id="myTable">
+                <thead class="custom-thead">
+                    <tr>
+                        <th>Image</th>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var book in Books.Books)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@book.BookImage" alt="Book Image" width="80" height="80" onerror="this.onerror=null;this.src='/img/image.png';">
+                            </td>
+                            <td>@book.Isbn</td>
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.Genre</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center  mt-5">
+            <li class="page-item @(Books.Page == 1 || Books.TotalPages <= 1 ? "disabled" : "")">
+                <a class="pagination-btn" href="@Url.Action("GenreList", new { genreName = Model.GenreName, page = Books.Page - 1, pageSize = Books.PageSize })" aria-label="Previous">
+                    <span class="pagination-text" aria-hidden="true">&lt;</span>
+                    <span></span>
+                </a>
+            </li>
+
+            <li class="page-item @(Books.Page == 1 ? "active" : "")">
+                <a class="pagination-btn" href="@Url.Action("GenreList", new { genreName = Model.GenreName, page = 1, pageSize = Books.PageSize })">
+                    <span class="pagination-text">1</span>
+                    <span></span>
+                </a>
+            </li>
+
+            @if (Model.TotalPages > 1)
+            {
+
+                @for (int i = Math.Max(2, Books.Page - 1); i <= Math.Min(Books.TotalPages - 1, Books.Page + 1); i++)
+                {
+                    <li class="page-item @(i == Books.Page ? "active" : "")">
+                        <a class="pagination-btn" href="@Url.Action("GenreList", new { genreName = Model.GenreName, page = i, pageSize = Books.PageSize })">
+                            <span class="pagination-text">@i</span>
+                            <span></span>
+                        </a>
+                    </li>
+                }
+                <li class="page-item @(Books.TotalPages == Books.Page ? "active" : "")">
+                    <a class="pagination-btn" href="@Url.Action("GenreList", new { genreName = Model.GenreName, page = Books.TotalPages, pageSize = Books.PageSize })">
+                        <span class="pagination-text">@Books.TotalPages</span>
+                        <span></span>
+                    </a>
+                </li>
+            }
+            <li class="page-item @(Books.Page == Books.TotalPages || Books.TotalPages <= 1 ? "disabled" : "")">
+                <a class="pagination-btn" href="@Url.Action("GenreList", new { genreName = Model.GenreName, page = Books.Page + 1, pageSize = Books.PageSize })" aria-label="Next">
+                    <span class="pagination-text" aria-hidden="true">&gt;</span>
+                    <span></span>
+                </a>
+            </li>
+        </ul>
+    </nav>

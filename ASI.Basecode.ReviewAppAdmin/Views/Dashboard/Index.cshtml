@@ -3,6 +3,10 @@
     <link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
 <div class="custom-container">
     <div class="mt-5 pt-4 mb-2">
         <div class="d-flex justify-content-between align-items-center">
@@ -22,14 +26,14 @@
                                 <div class="image-container position-relative">
                                     <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
                                     <div class="d-flex align-items-center ratings-badge">
-                                        @book.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                                        @book.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                     </div>
                                 </div>
                                 <h4 class="book-title text-truncate">@book.Title</h4>
                                 <div class="d-flex align-items-center book-genre-container">
                                     @foreach (var genre in book.SelectedGenres)
                                     {
-                                        <span class="d-flex align-items-center book-genre ">@genre</span>
+                                        <span class="d-flex align-items-center book-genre "><a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()">@genre</a></span>
                                     }
                                     </div>
                                 <p class="book-author">@book.Author</p>
@@ -58,7 +62,7 @@
                                     <div class="image-container position-relative">
                                         <img src="@top.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
                                         <div class="d-flex align-items-center ratings-badge">
-                                            @top.TotalRating/5&nbsp;<i class="bi bi-star-fill"></i>
+                                            @top.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                         </div>
                                     </div>
                                     <h4 class="book-title text-truncate">@top.Title</h4>
@@ -66,7 +70,7 @@
                                     <div class="d-flex align-items-center book-genre-container">
                                         @foreach (var genre in top.Genre.Split(','))
                                         {
-                                            <span class="d-flex align-items-center book-genre ">@genre.Trim()</span>
+                                            <span class="d-flex align-items-center book-genre "><a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()">@genre</a></span>
                                         }
                                     </div>
                                     <p class="book-author">@top.Author</p>
@@ -81,3 +85,13 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        // Check for success message and display Toastr notification
+        var successMessage = '@TempData["SuccessMessage"]';
+        if (successMessage) {
+            toastr.success(successMessage);
+        }
+    </script>
+}
