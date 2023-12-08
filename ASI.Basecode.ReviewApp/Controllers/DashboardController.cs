@@ -83,9 +83,16 @@ namespace ASI.Basecode.ReviewApp.Controllers
         [HttpPost]
         public IActionResult RateBook(RatingViewModel rating)
         {
+            if (!rating.Email.Contains("@gmail.com"))
+            {
+                var book = _bookService.GetBook(rating.BookId);
+                base.ModelState.AddModelError("Email", "Email is invalid.");
+                ViewData["Book"] = book;
+                return View(rating);
+            }
             _ratingService.AddRating(rating);
             var data = _bookService.GetBook(rating.BookId);
-            List<RatingViewModel> rate = _ratingService.GetRatings().Where(x => x.BookId == rating.BookId).Take(2).ToList();
+            List<RatingViewModel> rate = _ratingService.GetRatings().Where(x => x.BookId == rating.BookId).ToList();
             ViewData["Rate"] = rate;
             TempData["SuccessMessage"] = "Rate successfully.";
             return RedirectToAction("ViewBookAndReview", data);
