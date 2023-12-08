@@ -19,6 +19,10 @@ namespace ASI.Basecode.Services.Services
             _emailConfig = emailConfig;
         }
 
+        /// <summary>
+        /// Prepares and sends an email based on the provided message details.
+        /// </summary>
+        /// <param name="message">The message to be sent via email.</param>
         public void SendEmail(Message message)
         {
             var emailMessage = CreateEmailMessage(message);
@@ -26,6 +30,10 @@ namespace ASI.Basecode.Services.Services
             Send(emailMessage);
         }
 
+        /// <summary>
+        /// Connects to the SMTP server and sends the email message.
+        /// </summary>
+        /// <param name="mailMessage">The formatted email message to send.</param>
         private void Send(MimeMessage mailMessage)
         {
             using (var client = new SmtpClient())
@@ -50,6 +58,11 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
+        /// <summary>
+        /// Creates a MimeMessage email object from the given message data.
+        /// </summary>
+        /// <param name="message">Details of the message to send.</param>
+        /// <returns>The formatted MimeMessage email.</returns>
         private MimeMessage CreateEmailMessage(Message message)
         {
             var emailMessage = new MimeMessage();
