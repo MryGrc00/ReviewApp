@@ -20,7 +20,10 @@ namespace ASI.Basecode.Services.Services
             _ratingRepository = ratingRepository;
             _bookRepository = bookRepository;
         }
-
+        /// <summary>
+        /// Retrieves a list of all book ratings, including user details and comments, Sorted based on the most recent.
+        /// </summary>
+        /// <returns>Sorted list of book ratings with user feedback.</returns>
         public List<RatingViewModel> GetRatings()
         {
             var data = _ratingRepository.GetRatings().Select(x=> new RatingViewModel
@@ -36,6 +39,11 @@ namespace ASI.Basecode.Services.Services
             return data;
         }
 
+        /// <summary>
+        /// Retrieves the records of a specific rating, including the user's name, email, and their comments.
+        /// </summary>
+        /// <param name="id">ID of the rating to retrieve.</param>
+        /// <returns>Detailed record about the rating, or null if not found.</returns>
         public RatingViewModel GetRating(int id)
         {
             var model = _ratingRepository.GetRating(id);
@@ -56,6 +64,10 @@ namespace ASI.Basecode.Services.Services
             return null;
         }
 
+        /// <summary>
+        /// Adds a new user rating to a book, including comments and star rating, and updates the book's total rating score.
+        /// </summary>
+        /// <param name="model">Rating record provided by the user.</param>
         public void AddRating (RatingViewModel model)
         {
             var rating = new Rating();

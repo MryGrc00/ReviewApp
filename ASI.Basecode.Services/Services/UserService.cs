@@ -31,6 +31,13 @@ namespace ASI.Basecode.Services.Services
             _adminRepository = adminRepository;
         }
 
+        /// <summary>
+        /// Verifies user login details against stored credentials.
+        /// </summary>
+        /// <param name="userId">Email of the user attempting to log in.</param>
+        /// <param name="password">Password for login attempt.</param>
+        /// <param name="admin">Reference to store logged-in user's details.</param>
+        /// <returns>Status of login attempt: success or failure.</returns>
         public LoginResult AuthenticateUser(string userId, string password, ref Admin admin)
         {
             admin = new Admin();
@@ -41,6 +48,10 @@ namespace ASI.Basecode.Services.Services
             return admin != null ? LoginResult.Success : LoginResult.Failed;
         }
 
+        /// <summary>
+        /// Creates a new user account, ensuring the email is unique.
+        /// </summary>
+        /// <param name="model">Details of the user to be added.</param>
         public void AddUser(UserViewModel model)
         {
             var admin = new Admin();
@@ -61,6 +72,10 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
+        /// <summary>
+        /// Generates and sends a password reset code to a user's email.
+        /// </summary>
+        /// <param name="model">User's email for sending reset code.</param>
         public void GetCode(ForgotPasswordViewModel model)
         {
             var data = _adminService.GetAdminWithEmail(model.Email);
@@ -77,6 +92,11 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
+        /// <summary>
+        /// Verifies the password reset code entered by the user.
+        /// </summary>
+        /// <param name="model">Contains user's email and the reset code.</param>
+        /// <returns>Reset status based on code verification.</returns>
         public ForgotPasswordViewModel ForgotPassword (ForgotPasswordViewModel model)
         {
             var data = _forgotPasswordRepository.GetForgetPassword(model.Email);
@@ -102,6 +122,10 @@ namespace ASI.Basecode.Services.Services
             return null;
         }
 
+        /// <summary>
+        /// Resets the password for a user's account.
+        /// </summary>
+        /// <param name="model">Contains user's email and new password.</param>
         public void ResetPassword (AdminViewModel model)
         {
             var data = _adminRepository.GetAdminByEmail(model.Email);

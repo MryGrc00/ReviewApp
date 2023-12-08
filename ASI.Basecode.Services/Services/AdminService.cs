@@ -20,10 +20,11 @@ namespace ASI.Basecode.Services.Services
         {
             _adminRepository = adminRepository;
         }
+
         /// <summary>
-        /// Retrieves all administrators, sorted by the time they were creation.
+        /// Retrieves all administrators, sorted by the time they were created.
         /// </summary>
-        /// <returns>List of administrators with detailed information.</returns>
+        /// <returns>List of administrators with detailed record.</returns>
         public List<AdminViewModel> GetAdmins()
         {
             var data = _adminRepository.GetAdmins().Select(x => new AdminViewModel
@@ -39,6 +40,7 @@ namespace ASI.Basecode.Services.Services
             }).OrderByDescending(x => x.CreatedTime).ToList();
             return data;
         }
+
         /// <summary>
         /// Provides a paginated list of administrators.
         /// </summary>
@@ -74,6 +76,7 @@ namespace ASI.Basecode.Services.Services
                 TotalPages = totalPages,
             };
         }
+
         /// <summary>
         /// Retrieves a specific administrator by ID.
         /// </summary>
@@ -99,6 +102,7 @@ namespace ASI.Basecode.Services.Services
             }
             return null;
         }
+
         /// <summary>
         /// Retrieves an admin's records, including decrypted password.
         /// </summary>
@@ -125,6 +129,7 @@ namespace ASI.Basecode.Services.Services
             }
             return null;
         }
+
         /// <summary>
         /// Fetches an administrator's record using their email address.
         /// </summary>
@@ -144,6 +149,7 @@ namespace ASI.Basecode.Services.Services
             }
             return null;
         }
+
         /// <summary>
         /// Retrieves an administrator's record based on their name.
         /// </summary>
@@ -165,6 +171,7 @@ namespace ASI.Basecode.Services.Services
             }
             return null;
         }
+
         /// <summary>
         /// Adds a new administrator to the system.
         /// </summary>
@@ -182,6 +189,7 @@ namespace ASI.Basecode.Services.Services
             admin.UpdatedTime = DateTime.Now;
             _adminRepository.AddAdmin(admin);
         }
+
         /// <summary>
         /// Checks if an email address is already in use and validates its format.
         /// </summary>
@@ -204,12 +212,12 @@ namespace ASI.Basecode.Services.Services
 
             return "Valid";
         }
+
         /// <summary>
         /// Verifies if the provided old password matches the stored password.
         /// </summary>
         /// <param name="Adminid">The admin's ID.</param>
         /// <param name="oldPassword">The old password to verify.</param>
-
         public string CheckOldPassword(int Adminid, string oldPassword)
         {
             var password = _adminRepository.GetAdmin(Adminid);
@@ -221,6 +229,7 @@ namespace ASI.Basecode.Services.Services
 
             return "Not Match";
         }
+
         /// <summary>
         /// Validates and compares two passwords for consistency and strength.
         /// </summary>
@@ -258,6 +267,7 @@ namespace ASI.Basecode.Services.Services
 
             return "Passwords match and meet the criteria.";
         }
+
         /// <summary>
         /// Updates the record of an existing administrator.
         /// </summary>
@@ -277,6 +287,7 @@ namespace ASI.Basecode.Services.Services
                 _adminRepository.EditAdmin(admin);
             }
         }
+
         /// <summary>
         /// Deletes an administrator's record from the system.
         /// </summary>
@@ -289,6 +300,7 @@ namespace ASI.Basecode.Services.Services
                 _adminRepository.DeleteAdmin(admin);
             }
         }
+
         /// <summary>
         /// Changes the email address of an existing administrator.
         /// </summary>
@@ -305,6 +317,7 @@ namespace ASI.Basecode.Services.Services
                 _adminRepository.EditAdmin(admin);
             }
         }
+
         /// <summary>
         /// Updates the name of an existing administrator.
         /// </summary>
@@ -321,6 +334,7 @@ namespace ASI.Basecode.Services.Services
                 _adminRepository.EditAdmin(admin);
             }
         }
+
         /// <summary>
         /// Changes the password of an existing administrator.
         /// </summary>
