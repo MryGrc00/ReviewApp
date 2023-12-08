@@ -24,15 +24,21 @@
                      class="dpicn hover-pointer"
                      alt="dp">
             </div>
-            <div class="dropdown">
+            <div class="dropdown account-cont">
                 <ul>
                     <li>
-                        <i class="fa-solid fa-gear"></i>
-                        <a asp-action="AccountSetting" asp-controller="Admin">Account Settings</a>
+                       
+                        <a class="bd-viewBR m-0 d-inline-block" asp-action="AccountSetting" asp-controller="Admin">
+                            <span class="bd-viewBRText"> <i class="fa-solid fa-gear me-2"></i>Account Settings</span>
+                            <span></span>
+                        </a>
                     </li>
                     <li>
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <a class="text-black" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                        
+                        <a class="bd-viewBR m-0" data-toggle="modal" data-target="#logoutModal">
+                            <span class="bd-viewBRText"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</span>
+                            <span></span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -46,7 +52,7 @@
         <div class="modal-content modal-cont px-4">
             <form asp-controller="Account" asp-action="SignOutUser" method="post">
                 <div class="modal-body text-white d-flex flex-column justify-content-center align-items-center mt-2">
-                    <i class="bi bi-trash3-fill themed-text" style="font-size:5rem;"></i>
+                    <i class="fa-solid fa-right-from-bracket themed-text mb-3" style="font-size:5rem;"></i>
                     <h5 class="text-white text-center">Are you sure you want to Logout?</h5>
                 </div>
 
