@@ -25,7 +25,7 @@
                             <div class="card-body d-flex flex-column">
                                 <div class="image-container position-relative">
                                     <img src="@book.BookImage" alt="Image" class="img-fluid h-100 w-100" onerror="this.onerror=null;this.src='/img/image.png';">
-                                    <div class="ratings-badge">
+                                    <div class="ratings-badge d-flex align-items-center">
                                         @book.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                 <div class="card-body d-flex flex-column">
                                     <div class="image-container position-relative">
                                         <img src="@top.BookImage" alt="Image" class="img-fluid h-100 w-100" />
-                                        <div class="ratings-badge">
+                                        <div class="ratings-badge d-flex align-items-center">
                                             @top.AverageRating/5&nbsp;<i class="bi bi-star-fill"></i>
                                         </div>
                                     </div>
