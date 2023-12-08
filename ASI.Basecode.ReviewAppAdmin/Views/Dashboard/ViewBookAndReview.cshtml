@@ -50,41 +50,48 @@
         @* column-2 *@
         <div class="col-md-7 d-flex flex-column col-2">
             <div class="row bd-scroll mt-3">
-                @foreach (var rate in (List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"])
+                @if (ViewData["Rate"] == null || !((List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"]).Any())
                 {
-                    <div class="bd-review-container with-linear-gradient rounded-2">
-                        <div class="px-4 py-5">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-column justify-content-lg-start">
-                                    <div class="card-text">
-                                        <span>@rate.Name</span>
-                                        <span>&nbsp;|&nbsp;</span>
-                                        <span>@rate.Email</span>
+                    <h2>No Reviews Yet.</h2>
+                }
+                else
+                {
+                    @foreach (var rate in (List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"])
+                    {
+                        <div class="bd-review-container with-linear-gradient rounded-2">
+                            <div class="px-4 py-5">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-column justify-content-lg-start">
+                                        <div class="card-text">
+                                            <span>@rate.Name</span>
+                                            <span>&nbsp;|&nbsp;</span>
+                                            <span>@rate.Email</span>
+                                        </div>
+                                        <div class="bd-review-date">
+                                            <p>September 12, 2023</p>
+                                        </div>
                                     </div>
-                                    <div class="bd-review-date">
-                                        <p>September 12, 2023</p>
+                                    <div class="d-flex justify-content-end">
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (i < @rate.RateStars)
+                                            {
+                                                <i class="bi bi-star-fill" style="font-size: 23px; color: rgba(255, 203, 69, 1)"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-star-fill" style="font-size: 23px;color: rgba(140, 140, 140, 1)"></i>
+                                            }
+                                        }
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end">
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        if (i < @rate.RateStars)
-                                        {
-                                            <i class="bi bi-star-fill" style="font-size: 23px; color: rgba(255, 203, 69, 1)"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="bi bi-star-fill" style="font-size: 23px;color: rgba(140, 140, 140, 1)"></i>
-                                        }
-                                    }
+                                <div class="review-desc">
+                                    <p>@rate.RateComment</p>
+                                    <span class="toggle-text"><a href="#" class="read-more-link">See more</a></span>
                                 </div>
-                            </div>
-                            <div class="review-desc">
-                                <p>@rate.RateComment</p>
-                                <span class="toggle-text"><a href="#" class="read-more-link">See more</a></span>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>
