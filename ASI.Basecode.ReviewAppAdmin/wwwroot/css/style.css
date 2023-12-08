@@ -881,7 +881,22 @@ input[data-autocompleted] {
         position: relative;
         border: 0;
     }
+.account-cont {
+    border: 3px solid #C40D60;
+    border-radius: 6px;
+    border-bottom-color: rgba(72,5,224,1);
+    border-top-color: rgba(196,13,96,1);
+    border-left-color: rgb(72,5,224);
+    border-right-color: rgba(196,13,96,1);
+    background-image: var(--background-color5);
 
+}
+
+   
+.dropdown.account-cont {
+    z-index: 1000;
+    position:absolute;
+}
 /*   .modal-cont .modal-header::after,
         .modal-cont .modal-body::after {
             content: '';
