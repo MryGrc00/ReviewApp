@@ -57,7 +57,7 @@
                         <p class="card-text text-silver p-0 mb-0">Book ID:&nbsp;@Model.BookId</p>
                         <p class="card-text fs-18 p-0 mb-0 fw-400">@Model.Title</p>
                         <p class="card-text fs-16 fw-500 p-0 mb-0 text-charcoal">ISBN#:&nbsp;@Model.Isbn</p>
-                        <div class="d-flex align-items-center book-genre-container  p-0 mb-1">
+                        <div class="d-flex align-items-center  p-0 mb-1">
                             @foreach (var genre in @Model.Genre.Split(','))
                             {
                                 <a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()" class="genre-btn me-1"><span class="genre-btnText">@genre</span><span></span></a>

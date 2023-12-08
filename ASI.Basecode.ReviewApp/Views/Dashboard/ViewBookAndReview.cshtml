@@ -32,10 +32,13 @@
                             </span>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center bd-genre-container">
+                    <div class="d-flex flex-wrap">
                         @foreach (var genre in @Model.Genre.Split(','))
                         {
-                            <span class="d-flex align-items-center bd-genre"><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
+                            <a class="d-inline-block genre-btn me-1 mb-1" asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()">
+                                <span class="genre-btnText">@genre</span>
+                                <span></span>
+                            </a>
                         }
                     </div>
                     <p class="book-author"> @Model.Author</p>
@@ -59,7 +62,9 @@
             <div class="row bd-scroll mt-3">
                 @if (ViewData["Rate"] == null || !((List<ASI.Basecode.Services.ServiceModels.RatingViewModel>)ViewData["Rate"]).Any())
                 {
-                    <h2>No Reviews Yet.</h2>
+                    <div class="w-100 d-flex justify-content-center">
+                        <h2 class="themed-text fw-bold">NO REVIEWS YET.</h2>
+                    </div>
                 }
                 else
                 {

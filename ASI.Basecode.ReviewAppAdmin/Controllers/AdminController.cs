@@ -55,6 +55,16 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpPost]
         public IActionResult AddAdmin(AdminViewModel admin)
         {
+            if (admin.Email == null || admin.Email == " ")
+            {
+                base.ModelState.AddModelError("Email", "Email is required");
+                return View(admin);
+            }
+            if (admin.Name == null || admin.Name == " ")
+            {
+                base.ModelState.AddModelError("Name", "Name is required");
+                return View(admin);
+            }
             var checkEmail = _adminService.CheckEmail(admin.Email);
             if (checkEmail == "Exist")
             {
@@ -93,6 +103,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 base.ModelState.AddModelError("ConfirmPassword", "Passwords do not match.");
                 return View(admin);
             }
+        
             _adminService.AddAdmin(admin, this.UserName);
             TempData["SuccessMessage"] = "Admin successfully added.";
             return RedirectToAction("List");
@@ -107,7 +118,6 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult EditAdmin(int AdminId)
         {
             var data = _adminService.GetAdminWithPassword(AdminId);
-            TempData["SuccessMessage"] = "Admin successfully updated.";
             return View(data);
         }
 
@@ -120,6 +130,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         public IActionResult EditAdmin(AdminViewModel admin)
         {
             _adminService.UpdateAdmin(admin, this.UserName);
+            TempData["SuccessMessage"] = "Admin successfully updated.";
             return RedirectToAction("List");
         }
 

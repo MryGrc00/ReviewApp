@@ -456,14 +456,34 @@ input[data-autocompleted] {
     text-decoration: none;
     background: none;
 }
-
-.bd-viewBRText {
+.themed-cont {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px 12px;
+    border: 1.7px solid #C40D60;
+    border-bottom-color: rgb(72,5,224);
+    border-left-color: rgb(72,5,224);
+    border-top-color: rgba(136, 19, 66, 100);
+    border-right-color: rgba(136, 19, 66, 100);
+    box-shadow: -5px 5px 10px #ffffff20;
+    cursor: pointer;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    background: linear-gradient(94deg, #2103FE, #C40D60);
+}
+.bd-viewBR .bd-viewBRText {
     background: linear-gradient(94deg, #2203FF 33.29%, #C40D60 67.01%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-    margin-right: 8px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -505,6 +525,12 @@ input[data-autocompleted] {
         opacity: 1;
         align-self: center;
     }
+
+
+    .themed-cont .bd-viewBRText {
+        color: white;
+    }
+
 /*genre button*/
 .genre-btn {
     position: relative;

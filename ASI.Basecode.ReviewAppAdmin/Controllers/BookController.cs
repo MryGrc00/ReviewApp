@@ -59,6 +59,26 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         [HttpPost]
         public IActionResult AddBook (BookViewModel book)
         {
+            if (book.Title == null || book.Title == " ")
+            {
+                base.ModelState.AddModelError("Title", "Title is required");
+                return View(book);
+            }
+            if (book.Description == null || book.Description == " ")
+            {
+                base.ModelState.AddModelError("Description", "Description is required");
+                return View(book);
+            }
+            if (book.Isbn == null || book.Isbn == " ")
+            {
+                base.ModelState.AddModelError("Isbn", "Isbn is required");
+                return View(book);
+            }
+            if (book.Author == null || book.Author == " ")
+            {
+                base.ModelState.AddModelError("Author", "Author is required");
+                return View(book);
+            }
             var isExist = _bookService.CheckIsbn(book.Isbn);
             if(isExist)
             {
@@ -71,6 +91,7 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
                 base.ModelState.AddModelError("Title", "Title already exisits");
                 return View(book);
             }
+           
             _bookService.AddBook(book, this.UserName);
             TempData["SuccessMessage"] = "Book successfully added.";
             return RedirectToAction("List");

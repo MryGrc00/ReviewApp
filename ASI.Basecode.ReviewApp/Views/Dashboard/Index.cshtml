@@ -74,7 +74,7 @@
                                     <div class="d-flex align-items-center">
                                         @foreach (var genre in top.Genre.Split(','))
                                         {
-                                            <a class="genre-btn" asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">
+                                            <a class="genre-btn me-1" asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">
                                                 <span class="d-flex align-items-center genre-btnText">@genre</span>
                                                 <span></span>
                                             </a>

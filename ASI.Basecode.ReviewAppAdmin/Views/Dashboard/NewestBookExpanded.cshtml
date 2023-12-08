@@ -15,15 +15,15 @@
             <span></span>
         </a>
     </div>
-    <div class="container">
+    <div class="container mt-2">
         <form asp-action="NewestBookExpanded" asp-controller="Dashboard" method="get">
             <!-- Search -->
             <div class="row">
                 <div class="col-md-4">
                     <h2 class="fw-bolder newest-label"><i class="bi bi-fire bs-icon-fire"></i>Newest Books</h2>
                 </div>
-                <div class="col-md-8 d-flex align-items-center justify-content-end">
-                    <div class="search-input me-3">
+                <div class="col-md-8 d-flex justify-content-end">
+                    <div class="search-input">
                         <input type="text" name="searchKeyword" placeholder="Search here..." aria-label="Search Keyword" aria-describedby="search-addon" value="@ViewBag.SearchKeyword">
                         <span class="icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="url(#searchGradient)" class="bi bi-search" viewBox="0 0 16 16">
@@ -37,19 +37,36 @@
                             </svg>
                         </span>
                     </div>
-                    <div class="col-auto me-3">
-                        <button class="btn @(ViewBag.SortBy == "title" ? "btn-primary" : "btn-secondary")" name="sortBy" value="title">Title</button>
-                        <button class="btn @(ViewBag.SortBy == "rating" ? "btn-primary" : "btn-secondary")" name="sortBy" value="rating">Rating</button>
-                        <button class="btn @(ViewBag.SortBy == "rating-asc" ? "btn-primary" : "btn-secondary")" name="sortBy" value="rating-asc">Rating-Asc</button>
-                        <!-- Add additional buttons as needed -->
+                    <div class="mx-1 row">
+                        <button class="col-auto me-1 @(ViewBag.SortBy == "title" ? "themed-cont" : "bd-viewBR px-3")" name="sortBy" value="title">
+                            <span class="bd-viewBRText text-center">Title</span><span></span>
+                        </button>
+                        <button class="col-auto @(
+                                    (ViewBag.SortBy == "rating" || ViewBag.SortBy == "rating-asc") ? "themed-cont" : "bd-viewBR px-3"
+                                     )" name="sortBy" value="@((ViewBag.SortBy == "rating") ? "rating-asc" : "rating")">
+                            <span class="bd-viewBRText">
+                                @if (ViewBag.SortBy == "rating-asc")
+                                {
+                                    <p class="m-0">Ratings&nbsp;<i class="bi bi-arrow-down"></i></p>
+                                }
+                                else
+                                {
+                                    <p class="m-0">Ratings&nbsp;<i class="bi bi-arrow-up"></i></p>
+                                }
+                            </span>
+                            <span></span>
+                        </button>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Apply</button>
+                        <a class="bd-viewBR px-3"
+                           asp-action="NewestBookExpanded" asp-controller="Dashboard">
+                            <span class="bd-viewBRText">Reset </span>
+                            <span></span>
+                        </a>
                     </div>
                 </div>
             </div>
         </form>
-        <br />
         <!-- Book Cards -->
         <div class="row row-cols-md-5 g-1">
             @foreach (var book in Model.Books)
@@ -130,11 +147,3 @@
     </nav>
 </div>
 
-@section scripts{
-    <script>
-        $('#sortBy').on('change', function () {
-            $(this).find('option').css('background-color', ''); // Reset background color
-            $(this).find('option:selected').css('background-color', 'violet'); // Change background color of selected option
-        });
-    </script>
-}
