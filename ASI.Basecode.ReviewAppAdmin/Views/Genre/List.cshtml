@@ -30,7 +30,14 @@
                 @foreach (var genre in Model.Genres)
                 {
                     <tr>
-                        <td><a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.GenreName">@genre.GenreName</a></td>
+                        <td>
+                            <div style=" display: flex; justify-content: center; align-items: center;">
+                                <a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.GenreName" class="genre-btn me-1">
+                                    <span class="genre-btnText">@genre.GenreName</span>
+                                    <span></span>
+                                </a>
+                            </div>
+                        </td>
                         <td>@genre.GenreCreatedBy</td>
                         <td>@genre.DateAdded</td>
                         <td>@genre.UpdatedBy</td>
