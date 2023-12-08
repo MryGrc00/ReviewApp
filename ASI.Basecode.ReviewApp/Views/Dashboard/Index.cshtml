@@ -31,10 +31,13 @@
                                 </div>
                                 <h4 class="book-title text-truncate">@book.Title</h4>
 
-                                <div class="d-flex align-items-center book-genre-container">
+                                <div class="d-flex align-items-center">
                                     @foreach (var genre in book.Genre.Split(','))
                                     {
-                                        <span class="d-flex align-items-center book-genre "><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
+                                        <a class="genre-btn me-1" asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">
+                                            <span class="d-flex align-items-center genre-btnText ">@genre</span>
+                                            <span></span>
+                                        </a>
                                     }
                                 </div>
                                 <p class="book-author">@book.Author</p>
@@ -68,10 +71,13 @@
                                     </div>
                                     <h4 class="book-title text-truncate">@top.Title</h4>
 
-                                    <div class="d-flex align-items-center book-genre-container">
+                                    <div class="d-flex align-items-center">
                                         @foreach (var genre in top.Genre.Split(','))
                                         {
-                                            <span class="d-flex align-items-center book-genre "><a asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">@genre</a></span>
+                                            <a class="genre-btn" asp-action="GenreList" asp-controller="Dashboard" asp-route-genreName="@genre.Trim()">
+                                                <span class="d-flex align-items-center genre-btnText">@genre</span>
+                                                <span></span>
+                                            </a>
                                         }
                                     </div>
                                     <p class="book-author">@top.Author</p>

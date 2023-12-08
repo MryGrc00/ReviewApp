@@ -38,10 +38,12 @@
                         <td>@book.Title</td>
                         <td>@book.Author</td>
                         <td>
-                            @foreach (var genre in book.SelectedGenres)
-                            {
-                                <span class="d-flex align-items-center book-genre "><a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()">@genre</a></span>
-                            }
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                @foreach (var genre in book.SelectedGenres)
+                                {
+                                    <a asp-action="BookList" asp-controller="Genre" asp-route-genreName="@genre.Trim()" class="genre-btn me-1"><span class="genre-btnText">@genre</span><span></span></a>
+                                }
+                            </div>
                         </td>
                         <td>
                             <div style=" display: flex; justify-content: center; align-items: center;">

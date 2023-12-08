@@ -5,13 +5,44 @@
 @{
     ViewData["Title"] = "Account Setting";
 }
+<div class="mt-5 pt-4 mb-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="d-flex justify-content-between">
+                <a class="bd-viewBR px-3" asp-action="Index" asp-controller="Dashboard">
+                    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </div>
 
-<a class="bd-viewBR px-3"
-   asp-action="Index" asp-controller="Dashboard">
-    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
-    <span></span>
-</a>
+    <div class="container p-0">
+        <div class="row">
+            <div class="w-100 d-flex justify-content-center">
+                <div class="txt-title">Account Settings.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a asp-action="ChangeEmail" asp-controller="Admin" class="bd-viewBR">
+                    <span class="bd-viewBRText">Change Email</span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a asp-action="ChangeName" asp-controller="Admin" class="bd-viewBR">
+                    <span class="bd-viewBRText">Change Name</span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a asp-action="ChangePassword" asp-controller="Admin" class="bd-viewBR">
+                    <span class="bd-viewBRText">Change Password</span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </div>
 
-<a asp-action="ChangeEmail" asp-controller="Admin">Change Email</a>
-<a asp-action="ChangeName" asp-controller="Admin">Change Name</a>
-<a asp-action="ChangePassword" asp-controller="Admin">Change Password</a>
+</div>

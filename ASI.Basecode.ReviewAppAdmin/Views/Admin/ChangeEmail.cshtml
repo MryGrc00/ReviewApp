@@ -1,27 +1,45 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.AdminViewModel
 @section styles {
-    <link rel="stylesheet" href="~/css/admin.css" />
+    <link rel="stylesheet" href="~/css/genre.css" />
 }
 @{
     ViewData["Title"] = "Change Email";
 }
 
-<a class="bd-viewBR px-3"
-   asp-action="Index" asp-controller="Dashboard">
-    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
-    <span></span>
-</a>
-
-<form asp-action="ChangeEmail" method="post">
-    <input type="hidden" asp-for="AdminId" />
-    <label>Email</label>
-    <input class="form-control  shadow-none bg-transparent text-white border-white mt-1" asp-for="Email" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-
-    <div class="col">
-        <button type="submit" class="bd-viewBR w-100">
-            <span class="bd-viewBRText ff-inter fw-bold">Save</span>
-            <span></span>
-        </button>
+<div class="mt-5 pt-4 mb-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="d-flex justify-content-between">
+                <a class="bd-viewBR px-3" asp-action="AccountSetting" asp-controller="Admin">
+                    <span class="bd-viewBRText">&lt;&nbsp;Back </span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
     </div>
-</form>
+    <div class="updatelbl">
+        <h2 class="updatelabel ">Account settings.</h2>
+        <p class="fw-bold">CHANGE EMAIL</p>
+    </div>
+    <form asp-action="ChangeEmail" method="post">
+        <input type="hidden" asp-for="AdminId" />
+        <label>Email</label>
+        <input class="form-control  shadow-none bg-transparent text-white border-white mt-1" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+        <div class="row mt-2 g-2" style="width:30.5%;">
+            <div class="col">
+                <a class="bd-viewBR w-100" asp-action="AccountSetting" asp-controller="Admin">
+                    <span class="bd-viewBRText ff-inter fw-bold">Cancel</span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="col">
+                <button type="submit" class="bd-viewBR w-100">
+                    <span class="bd-viewBRText ff-inter fw-bold">Save</span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
