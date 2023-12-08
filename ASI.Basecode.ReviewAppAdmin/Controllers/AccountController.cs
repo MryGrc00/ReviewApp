@@ -61,9 +61,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Login Method
+        /// Displays the login view. Initializes a new session.
         /// </summary>
-        /// <returns>Created response view</returns>
+        /// <returns>Login view.</returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
@@ -75,11 +75,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Authenticate admin and signs the admin in when successful.
+        /// Authenticates and signs in an admin based on provided credentials.
         /// </summary>
-        /// <param name="model">The model.</param>
-        /// <param name="returnUrl">The return URL.</param>
-        /// <returns> Created response view </returns>
+        /// <param name="model">Contains admin's login credentials.</param>
+        /// <param name="returnUrl">URL to return to after successful login.</param>
+        /// <returns>Redirects to the dashboard on successful login, or shows login view with error message.</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
@@ -104,6 +104,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View();
         }
 
+        /// <summary> Hi
+        /// Displays the forgot password view.
+        /// </summary>
+        /// <returns>Forgot Password view.</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -111,6 +115,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Processes the request for a password reset code based on the provided email.
+        /// </summary>
+        /// <param name="forgotPassword">Contains the email for password reset.</param>
+        /// <returns>Forgot Password view with the result of the request.</returns>
         [HttpPost]
         [AllowAnonymous]
         public IActionResult GetCode(ForgotPasswordViewModel forgotPassword)
@@ -120,6 +129,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View("ForgotPassword", data);
         }
 
+        ///<summary>
+        /// Processes the forgot password request and initiates password reset process.
+        /// </summary>
+        /// <param name="forgotPassword">Contains the email for password reset.</param>
+        /// <returns>Redirects to Reset Password view or returns with an error message.</returns>
         [HttpPost]
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
@@ -141,6 +155,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("ResetPassword", new { email = forgotPassword.Email});
         }
 
+        ///<summary>
+        /// Displays the reset password view for a specific email.
+        /// </summary>
+        /// <param name="email">Email address for resetting the password.</param>
+        /// <returns>Reset Password view.</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string email)
@@ -148,6 +167,13 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             var data = _adminService.GetAdminWithEmail(email);
             return View(data);
         }
+
+
+        /// <summary>
+        /// Processes the password reset request.
+        /// </summary>
+        /// <param name="admin">Admin view model containing new password record.</param>
+        /// <returns>Redirects to the Login view upon successful reset or returns to the same view with error message.</returns>
         [HttpPost]
         [AllowAnonymous]
         public IActionResult ResetPassword(AdminViewModel admin)
@@ -183,6 +209,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        ///<summary>
+        /// Displays the user registration view.
+        /// </summary>
+        /// <returns>Registration view.</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -190,6 +220,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Processes user registration.
+        /// </summary>
+        /// <param name="model">User view model containing registration records.</param>
+        /// <returns>Redirects to the Login view upon successful registration or returns to the same view with error message.</returns>
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(UserViewModel model)
@@ -211,9 +246,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Sign Out current account and return login view.
+        /// Signs out the current user and redirects to the login view.
         /// </summary>
-        /// <returns>Created response view</returns>
+        /// <returns>Redirects to the Login view after signing out.</returns>
         [AllowAnonymous]
         public async Task<IActionResult> SignOutUser()
         {

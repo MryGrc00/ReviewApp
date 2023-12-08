@@ -27,11 +27,11 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// List of Book Records
+        /// Retrieves and displays a paginated list of book records.
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <param name="page">Page number to display. Default is 1.</param>
+        /// <param name="pageSize">Number of records per page. Default is 5.</param>
+        /// <returns>View with the list of books.</returns>
         [HttpGet]
         public IActionResult List(int page = 1, int pageSize = 5)
         {
@@ -40,9 +40,9 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add Method
+        /// Displays the view for adding a new book, including genre selection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Add Book view with genre selection options.</returns>
         [HttpGet]
         public IActionResult AddBook()
         {
@@ -52,10 +52,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Add book record to the database
+        /// Processes the addition of a new book record after validating required fields and checking for uniqueness of ISBN and title.
         /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
+        /// <param name="book">Book data to add.</param>
+        /// <returns>Redirects to the book list on success, or displays validation errors.</returns>
         [HttpPost]
         public IActionResult AddBook (BookViewModel book)
         {
@@ -105,10 +105,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Edit Method
+        /// Fetches and displays the details of a book for editing, including genre selection.
         /// </summary>
-        /// <param name="BookId"></param>
-        /// <returns></returns>
+        /// <param name="BookId">ID of the book to edit.</param>
+        /// <returns>Edit Book view populated with book's details and genre options.</returns>
         [HttpGet]
         public IActionResult EditBook(int BookId)
         {
@@ -119,10 +119,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
         }
 
         /// <summary>
-        /// Update book record to the database
+        /// Updates a book record with new information after validating the genre.
         /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
+        /// <param name="book">Updated book data.</param>
+        /// <returns>Redirects to the book list after successful update.</returns>
         [HttpPost]
         public IActionResult EditBook(BookViewModel book)
         {
@@ -153,11 +153,10 @@ namespace ASI.Basecode.ReviewAppAdmin.Controllers
             return RedirectToAction("List");
         }
 
-        /// <summary>
-        /// View book record and revoew associated
+        /// Deletes a book record from the system.
         /// </summary>
-        /// <param name="BookId"></param>
-        /// <returns></returns>
+        /// <param name="book">Book data to delete.</param>
+        /// <returns>Redirects to the book list after deletion.</returns>
         [HttpGet]
         public IActionResult ViewBook(int BookId, int page = 1, int pageSize = 5)
         {
